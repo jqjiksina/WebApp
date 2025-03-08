@@ -50,7 +50,7 @@ const scene = new THREE.Scene()
 
 // 交互状态
 const container = ref<HTMLElement | null>(null)
-const { isDragging, x, y, style } = useDraggable(container)
+const { isDragging, style } = useDraggable(container)
 const showDialog = useElementHover(container)
 
 // 初始化场景
