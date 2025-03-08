@@ -49,14 +49,15 @@ const closeMenu = () => {
 }
 
 // 处理外部点击
-const handleClickOutside = (event) => {
+const handleClickOutside = (event:MouseEvent) => {
   if(!menu.value || !triggerButton.value) return;
   const triggerValue = triggerButton.value as HTMLElement;
   const menuValue = menu.value as HTMLDivElement;
+  const target = event.target as Node | null
   if (
     isMenuVisible.value &&
-    !triggerValue.contains(event.target) &&
-    !menuValue.contains(event.target)
+    !triggerValue.contains(target) &&
+    !menuValue.contains(target)
   ) {
     closeMenu()
   }
