@@ -1,11 +1,10 @@
 <script setup lang="ts" name="App">
 import FloatingAvatar from './components/FloatingAvatar.vue';
 import SideBar from './components/SideBar.vue';
-// import SwitchText from './components/SwitchText.vue'
-import SwitchText from './components/SwitchText/SwitchText.vue';
+// import SwitchText from './components/SwitchText/SwitchText.vue';
 import { ref } from 'vue';
 import avatar_image from '@/assets/logo.svg';
-import FloatingModel from './components/FloatingModel.vue'
+// import FloatingModel from './components/FloatingModel.vue'
 import FormTest from './components/FormTest.vue';
 import ChatLog from './components/ChatLog.vue';
 

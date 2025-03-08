@@ -1,8 +1,7 @@
 <script setup lang="ts">
 // import { Draggable } from 'gsap/all';
-import {ref, type CSSProperties} from 'vue';
 // import IconCommunity from './icons/IconCommunity.vue';
-import SideBarMenu from './SideBarMenu.vue';
+import SideBarMenu from '@/components/SideBarMenu.vue';
 const dataList = [
   {content: '首页' },
   {content: '项目管理' },
@@ -40,10 +39,10 @@ const dataList = [
   {content: '更多'},
   {content: '更多'},
 ]
-const showMenu = ref(false);
-const onAvatarClick = ()=>{
-  showMenu.value = !showMenu.value;
-};
+// const showMenu = ref(false);
+// const onAvatarClick = ()=>{
+//   showMenu.value = !showMenu.value;
+// };
 
 </script>
 
