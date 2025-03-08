@@ -1,3 +1,4 @@
+
 <template>
   <div class="menu-container">
     <!-- 触发按钮 -->
@@ -48,7 +49,7 @@ const closeMenu = () => {
 }
 
 // 处理外部点击
-const handleClickOutside = (event:MouseEvent) => {
+const handleClickOutside = (event) => {
   if(!menu.value || !triggerButton.value) return;
   const triggerValue = triggerButton.value as HTMLElement;
   const menuValue = menu.value as HTMLDivElement;

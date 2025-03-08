@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Draggable } from 'gsap/all';
+// import { Draggable } from 'gsap/all';
 import {ref, type CSSProperties} from 'vue';
-import IconCommunity from './icons/IconCommunity.vue';
+// import IconCommunity from './icons/IconCommunity.vue';
 import SideBarMenu from './SideBarMenu.vue';
 const dataList = [
   {content: '首页' },
