@@ -37,4 +37,12 @@ npm run build
 ```sh
 npm run lint
 ```
-#
+## 在Github上直接构建项目运行
+
+Firstly, you should use **VPN** for using Vercel to build the project on website.
+
+![9d0ea1de33f1dc3d4325d5e83033b1bd](https://github.com/user-attachments/assets/a98e3f9b-2353-42eb-b09a-859e7a084a88)
+
+![3f8ef19457db1baf7de2dbebb7fa632f](https://github.com/user-attachments/assets/e319cc12-79c6-4b42-b4db-343f7bd57be8)
+
+Launch your VPN, click the url at the above image, and you'll get the project running on website!
