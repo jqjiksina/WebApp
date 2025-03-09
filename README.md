@@ -1,26 +1,40 @@
+# myVueProject
 
-# Example headings
+This template should help get you started developing with Vue 3 in Vite.
 
-## Sample Section
+## Recommended IDE Setup
 
-## This'll be a _Helpful_ Section About the Greek Letter Θ!
-A heading containing characters not allowed in fragments, UTF-8 characters, two consecutive spaces between the first and second words, and formatting.
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## This heading is not unique in the file
+## Type Support for `.vue` Imports in TS
 
-TEXT 1
+TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
 
-## This heading is not unique in the file
+## Customize configuration
 
-TEXT 2
+See [Vite Configuration Reference](https://vite.dev/config/).
 
-# Links to the example headings above
+## Project Setup
 
-Link to the sample section: [Link Text](#sample-section).
+```sh
+npm install
+```
 
-Link to the helpful section: [Link Text](#thisll--be-a-helpful-section-about-the-greek-letter-Θ).
+### Compile and Hot-Reload for Development
 
-Link to the first non-unique section: [Link Text](#this-heading-is-not-unique-in-the-file).
+```sh
+npm run dev
+```
 
-Link to the second non-unique section: [Link Text](#this-heading-is-not-unique-in-the-file-1).
+### Type-Check, Compile and Minify for Production
 
+```sh
+npm run build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```
+#
