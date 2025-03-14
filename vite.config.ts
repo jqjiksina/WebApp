@@ -7,17 +7,19 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  mode: "development",
   plugins: [
     vue(),
     vueJsx(),
     vueDevTools(),
   ],
+  envPrefix:"APP_",//APP_  为自定义开头名
   server:{
-    host:'0.0.0.0',
+    host:'localhost',
   },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
-  },
+  }
 })

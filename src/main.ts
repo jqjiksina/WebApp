@@ -1,13 +1,11 @@
-import './assets/main.css'
-
-// import App from './App.vue'
+import '@/assets/main.css'
 import { createApp } from 'vue'
-import MyApp from './MyApp.vue'
-import router from './router'
+import App from '@/App.vue'
+import router from '@/router'
+import { createPinia } from "pinia";
 
-// createApp(App).mount('#app')
-// MyApp.use(Vue3SeamlessScroll);
+const pinia = createPinia();  //状态管理库
 
-const app = createApp(MyApp);
-app.use(router);
-app.mount('#app');
+const app = createApp(App);
+app.use(router).use(pinia);
+app.mount('#app')
