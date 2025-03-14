@@ -13,12 +13,11 @@ const submitForm = async () => {
 
   try {
     const response = await axios.post(
-      'http://localhost:8000/users/',
+      'http://' + import.meta.env.APP_BACK_END_URL +'/auth/register',
       formData.value,
       {
         headers: {
-          'Content-Type': 'application/json' ,
-          'Authorization': 'Bearer <token>'
+          'Content-Type': 'application/json'
         },
         timeout: 5000 // 设置超时时间（单位：毫秒）
       }
@@ -59,30 +58,45 @@ const submitForm = async () => {
 
 <style scoped>
 .log-input{
+  height: 100%;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 30%;
-  height: 100%;
+  flex-wrap: nowrap;
+  justify-content: center;
 }
 
 .submit{
+  margin-top: 8px;
+  width: 10rem;
   display: flex;
   justify-content: center;
-  width: 70%;
-  height: 100%;
-  flex-grow: 1;
+}
+button{
+  width:100%;height:100%;
+  background-color: rgb(134, 179, 236);
+}
+button:hover{
+  background-color: rgb(114,159,216);
+  cursor: pointer;
+}
+button:active{
+
 }
 
-button{
-  height: 100%;
-  width: 100%;
+input{
+  height: 2rem;
+  border-radius: 6px;
+  margin: 2px 0;
+  background-color: rgb(187, 186, 186);
+  display: block; /*关键，取消input的默认inline*/
+  font-size: 1.2rem;
 }
 
 .log-container{
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
 }
 </style>

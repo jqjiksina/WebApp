@@ -12,6 +12,7 @@ interface Log{
 defineProps<{
   logItems : Log[]
 }>();
+
 const log_style = (name:string) => {
   if (name === 'ai') return { order: '0', 'margin':'2px -27px auto 5px'}
   else return {order : '1','margin':'2px 5px auto -27px'};

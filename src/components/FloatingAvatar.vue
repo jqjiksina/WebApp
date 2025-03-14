@@ -122,6 +122,7 @@ const updatePosition = (clientX: number, clientY: number) => {
   if (!props.container || !avatarElement.value) return
 
   const containerRect = props.container.getBoundingClientRect()
+  // console.log(containerRect.width,' ',containerRect.height);
   const avatarRect = avatarElement.value.getBoundingClientRect()
 
   const newX = clientX - dragStartOffset.value.x
