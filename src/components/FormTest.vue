@@ -46,9 +46,9 @@ const submitForm = async () => {
 <template>
   <div class="log-container">
     <div clss="log-input">
-      <input type="text" placeholder="Type your username" v-model='formData.username'  />
-      <input type="text" placeholder="Type your email" v-model='formData.email'  />
-      <input type="text" placeholder="Type your password" v-model='formData.password'  />
+      <input type="text" placeholder="username" v-model='formData.username'  />
+      <input type="text" placeholder="email" v-model='formData.email'  />
+      <input type="text" placeholder="password" v-model='formData.password'  />
     </div>
     <div class="submit">
       <button @click="submitForm()">Send</button>

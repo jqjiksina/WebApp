@@ -1,8 +1,9 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class='Home' ref='floating_container'>
     <div class='welcome-container'>
       <div class='welcome-head'>
-        <IconCommunity/>
+        <i><IconCommunity/></i>
         <p>我是Ai-assitant，很高兴见到你！</p>
       </div>
       <div class='welcome-body'>
@@ -62,9 +63,9 @@ const floating_container = ref<HTMLElement|null>(null);
     justify-content: center;
     height: 100%;
     width: 100%
-    /* display: grid;
-    grid-template-rows: 1fr 1fr;
-    height: 100%;
-    width: 100%; */
+  }
+
+  i{
+    width: 5rem;
   }
 </style>
