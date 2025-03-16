@@ -10,7 +10,8 @@
     @touchmove="handleTouchMove"
     @touchend="handleTouchEnd"
   >
-    <img alt="虚拟形象" @dragstart.prevent :src="avatarImage">
+    <!-- <img alt="虚拟形象" @dragstart.prevent :src="avatarImage"> -->
+     <slot name="avatarImage"></slot>
 
     <transition name="fade">
       <div
@@ -28,7 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, type CSSProperties } from 'vue'
+import { ref, computed, onMounted, onUnmounted, type CSSProperties, watch } from 'vue'
+
 
 interface Position {
   x: number
@@ -36,7 +38,7 @@ interface Position {
 }
 
 interface Props {
-  avatarImage?: string
+  // avatarImage?: string
   size?: number
   hideThreshold?: number
   dialogContent?: string
@@ -51,6 +53,14 @@ const props = withDefaults(defineProps<Props>(), {
   container: null
 })
 
+watch(props,()=>{
+  console.log('props changed! ',props)
+  if (!props.container) return
+  containerRect.value = props.container?.getBoundingClientRect()
+  resizeObserver.observe(props.container)
+  containerRect.value = props.container.getBoundingClientRect();
+  avatarRect.value = avatarElement.value?.getBoundingClientRect();
+})
 // const container = ref<HTMLElement | null>(null)
 const avatarElement = ref<HTMLElement | null>(null)
 const isDragging = ref(false)
@@ -58,6 +68,8 @@ const showDialog = ref(false)
 const position = ref<Position>({ x: 100, y: 100 })
 const dragStartOffset = ref<Position>({ x: 0, y: 0 })
 const touchIdentifier = ref<number | null>(null)
+const containerRect = ref();
+const avatarRect = ref();
 
 // 组件样式计算
 const avatarStyle = computed<CSSProperties>(() => ({
@@ -121,9 +133,10 @@ const onMouseDrag = (e: MouseEvent) => {
 const updatePosition = (clientX: number, clientY: number) => {
   if (!props.container || !avatarElement.value) return
 
-  const containerRect = props.container.getBoundingClientRect()
-  // console.log(containerRect.width,' ',containerRect.height);
-  const avatarRect = avatarElement.value.getBoundingClientRect()
+  // //todo: 缓存！更新位置时没有容器变化，不应该时刻调用getBounding
+  // const containerRect = props.container.getBoundingClientRect()
+  // // console.log(containerRect.width,' ',containerRect.height);
+  // const avatarRect = avatarElement.value.getBoundingClientRect()
 
   const newX = clientX - dragStartOffset.value.x
   const newY = clientY - dragStartOffset.value.y
@@ -131,11 +144,11 @@ const updatePosition = (clientX: number, clientY: number) => {
   position.value = {
     x: Math.max(0, Math.min(
       newX,
-      containerRect.width - avatarRect.width
+      containerRect.value.width - avatarRect.value.width
     )),
     y: Math.max(0, Math.min(
       newY,
-      containerRect.height - avatarRect.height
+      containerRect.value.height - avatarRect.value.height
     ))
   }
 }
@@ -152,22 +165,20 @@ const stopDrag = () => {
 const checkEdgeHide = () => {
   if (!props.container || !avatarElement.value) return
 
-  const containerRect = props.container.getBoundingClientRect()
-  const avatarRect = avatarElement.value.getBoundingClientRect()
   const threshold = props.hideThreshold
 
   // 左右边缘检测
   if (position.value.x < threshold) {
-    position.value.x = -avatarRect.width + threshold
-  } else if (position.value.x > containerRect.width - avatarRect.width - threshold) {
-    position.value.x = containerRect.width - threshold
+    position.value.x = -avatarRect.value.width + threshold
+  } else if (position.value.x > containerRect.value.width - avatarRect.value.width - threshold) {
+    position.value.x = containerRect.value.width - threshold
   }
 
   // 上下边缘检测
   if (position.value.y < threshold) {
-    position.value.y = -avatarRect.height + threshold
-  } else if (position.value.y > containerRect.height - avatarRect.height - threshold) {
-    position.value.y = containerRect.height - threshold
+    position.value.y = -avatarRect.value.height + threshold
+  } else if (position.value.y > containerRect.value.height - avatarRect.value.height - threshold) {
+    position.value.y = containerRect.value.height - threshold
   }
 }
 
@@ -175,24 +186,27 @@ const checkEdgeHide = () => {
 const resizeObserver = new ResizeObserver(() => { //observe的DOM元素变更时触发该lambda函数
   if (!props.container || !avatarElement.value) return;
 
-  const containerRect = props.container.getBoundingClientRect();
-  const avatarRect = avatarElement.value.getBoundingClientRect();
+  containerRect.value = props.container.getBoundingClientRect();
+  avatarRect.value = avatarElement.value.getBoundingClientRect();
   //console.log("contantRect: " + containerRect.width + " avatarRect: " + avatarRect.width)
 
   position.value.x = Math.min(  //父容器右边框触碰到avatar右边框时，保持右边框重合
     position.value.x,
-    containerRect.width - avatarRect.width
+    containerRect.value.width - avatarRect.value.width
   );
   position.value.y = Math.min(  //父容器下边框触碰到avatar下边框时，保持下边框重合
     position.value.y,
-    containerRect.height - avatarRect.height
+    containerRect.value.height - avatarRect.value.height
   );
 })
 
 onMounted(() => {
-  if (props.container) {
-    resizeObserver.observe(props.container)
-  }
+  // console.log("Floating Avatar Mounted! avatarElement: ",avatarElement.value?.getBoundingClientRect()," container:",props.container?.getBoundingClientRect(),
+  // " props: ",props," avatarRect: ",avatarRect.value)
+  if (!props.container || !avatarElement.value) return  //存在BUG！参数未能及时传给子组件！
+  resizeObserver.observe(props.container)
+  containerRect.value = props.container.getBoundingClientRect();
+  avatarRect.value = avatarElement.value.getBoundingClientRect();
 })
 
 onUnmounted(() => {

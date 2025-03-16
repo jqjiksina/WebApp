@@ -1,4 +1,3 @@
-
 <template>
   <div class="menu-container">
     <!-- 触发按钮 -->
@@ -18,17 +17,29 @@
       >
         <div class="menu-item">选项一</div>
         <div class="menu-item">选项二</div>
-        <div class="menu-item">选项三</div>
+        <div class="menu-item" @click="LoginOrRegister">登录/注册</div>
       </div>
+    </transition>
+    <transition name="fade">
+      <component :is="LoginMenu" v-if="loginRegMenuShow" @click-outside="onClickOutside"/>
     </transition>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-
+import LoginMenu from '../LoginMenu.vue';
+const onClickOutside = (value_:boolean)=>{
+  console.log('sidebarMenu accept click-outside! ',value_,' before-value: ',loginRegMenuShow.value)
+  loginRegMenuShow.value = value_
+}
+const LoginOrRegister = ()=>{
+  isMenuVisible.value = false;
+  loginRegMenuShow.value = true;
+}
 // 菜单显示状态
 const isMenuVisible = ref(false)
+const loginRegMenuShow = ref(false)
 
 // DOM 元素引用
 const triggerButton = ref(null)
@@ -75,6 +86,9 @@ onUnmounted(() => {
 
 <style scoped>
 .menu-container {
+  padding: 1px;
+  width: 100%;
+  height: 100%;
   position: relative;
   display: inline-block;
   display: flex;
@@ -82,13 +96,18 @@ onUnmounted(() => {
 }
 
 button {
-  padding: 8px 16px;
+  width: 100%;
+  height: 100%;
   background: #409eff;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   flex-grow: 1;
+}
+button:hover{
+  background-color: rgb(22, 123, 182);
+  transition: background-color 0.3s ease;
 }
 
 .dropdown-menu {

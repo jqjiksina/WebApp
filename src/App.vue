@@ -22,7 +22,7 @@ import {SideBar} from '@/components/index.ts';
   height: 100vh;
 }
 
-main {
+main{
   display:flex;
   flex-direction: column;
   justify-content: space-between;

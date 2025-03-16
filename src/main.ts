@@ -4,8 +4,14 @@ import App from '@/App.vue'
 import router from '@/router'
 import { createPinia } from "pinia";
 
-const pinia = createPinia();  //状态管理库
-
 const app = createApp(App);
-app.use(router).use(pinia);
+
+//挂载方法
+app.config.globalProperties['$assert']=(exp:boolean)=>{
+  if(!exp) throw Error("error");
+};
+
+
+const pinia = createPinia();
+app.use(pinia).use(router);
 app.mount('#app')

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios, { AxiosError } from 'axios'  // 需先安装：npm install axios
+import { AxiosError } from 'axios'  // 需先安装：npm install axios
+import { userApi } from '@/api/userApi'
 
 const formData = ref({
   username: 'test_name',
@@ -8,22 +9,36 @@ const formData = ref({
   password: '12345678'
 })
 
-const submitForm = async () => {
+const formRegister = async () => {
   console.log('开始提交', formData.value) // 调试点1：确认数据状态
 
   try {
-    const response = await axios.post(
-      'http://' + import.meta.env.APP_BACK_END_URL +'/auth/register',
-      formData.value,
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        timeout: 5000 // 设置超时时间（单位：毫秒）
-      }
-    )
+    const response = await userApi.register(formData.value);
     console.log('完整响应对象:', response)
     console.log('注册成功:', response.data)
+  } catch (error) {
+    console.error('错误详情:', error)
+    if (! (error instanceof AxiosError)) return;
+    if (error.response) {
+      // 服务器返回了4xx/5xx响应
+      console.log('状态码:', error.response.status)
+      console.log('响应头:', error.response.headers)
+    } else if (error.request) {
+      // 请求已发出但无响应
+      console.log('请求对象:', error.request)
+      alert('服务器未响应，请检查后端是否运行')
+    } else {
+      // 其他错误（如配置错误）
+      console.log('错误信息:', error.message)
+    }
+  }
+}
+
+const formLogin = async () => {
+  try {
+    const response = await userApi.login(formData.value);
+    console.log('完整响应对象:', response)
+    console.log('登录成功:', response.data)
   } catch (error) {
     console.error('错误详情:', error)
     if (! (error instanceof AxiosError)) return;
@@ -51,7 +66,8 @@ const submitForm = async () => {
       <input type="text" placeholder="password" v-model='formData.password'  />
     </div>
     <div class="submit">
-      <button @click="submitForm()">Send</button>
+      <button @click="formRegister()">Register</button>
+      <button @click="formLogin()">Login</button>
     </div>
   </div>
 </template>
@@ -68,20 +84,30 @@ const submitForm = async () => {
 
 .submit{
   margin-top: 8px;
-  width: 10rem;
+  height: 2rem;
+  width: 15rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 }
 button{
+  margin: 0 2px;
   width:100%;height:100%;
   background-color: rgb(134, 179, 236);
+  border-radius: 5px;
+  border-top: 0;
+  border-left: 0;
+  border-bottom: 1px solid rgb(185, 184, 184);
+  border-right: 1px solid rgb(185, 184, 184);
 }
 button:hover{
   background-color: rgb(114,159,216);
   cursor: pointer;
 }
 button:active{
-
+  border-bottom: 0;
+  border-right: 0;
+  border-top: 1px solid rgb(185, 184, 184);
+  border-left: 1px solid rgb(185, 184, 184);
 }
 
 input{
@@ -94,9 +120,11 @@ input{
 }
 
 .log-container{
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
+  justify-content: space-around;
 }
 </style>

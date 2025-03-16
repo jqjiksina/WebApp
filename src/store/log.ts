@@ -1,15 +1,6 @@
+import type { Log } from '@/types/logList';
 import { defineStore } from 'pinia'
-import { compute } from 'three/tsl'
 import { ref, computed } from 'vue'
-
-interface User{
-  name: string,   //用户名
-  avatar: string  //头像路径
-}
-interface Log{
-  arrater:  User,
-  content:  string
-}
 
 export const useLogsStore = defineStore('logs', ()=>{
   const logs = ref([{
@@ -22,6 +13,9 @@ export const useLogsStore = defineStore('logs', ()=>{
   const getLength = computed(()=>logs.value.length);
   const getLog = computed(()=>{return (nth:number)=>logs.value[nth]});
 
-  return {logs, getLength, getLog}
+  function updateCurrentLogs(logs_:Log[]){
+    logs.value = logs_;
+  }
+  return {logs, getLength, getLog,updateCurrentLogs}
 })
 

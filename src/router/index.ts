@@ -1,4 +1,4 @@
-import { createRouter } from "vue-router"
+import { createRouter, createWebHashHistory } from "vue-router"
 //引入路由器模式
 import { createWebHistory } from "vue-router";
 
@@ -11,9 +11,10 @@ const router = createRouter({
       name: 'Home',
       component: () => import('@/views/Home/index.vue')
     },{
-      path: "/log",
+      path: "/log/:logKey",
       name: 'log',
-      component: () => import('@/views/ChatLog/index.vue')
+      component: () => import('@/views/ChatLog/index.vue'),
+      props: true
     },{
       path: "/:patchMatch(.*)*",
       name: '404',
@@ -22,5 +23,6 @@ const router = createRouter({
     }
    ]
 })
+
 
 export default router;

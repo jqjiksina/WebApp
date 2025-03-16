@@ -1,11 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import {ref} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import { useLogsStore } from '@/store/log';
 import { FormTest,FloatingAvatar } from '@/components';
-import avatar_image from '@/assets/logo.svg';
-const store = useLogsStore();
-const logItems = store.logs;
+import type {Log} from '@/types/logList'
+import { getApi } from '@/api/getApi';
+
+const logItems = ref<Log[]>(useLogsStore().logs);
+
+const props = defineProps<{ //Chatlog mounted时，通过url路由传参得到参数，然后请求后端数据到logitems！
+  logKey: string
+}>();
 
 const log_style = (name:string) => {
   if (name === 'ai') return { order: '0', 'margin':'2px -27px auto 5px'}
@@ -13,6 +18,16 @@ const log_style = (name:string) => {
 };
 
 const floating_container = ref<HTMLElement|null>(null);
+onMounted(async ()=>{
+  console.log("Chatlog View Mounted!" + " props: " + props.logKey)
+  getApi.getLog(props.logKey)
+})
+
+watch(props,async ()=>{
+  console.log("props changed: " + props.logKey)
+  getApi.getLog(props.logKey)
+})
+
 </script>
 
 <template>
@@ -34,11 +49,12 @@ const floating_container = ref<HTMLElement|null>(null);
     </div>
 
     <FloatingAvatar
-      :avatar-image="avatar_image"
       :size="60"
       :hide-threshold="40"
       :container="floating_container"
-    />
+    >
+      <template #avatarImage><img alt="虚拟形象" @dragstart.prevent src="@/assets/logo.svg"></template>
+    </FloatingAvatar>
   </div>
 </template>
 
@@ -54,6 +70,7 @@ const floating_container = ref<HTMLElement|null>(null);
 }
 .chat-input{
   height: 10rem;
+  margin-bottom: 2rem;
 }
 .log{
   position: relative;
@@ -89,6 +106,7 @@ const floating_container = ref<HTMLElement|null>(null);
 .chat-wrapper{
   width:100%;
   height:100%;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
 }
