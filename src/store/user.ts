@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import {ref, computed} from 'vue'
-import type{LoginParams, RegistryParams} from '@/types/userApi'
+import type{LoginParams, RegistryParams} from '@/types/formSubmit'
 
 // 第一个参数是应用程序中 store 的唯一 id
 export const useUsersStore = defineStore('users', ()=>{
@@ -8,9 +8,11 @@ export const useUsersStore = defineStore('users', ()=>{
   const username = ref<string>('')
   const email = ref<string>('')
   const password = ref<string>('')
+  const uid = ref<string>('')
 
   const getToken = computed(()=>token);
-  const getUser = computed(()=>{return {username,email,password}})
+  const getUser = computed(()=>{return {username,email,password}});
+  const getUid = computed(()=>uid.value)
 
   function updateToken(newToken: string){
     token.value = newToken;
@@ -29,5 +31,5 @@ export const useUsersStore = defineStore('users', ()=>{
     password.value = newUser.password;
   }
 
-  return {getToken, getUser, updateToken, updateUser}
+  return {getToken, getUser, updateToken, updateUser,getUid}
 })

@@ -1,6 +1,15 @@
 <!-- eslint-disable vue/multi-word-component-names -->
+<script setup lang='ts'>
+import {IconCommunity,FormTest,FloatingAvatar} from '@/components';
+import { onMounted, ref } from 'vue';
+const floating_container = ref<HTMLElement|null>(null);
+onMounted(()=>{
+  console.log("Home View Mounted!")
+})
+</script>
+
 <template>
-  <div class='Home' ref='floating_container'>
+  <div class='Home floating-container' ref='floating_container'>
     <div class='welcome-container'>
       <div class='welcome-head'>
         <i><IconCommunity/></i>
@@ -16,21 +25,14 @@
     </div>
 
     <FloatingAvatar
-      :avatar-image="avatar_image"
       :size="60"
       :hide-threshold="40"
       :container="floating_container"
-    />
+    >
+      <template #avatarImage><img alt="虚拟形象" @dragstart.prevent src="@/assets/logo.svg"></template>
+    </FloatingAvatar>
   </div>
 </template>
-
-<script setup lang='ts'>
-import {IconCommunity,FormTest,FloatingAvatar} from '@/components';
-import avatar_image from '@/assets/logo.svg';
-import { ref } from 'vue';
-const floating_container = ref<HTMLElement|null>(null);
-</script>
-
 
 <style scoped>
   .welcome-head{
@@ -60,9 +62,14 @@ const floating_container = ref<HTMLElement|null>(null);
   .Home{
     display: flex;
     flex-direction: column;
-    justify-content: center;
     height: 100%;
     width: 100%
+    /* 不可设置justify-content，否则floatingAvatar也将受影响 */
+  }
+
+  .floating-container {
+    position: relative;
+    overflow: hidden;
   }
 
   i{
