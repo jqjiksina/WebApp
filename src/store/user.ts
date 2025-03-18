@@ -4,11 +4,12 @@ import type{LoginParams, RegistryParams} from '@/types/formSubmit'
 
 // 第一个参数是应用程序中 store 的唯一 id
 export const useUsersStore = defineStore('users', ()=>{
-  const token = ref<string>('')
+  const uid = ref<string>('')
+  const phone = ref<string>('')
   const username = ref<string>('')
   const email = ref<string>('')
   const password = ref<string>('')
-  const uid = ref<string>('')
+  const token = ref<string>('')
 
   const getToken = computed(()=>token);
   const getUser = computed(()=>{return {username,email,password}});
@@ -22,7 +23,7 @@ export const useUsersStore = defineStore('users', ()=>{
   }
   function updateUser(newUser: RegistryParams|LoginParams){
     if (!isRegistryParams(newUser)){
-      username.value = newUser.username;
+      phone.value = newUser.phone;
       password.value = newUser.password;
       return
     }

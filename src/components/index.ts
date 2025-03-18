@@ -2,7 +2,7 @@ import FloatingAvatar from "./FloatComponents/FloatingAvatar.vue";
 import FloatingModel from "./FloatComponents/FloatingModel.vue";
 import SideBar from "./SideBar/SideBar.vue";
 import SideBarMenu from "./SideBar/SideBarMenu.vue";
-import FormTest from "./FormTest.vue";
+import FormTest from "./FormRegister.vue";
 import SwitchText from "./SwitchText/SwitchText.vue";
 import IconCommunity from "./icons/IconCommunity.vue";
 import IconDocumentation from "./icons/IconDocumentation.vue";
