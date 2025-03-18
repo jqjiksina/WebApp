@@ -4,9 +4,12 @@ import { AxiosError } from 'axios'  // 需先安装：npm install axios
 import { userApi } from '@/api/userApi'
 
 const formData = ref({
+  phone: 'test_phone',
   username: 'test_name',
+  password: '12345678',
+  password_again: '12345678',
   email: 'test@emain',
-  password: '12345678'
+  validation_code: 'test'
 })
 
 const formRegister = async () => {
@@ -14,8 +17,7 @@ const formRegister = async () => {
 
   try {
     const response = await userApi.register(formData.value);
-    console.log('完整响应对象:', response)
-    console.log('注册成功:', response.data)
+    console.log('注册成功:', response?.data)
   } catch (error) {
     console.error('错误详情:', error)
     if (! (error instanceof AxiosError)) return;
@@ -60,19 +62,29 @@ const formLogin = async () => {
 
 <template>
   <div class="log-container">
-    <div clss="log-input">
-      <input type="text" placeholder="username" v-model='formData.username'  />
-      <input type="text" placeholder="email" v-model='formData.email'  />
-      <input type="text" placeholder="password" v-model='formData.password'  />
-    </div>
-    <div class="submit">
-      <button @click="formRegister()">Register</button>
-      <button @click="formLogin()">Login</button>
-    </div>
+    <form class="log-form">
+      <div class="log-input">
+        <input type="text" placeholder="phone" v-model='formData.phone'  />
+        <input type="text" placeholder="username" v-model='formData.username'  />
+        <input type="password" placeholder="password" v-model='formData.password'  />
+        <input type="password" placeholder="password" v-model='formData.password_again'  />
+        <input type="text" placeholder="email" v-model='formData.email'  />
+        <input type="text" placeholder="code" v-model='formData.validation_code'  />
+      </div>
+      <div class='submit'>
+        <input type='submit' @click="formRegister()" value="Register"/>
+        <input type='submit' @click="formLogin()" value="Login"/>
+      </div>
+    </form>
   </div>
 </template>
 
 <style scoped>
+:root{
+  --input-box-radius: 8px;
+  --input-height : 1.5rem;
+}
+
 .log-input{
   height: 100%;
 
@@ -89,7 +101,7 @@ const formLogin = async () => {
   display: flex;
   justify-content: space-around;
 }
-button{
+input[type='submit']{
   margin: 0 2px;
   width:100%;height:100%;
   background-color: rgb(134, 179, 236);
@@ -98,25 +110,25 @@ button{
   border-left: 0;
   border-bottom: 1px solid rgb(185, 184, 184);
   border-right: 1px solid rgb(185, 184, 184);
-}
-button:hover{
-  background-color: rgb(114,159,216);
-  cursor: pointer;
-}
-button:active{
-  border-bottom: 0;
-  border-right: 0;
-  border-top: 1px solid rgb(185, 184, 184);
-  border-left: 1px solid rgb(185, 184, 184);
+  &:hover{
+    background-color: rgb(114,159,216);
+    cursor: pointer;
+  }
+  &:active{
+    border-bottom: 0;
+    border-right: 0;
+    border-top: 1px solid rgb(185, 184, 184);
+    border-left: 1px solid rgb(185, 184, 184);
+  }
 }
 
-input{
-  height: 2rem;
-  border-radius: 6px;
+input[type='text'],input[type='password']{
+  height: var(--input-height,1.2rem);
+  border-radius: var(--input-box-radius,6px);
   margin: 2px 0;
   background-color: rgb(187, 186, 186);
+  font-size: calc(var(--input-height,1.2rem) - 0.2rem);
   display: block; /*关键，取消input的默认inline*/
-  font-size: 1.2rem;
 }
 
 .log-container{

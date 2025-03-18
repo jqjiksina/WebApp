@@ -4,10 +4,10 @@ import { ref, computed } from 'vue'
 
 export const useLogsStore = defineStore('logs', ()=>{
   const logs = ref([{
-    arrater: {name: 'yjh', avatar: ''},
+    isSpeakerUser: true,
     content: 'saying some words'
     },{
-    arrater: {name: 'ai', avatar: ''},
+    isSpeakerUser: false,
     content: 'saying some words'
     }]);
   const getLength = computed(()=>logs.value.length);

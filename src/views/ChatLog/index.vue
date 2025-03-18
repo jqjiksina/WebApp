@@ -12,8 +12,8 @@ const props = defineProps<{ //Chatlog mounted时，通过url路由传参得到�
   logKey: string
 }>();
 
-const log_style = (name:string) => {
-  if (name === 'ai') return { order: '0', 'margin':'2px -27px auto 5px'}
+const log_style = (isSpeakerUser:boolean) => {
+  if (!isSpeakerUser) return { order: '0', 'margin':'2px -27px auto 5px'}
   else return {order : '1','margin':'2px 5px auto -27px'};
 };
 
@@ -28,6 +28,10 @@ watch(props,async ()=>{
   getApi.getLog(props.logKey)
 })
 
+const getUserAvatar = ()=>{
+  return ' '
+}
+
 </script>
 
 <template>
@@ -35,8 +39,8 @@ watch(props,async ()=>{
   <div class="chat-wrapper floating-container" ref="floating_container">
     <div class="chat-log">
       <div v-for="logItem in logItems" :key="logItem.content" class="log">
-        <div class="log-avatar" :style=log_style(logItem.arrater.name)>
-          <img :src=logItem.arrater.avatar alt="avatar">
+        <div class="log-avatar" :style=log_style(logItem.isSpeakerUser)>
+          <img :src='logItem.isSpeakerUser?getUserAvatar():"aiAvatar"' alt="avatar"> <!--根据对话者加载对应头像-->
         </div>
         <div class="log-content">
           <span>{{ logItem.content }}</span>

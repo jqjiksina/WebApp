@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue';
-import FormTest from './FormTest.vue';
+import FormTest from './FormRegister.vue';
 import IconLogo from './icons/IconLogo.vue';
 
 onMounted(()=>{
