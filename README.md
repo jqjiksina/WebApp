@@ -1,6 +1,6 @@
-# myVueProject
+# AiWeb_frontEnd
 
-This template should help get you started developing with Vue 3 in Vite.
+In this section, we will help you start deploying front-end project with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
@@ -37,3 +37,22 @@ npm run build
 ```sh
 npm run lint
 ```
+
+# AiWeb_backEnd
+
+In this section, we will help you start deploying back-end project with Python in Anaconda.
+
+## Installing Anaconda
+
+if you havenot installed Anaconda, I have to tell you Anaconda is a great environment manager for python project.
+
+- convenient environment management
+
+Anoconda manage python project primarily by commmands below:
+```sh
+conda env list                   # to see how many environments you have created in anaconda.
+conda create env <your_env_name> # create a new environment named <your_env_name>
+conda activate <your_env_name>   # activate and go into the environment
+conda deactivate <your_env_name> # deactivate and go out of the environment
+```
+All the environments you create are **seperated**. This means you'll not get crazy about the collisions between packages of diffrent versions, and you'll be free to set up packages of diffrent versions in different environments.
