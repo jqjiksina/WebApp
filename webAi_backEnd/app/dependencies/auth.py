@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.models import User  # 假设您已定义User模型
+from database.models import User
 # from schemas import LoginPost, RegistryPost  # 根据前端接口生成
 from database.core import get_async_db
 import os
@@ -66,16 +66,16 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db : AsyncSessio
         # 解码JWT
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload["sub"]
+        # print ("token payload: ", payload,
+        #        "\n token username : ", username)
         if username is None:
             raise credentials_exception
     except JWTError:
         raise credentials_exception
 
     # 查询数据库
-    if '@' in username:
-        user = await db.execute(select(User).where(User.email == username))
-    else:
-        user = await db.execute(select(User).where(User.phone == username))
+    user = await db.execute(select(User).where(User.id == username))
+        # user = await db.execute(select(User).where(User.phone == username))
         
     user = user.scalars().first()
     if user is None:

@@ -17,14 +17,23 @@ AsyncSessionLocal = async_sessionmaker(async_engine, class_=AsyncSession, expire
 # sync_engine = create_engine(DATABASE_URL.replace("+asyncmy", ""))
 # SyncSessionLocal = sessionmaker(sync_engine)
 
+# 在确保模型正确后，重置数据库（仅限开发环境！）
+async def recreate_tables():
+    print("recreating table...")
+    async with async_engine.begin() as conn:
+        await conn.run_sync(Base.metadata.drop_all)
+        await conn.run_sync(Base.metadata.create_all)
+        
 #初始化数据库表结构
 async def init_db() :
     print('creating table...')
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+    # await recreate_tables()
 
 # 获取异步会话的依赖
 async def get_async_db():
-    print('getting async session')
+    # print('getting async session')
     async with AsyncSessionLocal() as session:
         yield session
+        

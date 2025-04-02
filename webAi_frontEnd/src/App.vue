@@ -1,55 +1,32 @@
 <script setup lang="ts" name="App">
+import { onBeforeMount, ref } from 'vue';
 import { RouterView } from 'vue-router';
-import {SideBar} from '@/components/index.ts';
+import { userApi } from './api/userApi';
+import { useUsersStore } from './store/user';
+import type { Request_Login } from './types/formSubmit';
+
+onBeforeMount(async ()=>{
+  // const userStore = useUsersStore()
+  // const user = userStore.getUser
+  const user = useUsersStore()
+  if (!user || (!user.phone && !user.email)) {
+    console.log("userStore数据空",user)
+    return
+  }
+  console.log("userStore保存的User信息：",user.phone,user.password)
+  const request = ref<Request_Login>({username : "", password : ""})
+  if (user.phone)
+    request.value = {username : user.phone, password : user.password}
+  else if (user.email)
+    request.value = {username : user.email, password : user.password}
+
+  console.log("开始自动登录...",request)
+  const response = await userApi.login(request.value)
+  user.updateToken(response.data.access_token)
+  console.log("自动登录成功！Response:",response.data)
+})
 </script>
 
 <template>
-  <!--组件切换动态改变width-->
-  <div class="side-bar"><SideBar/></div>
-  <main>
-    <RouterView/>
-  </main>
+  <RouterView/>
 </template>
-
-<style>
-.side-bar{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  max-width: 30vw;
-  border: solid 1px #fff;
-  border-radius: 12px;
-  height: 100vh;
-}
-
-main{
-  display:flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.log-wrapper {
-  display: grid;
-  grid-template-rows: 1fr 5rem;
-  height: calc(100vh - 2rem);
-  width: 100%;
-}
-
-.chat-log {
-  height: calc(100vh - 2rem - 5rem);
-  width: 100%;
-}
-
-.chat-input {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ai-assitant{
-  position: relative;
-  float: left;
-}
-
-</style>
