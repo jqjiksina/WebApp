@@ -1,16 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
-import {onMounted, ref, watch} from 'vue';
+import {computed, onMounted, ref, watch, type ComputedRef} from 'vue';
 import { useLogsStore } from '@/store/log';
 import { FloatingAvatar } from '@/components';
-import type {Log} from '@/types/logList'
-import { getApi } from '@/api/getApi';
+import type {Log} from '@/types/chatSession'
+import { chatApi } from '@/api/chatApi';
 import LogInput from '@/components/LogInput.vue';
 
-const logItems = ref<Log[]>(useLogsStore().logs);
+const logItems : ComputedRef<Log[]> = computed(()=>useLogsStore().getLogs); // 一定要用computed！才能保证变量保持响应性！
 
 const props = defineProps<{ //Chatlog mounted时，通过url路由传参得到参数，然后请求后端数据到logitems！
-  logKey: string
+  session_id: number
 }>();
 
 const log_style = (isSpeakerUser:boolean) => {
@@ -20,19 +20,18 @@ const log_style = (isSpeakerUser:boolean) => {
 
 const floating_container = ref<HTMLElement|null>(null);
 onMounted(async ()=>{
-  console.log("Chatlog View Mounted!" + " props: " + props.logKey)
-  getApi.getLog(props.logKey)
+  console.log("Chatlog View Mounted!" + " props: " + props.session_id)
+  chatApi.getLog(props.session_id)
 })
 
 watch(props,async ()=>{
-  console.log("props changed: " + props.logKey)
-  getApi.getLog(props.logKey)
+  console.log("props changed: " + props.session_id)
+  chatApi.getLog(props.session_id)
 })
 
 const getUserAvatar = ()=>{
   return ' '
 }
-
 </script>
 
 <template>
@@ -73,9 +72,15 @@ const getUserAvatar = ()=>{
   box-shadow: 10px 5px 10px 10px rgb(29, 28, 28);  /*x,y,blurR,spreadR*/
   z-index: 1;
 }
-.chat-input{
+
+.chat-input {
+  flex-grow: 0;
   height: 10rem;
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 .log{
   position: relative;
@@ -96,6 +101,7 @@ const getUserAvatar = ()=>{
     height: fit-content;
 }
 .chat-log{
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   height: 100%;

@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang='ts'>
-import {IconCommunity,FormTest,FloatingAvatar} from '@/components';
+import {IconCommunity,FloatingAvatar} from '@/components';
+import LogInput from '@/components/LogInput.vue';
 import { onMounted, ref } from 'vue';
 const floating_container = ref<HTMLElement|null>(null);
 onMounted(()=>{
@@ -21,7 +22,8 @@ onMounted(()=>{
     </div>
 
     <div class="chat-input">
-      <FormTest/>
+      <!-- <FormTest/> -->
+       <LogInput></LogInput>
     </div>
 
     <FloatingAvatar
@@ -35,44 +37,44 @@ onMounted(()=>{
 </template>
 
 <style scoped>
-  .welcome-head{
-    font-size:2rem;
-    display: flex;
-  }
+.welcome-head{
+  font-size:2rem;
+  display: flex;
+}
 
-  .welcome-container{
-    flex-grow: 1;
-    height: 100%;
+.welcome-container{
+  flex-grow: 1;
+  height: 100%;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
 
-  .chat-input{
-    flex-grow: 1;
-    height: 100%;
+.chat-input {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
+.Home{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%
+  /* 不可设置justify-content，否则floatingAvatar也将受影响 */
+}
 
-  .Home{
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%
-    /* 不可设置justify-content，否则floatingAvatar也将受影响 */
-  }
+.floating-container {
+  position: relative;
+  overflow: hidden;
+}
 
-  .floating-container {
-    position: relative;
-    overflow: hidden;
-  }
-
-  i{
-    width: 5rem;
-  }
+i{
+  width: 5rem;
+}
 </style>

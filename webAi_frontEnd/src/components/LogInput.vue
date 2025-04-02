@@ -11,11 +11,18 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { chatApi } from '@/api/chatApi';
+import { useChatSessionStore } from '@/store/chatSession';
+import type { LogInputRequest } from '@/types/input';
 
+const chatSessionStore = useChatSessionStore()
 const input_text = ref('')
-const inputLog = ()=>{
+const inputLog = async ()=>{
   //将输入框内容post到后端，后端ai响应内容
   console.log('inputLog!')
+  const request  = ref<LogInputRequest>({session_id:chatSessionStore.getCurSessionId,content:"test_content"})
+  const response = await chatApi.sendLog(request.value)
+  chatSessionStore.changeCurentSession(response.data.session_id)
 }
 </script>
 
