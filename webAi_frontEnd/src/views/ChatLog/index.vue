@@ -1,11 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import {computed, onMounted, ref, watch, type ComputedRef} from 'vue';
-import { useLogsStore } from '@/store/log';
+import { useLogsStore } from '@/store/chatLog';
 import { FloatingAvatar } from '@/components';
-import type {Log} from '@/types/chatSession'
+import type {Log} from '@/types/chat'
 import { chatApi } from '@/api/chatApi';
 import LogInput from '@/components/LogInput.vue';
+import { useUsersStore } from '@/store/user';
 
 const logItems : ComputedRef<Log[]> = computed(()=>useLogsStore().getLogs); // 一定要用computed！才能保证变量保持响应性！
 
@@ -21,13 +22,14 @@ const log_style = (isSpeakerUser:boolean) => {
 const floating_container = ref<HTMLElement|null>(null);
 onMounted(async ()=>{
   console.log("Chatlog View Mounted!" + " props: " + props.session_id)
-  chatApi.getLog(props.session_id)
+  // chatApi.getLog(props.session_id)
+  watch(()=>{return {id:props.session_id,store:useUsersStore().getToken}},async ()=>{
+    console.log("chatsession id changed: " + props.session_id)
+    chatApi.getLog(props.session_id)
+  })
 })
 
-watch(props,async ()=>{
-  console.log("props changed: " + props.session_id)
-  chatApi.getLog(props.session_id)
-})
+
 
 const getUserAvatar = ()=>{
   return ' '

@@ -95,20 +95,3 @@ async def login(
             "username": user.username
         }
     }
-
-# ------------------------- 需要补充的模型定义 -------------------------
-"""
-# models.py 示例
-from sqlalchemy import Column, Integer, String, Boolean
-from database import Base
-
-class User(Base):
-    __tablename__ = "users"
-    
-    uid = Column(Integer, primary_key=True, index=True)
-    username = Column(String(50))
-    phone = Column(String(20), unique=True, index=True)
-    email = Column(String(100))
-    hashed_password = Column(String(200))
-    is_active = Column(Boolean, default=True)
-"""

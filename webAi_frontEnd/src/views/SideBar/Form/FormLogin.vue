@@ -1,3 +1,18 @@
+<template>
+  <div class="log-container">
+    <form class="log-form" onsubmit='return false'>
+      <div class="log-input">
+        <input type="text" placeholder="phone or email" v-model='formData.username'  />
+        <input type="password" placeholder="password" v-model='formData.password'  />
+        <input type="text" placeholder="code" v-model='formData.code'  />
+      </div>
+      <div class='submit'>
+        <input type='submit' @click="formLogin()" value="Login"/>
+      </div>
+    </form>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { AxiosError } from 'axios'  // 需先安装：npm install axios
@@ -7,6 +22,8 @@ import { chatApi } from '@/api/chatApi'
 import { useChatSessionStore } from '@/store/chatSession'
 import type { Params_Login } from '@/types/formSubmit'
 import router from '@/router'
+
+const emit = defineEmits(['close'])
 
 const formData = ref<Params_Login>({
   username: '19374114256', // phone or email
@@ -40,7 +57,7 @@ const formLogin = async () => {
     console.log("logStore:",sessionStore.getSessions)
     // const redirect = router.currentRoute.value.query.redirect
     router.push('/')
-
+    emit('close')
   } catch (error) {
     console.error('错误详情:', error)
     if (! (error instanceof AxiosError)) return;
@@ -60,20 +77,6 @@ const formLogin = async () => {
 }
 </script>
 
-<template>
-  <div class="log-container">
-    <form class="log-form" onsubmit='return false'>
-      <div class="log-input">
-        <input type="text" placeholder="phone or email" v-model='formData.username'  />
-        <input type="password" placeholder="password" v-model='formData.password'  />
-        <input type="text" placeholder="code" v-model='formData.code'  />
-      </div>
-      <div class='submit'>
-        <input type='submit' @click="formLogin()" value="Login"/>
-      </div>
-    </form>
-  </div>
-</template>
 
 <style scoped>
 :root{
