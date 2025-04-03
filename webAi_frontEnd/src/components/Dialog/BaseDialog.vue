@@ -140,7 +140,7 @@ const props = defineProps({
 // ...其他代码保持相同
 const emit = defineEmits(['update:modelValue', 'close'])
 
-const dialogRef = ref(null)
+const dialogRef = ref()
 
 // 处理原生关闭事件
 const handleClose = () => {
@@ -149,7 +149,7 @@ const handleClose = () => {
 }
 
 // 处理 ESC 关闭
-const handleCancel = (e) => {
+const handleCancel = (e : KeyboardEvent) => {
   if (!props.escapeClose) {
     e.preventDefault()
   }
@@ -158,18 +158,20 @@ const handleCancel = (e) => {
 watch(() => props.modelValue, async (val) => {
   if (val) {
     await nextTick() // 等待 DOM 更新
-    dialogRef.value?.showModal()
-    dialogRef.value?.addEventListener('click', (e) => {
+    if (!dialogRef.value) return
+    dialogRef.value.showModal()
+    dialogRef.value.addEventListener('click', (e : MouseEvent) => {
       console.log("click outside")
       if (!props.persistent && e.target === dialogRef.value) {
-        dialogRef.value?.close()
+        dialogRef.value.close()
       }
     })
     document.documentElement.style.overflow = 'hidden'
   } else {
     // 关闭操作交给 transition 处理
+    if (!dialogRef.value) return
     console.log("dialog close!")
-    dialogRef.value?.close()
+    dialogRef.value.close()
   }
 })
 

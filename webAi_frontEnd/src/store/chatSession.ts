@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import { computed, ref } from "vue";
-import type{ LogsRecord } from "@/types/chatSession";
+import type{ LogsRecord } from "@/types/chat";
 
 
 export const useChatSessionStore = defineStore('chatSession',()=>{

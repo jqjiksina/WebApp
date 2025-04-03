@@ -9,7 +9,7 @@
       </span>
     </div>
     <div class="content">
-      <component :is="getCurrentForm"/>
+      <component :is="getCurrentForm" @close="emit('close')"/>
     </div>
     <div class="foot">
       <a @click="switchCurrentForm" style="text-align: center;">
@@ -26,35 +26,14 @@ import FormRegister from './Form/FormRegister.vue';
 import FormLogin from './Form/FormLogin.vue';
 import IconLogo from '@/components/icons/IconLogo.vue';
 
+const emit = defineEmits(['close'])
+
 const loginOrRegister = ref(true)
 const getCurrentForm = computed(()=>loginOrRegister.value ? FormRegister : FormLogin)
 const switchCurrentForm = ()=>{
   loginOrRegister.value = !loginOrRegister.value
 }
 
-// onMounted(()=>{
-//   // console.log('loginMenu Mounted')
-//   wrapperRect.value = wrapper.value.getBoundingClientRect();
-//   setTimeout(() => {
-//     document.addEventListener('click',onClickOutside)
-//   }, 200);
-// })
-
-// onUnmounted(()=>{
-//   // console.log('loginMenu unMounted')
-//   document.removeEventListener('click',onClickOutside)
-// })
-
-// function onClickOutside(ev:MouseEvent){
-//     if(!wrapper.value.contains(ev.target)){
-//       emit('click-outside',false);
-//       console.log('LoginMenu click-outside!')
-//     }
-// }
-
-// const emit = defineEmits(['click-outside'])
-
-// const wrapperRect = ref();
 const wrapper = ref();
 </script>
 

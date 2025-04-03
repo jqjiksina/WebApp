@@ -20,29 +20,21 @@
         <div class="menu-item" @click="LoginOrRegister">登录/注册</div>
       </div>
     </transition>
-    <!-- <transition name="fade"> -->
-    <!-- <dialog
-      ref="dialog_login"
-      class="dialog-login"
-      @close="handleClose"
-      >
-      <component :is="LoginMenu" @click-outside="onClickOutside"/>
-    </dialog> -->
-    <!-- </transition> -->
+    <!-- 登录/注册弹窗 -->
     <BaseDialog
       v-model="loginRegMenuShow"
       content-class="login-dialog"
       @close="onLoginClose"
     >
-      <LoginMenu @close="loginRegMenuShow = false" />
+      <LoginRegisterMenu @close="loginRegMenuShow = false" />
     </BaseDialog>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import LoginMenu from '@/views/SideBar/LoginRegisterMenu.vue';
 import BaseDialog from '@/components/Dialog/BaseDialog.vue';
+import LoginRegisterMenu from '@/views/SideBar/LoginRegisterMenu.vue';
 
 // const dialog_login = ref()
 function onLoginClose() {

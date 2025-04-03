@@ -24,6 +24,7 @@
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",
     "vue-seamless-scroll": "^1.1.23",
+    "vue3-eventbus": "^2.0.0",
     "vue3-seamless-scroll": "^3.0.2"
   },
   "devDependencies": {

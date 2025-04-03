@@ -1,7 +1,7 @@
 import type{LogInputRequest, LogInputResponse} from "@/types/input"
 import { useChatSessionStore } from "@/store/chatSession";
-import { useLogsStore } from "@/store/log";
-import type { Log, LogsRecord } from "@/types/chatSession";
+import { useLogsStore } from "@/store/chatLog";
+import type { Log, LogsRecord } from "@/types/chat";
 import axios, { AxiosError } from "axios";
 
 /**
