@@ -1,58 +1,66 @@
+from typing import List, Literal
 from discord import HTTPException
 from fastapi import APIRouter, Depends, HTTPException, status
-from pydantic import BaseModel
 from sqlalchemy import and_, insert, select, update
 from sqlalchemy.orm import selectinload
-from schema.response import Response
-from dependencies.auth import get_current_user
+from api.ragflow.schem import Response_Chat, Response_GetSessions
+from dependencies.auth import check_group_member, get_current_user
 from schema.chat import LogItem, Request_ChatLog, Response_GetChatLog, Response_PostChatLog, Response_ChatSession, SessionItem
 from database.core import get_async_db
 from sqlalchemy.ext.asyncio import AsyncSession
-from database.models import Base, ChatLog, User,ChatSession
+from database.models import BaseModel, User, Group, Rel_UserGroup
 from schema.response import Response
+
+from api.ragflow.ragflow import handle_user_question,rag_client
+
 
 
 router = APIRouter(
     tags=["chatSession"])
 
 @router.get('/chatSession')
-async def getChatSession(user : User =  Depends(get_current_user), 
-                         db : AsyncSession = Depends(get_async_db)
-                         ):
-    '''获取用户的chatsession列表'''
-    _user = await db.execute(select(User).where(User.id == user.id).options(selectinload(User.have_sessions)))
-    _user = _user.scalars().first()
-    print("_user:",_user)
-    if not _user:
-        return HTTPException(status_code=404, detail="User not found")
-    sessions = _user.have_sessions
+async def getChatSession(user : User =  Depends(get_current_user),
+                         group : Group = Depends(check_group_member)
+                         )->Response_ChatSession:
+    '''获取用户在对应群组的assitant所拥有的与自己相关的chatsession列表'''
+    print("[Debug] getChatSession...")
+    assitant_id = group.assistant_id
+    sessions = rag_client.getSessionList(assitant_id,user_id=user.external_id)
+    sessions = sessions.data
     if not sessions:
-        return []
-    print("chatSessions: ", sessions)
+        print("sessions empty")
+        return Response_ChatSession(message="empty sessions")
+    print("[Debug] chatSessions: ", sessions)
     new_list = [
         SessionItem(
             session_id = item.id,
-            title = item.title
+            title = item.name
         ) for item in sessions
     ]
     return Response_ChatSession(session=new_list)
 
 @router.get('/chatLog')
-async def getChatLog(session_id : int, 
+async def getChatLog(session_id : str, 
                      user: User = Depends(get_current_user), 
-                     db : AsyncSession = Depends(get_async_db)):
+                     group : Group = Depends(check_group_member)):
     '''获取一个chatsession中的所有chatlog'''
-    logs = await db.execute(select(ChatLog).
-                            where(and_(ChatLog.user_id == user.id,
-                                       ChatLog.chatSession_id == session_id)).
-                            order_by(ChatLog.id))
-    logs = logs.scalars()
-    log_list = [LogItem(
-            isSpeakerUser= True,
-            content = item.content
-        ) for item in logs]
-    print("log_list:",log_list)
-    if not logs:
+    
+    assitant_id = group.assistant_id
+    sessions = rag_client.getSessionList(assitant_id,user_id=user.external_id,session_id=session_id)
+    sessions = sessions.data
+    if not sessions:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail="session not found")
+        
+    log_list : List[LogItem] = []
+    for session in sessions:
+        for message in session.messages:
+            item = LogItem(role = message.role,
+                        content =  message.content)
+            log_list.append(item)
+    
+    print("[Debug] log_list:",str(log_list)[:100])
+    if not log_list:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="未找到对应对话记录！"
@@ -62,35 +70,27 @@ async def getChatLog(session_id : int,
 @router.post('/chatLog')
 async def postChatLog(message : Request_ChatLog, 
                       user : User = Depends(get_current_user),
-                      db : AsyncSession = Depends(get_async_db)):
+                      group : Group = Depends(check_group_member)):
     '''    提交一次信息，发往ai接口进行处理后，加入信息到数据库    '''
-    print("message.session_id:",message.session_id)
-    # 先查询user是否持有该mesasge的session_id，若有，则开始执行。
-    session = await db.execute(select(ChatSession).
-                               where(and_(ChatSession.user_id == user.id,
-                                          ChatSession.id == message.session_id)))
-    session = session.scalar()
-    if not session :# 开启一个新会话
-        print("session not found")
-        session = ChatSession(user_id = user.id, title = 'temporary')
-        db.add(session)
-        await db.flush()
-        print("session add:",session.id)
-        
-    chatlog = ChatLog(user_id = user.id, chatSession_id = session.id, content = message.content)
-    print ("to be inserted chatlog:id:",chatlog.id,
-           "session_id:",chatlog.chatSession_id,
-           "user_id:",chatlog.user_id,
-           "content:",chatlog.content)
-    db.add(chatlog)
-    await db.commit()
+    assitant_id = group.assistant_id
     
-    result = (await db.execute(select(ChatSession).where(ChatSession.id == session.id))).scalars().first()
-    if not result:
+    print("message.session_id:",message.session_id)
+    response = rag_client.chat(assitant_id,
+                               message.content,
+                               message.session_id,
+                               user.external_id)
+    if (Response_Chat.is_error(response)):
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
+                            detail="输入cotent为空")
+    if not response.data :
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    # 发给ai处理
-    return Response_PostChatLog(
-        session_id=result.id,
-        content="test_reply"
-    )
+    
+    # response = handle_user_question(message.content,"4a3516d6111811f094600242ac130005")
+    if Response_Chat.is_stream_end(response):
+        return Response_PostChatLog()
+    elif type(response.data) != Literal[True]:
+        return Response_PostChatLog(
+            session_id=response.data.session_id,
+            content=response.data.answer
+        )
     

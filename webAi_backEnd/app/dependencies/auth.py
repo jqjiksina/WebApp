@@ -11,10 +11,10 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
-from sqlalchemy import select
+from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database.models import User
+from database.models import Rel_UserGroup, User, Group
 # from schemas import LoginPost, RegistryPost  # 根据前端接口生成
 from database.core import get_async_db
 import os
@@ -57,6 +57,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db : AsyncSessio
     3. 从数据库查询对应用户
     4. 返回用户对象供路由使用
     """
+    print("[Debug] getting current user...")
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="无法验证凭据",
@@ -81,3 +82,25 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db : AsyncSessio
     if user is None:
         raise credentials_exception
     return user
+
+async def check_group_member(
+    group_id: int,
+    user_id: int = Depends(get_current_user),
+    db : AsyncSession = Depends(get_async_db)
+) -> Group:
+    '''依赖注入函数，验证并查询用户是否属于该群组id，并返回群组信息'''
+    print("[Debug] checking group ...")
+    if (group_id == 1): # base group id == 1
+        return (await db.execute(select(Group).where(Group.id == 1))).scalar()
+    result = await db.execute(select(Rel_UserGroup).
+                              where(
+                                  and_(Rel_UserGroup.user_id == user_id, 
+                                       Rel_UserGroup.group_id == group_id)))
+    result = result.scalar()
+    if not result:
+        raise HTTPException(status_code=403, detail="未加入该群组")
+    result = await db.execute(select(Group).where(Group.id == result.group_id))
+    result = result.scalar()
+    if not result:
+        raise HTTPException(status_code=404, detail="群组不存在")
+    return result

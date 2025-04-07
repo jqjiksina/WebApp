@@ -44,7 +44,7 @@ async def register(
     # =====================
     # 创建新用户
     new_user = User(
-        username=form_data.username,
+        name=form_data.username,
         phone=form_data.phone,
         email=form_data.email,
         hashed_password=get_password_hash(form_data.password)
@@ -57,7 +57,7 @@ async def register(
     return {
         "message": "注册成功",
         "user_id": new_user.id,
-        "username": new_user.username
+        "username": new_user.name
     }
 
 # ------------------------- 登录接口 -------------------------
@@ -92,6 +92,6 @@ async def login(
         "token_type": "bearer",
         "user_info": {
             "user_id": user.id,
-            "username": user.username
+            "username": user.name
         }
     }

@@ -1,22 +1,25 @@
-from pydantic import BaseModel
+from typing import List, Literal, Optional
+from pydantic import BaseModel, Field
 from sqlalchemy import Column, Integer
+from traitlets import default
 
 class Request_ChatLog(BaseModel):
-    session_id: int
+    session_id: Optional[str]
     content : str
     
 class Response_PostChatLog(BaseModel):
-    session_id : int
-    content : str
+    session_id : Optional[str] = Field(default=None)
+    content : Optional[str] = Field(default=None)
     
 class SessionItem(BaseModel):
-    session_id: int
+    session_id: str
     title: str
 class Response_ChatSession(BaseModel):
-    session: list[SessionItem]
+    message : str = Field(default="")
+    session: List[SessionItem] = Field(default=[])
     
 class LogItem(BaseModel):
-    isSpeakerUser: bool
+    role: Literal["system","assistant","user"] = Field(default=...)
     content : str
 class Response_GetChatLog(BaseModel):
     logs : list[LogItem]
