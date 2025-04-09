@@ -40,19 +40,29 @@ npm run lint
 
 # AiWeb_backEnd
 
-In this section, we will help you start deploying back-end project with Python in Anaconda.
+Here's detailed steps for deploying back-end project with python in Anaconda.
 
-## Installing Anaconda
+**Since I havenot wrapped the backend project into docker, so for now, just run the project on the host machine.**
 
-if you havenot installed Anaconda, I have to tell you Anaconda is a great environment manager for python project.
+### Firstly, import and apply the environment.yml with conda.
 
-- convenient environment management
-
-Anoconda manage python project primarily by commmands below:
+Open commmand line in `webAi_backEnd/`, and input commands below:
 ```sh
-conda env list                   # to see how many environments you have created in anaconda.
-conda create env <your_env_name> # create a new environment named <your_env_name>
-conda activate <your_env_name>   # activate and go into the environment
-conda deactivate <your_env_name> # deactivate and go out of the environment
+conda create -f environment.yml
 ```
-All the environments you create are **seperated**. This means you'll not get crazy about the collisions between packages of diffrent versions, and you'll be free to set up packages of diffrent versions in different environments.
+And you will get the conda environment properly.
+
+### Secondly, get into the environment and run it.
+
+Open commmand line in root directory, and input commands below:
+```sh
+conda activate webAi
+python webAi_backEnd/app/main.py
+```
+And it would be successfully running on `localhost:8888`.
+
+If you want it running on different port, just open `main.py` and change contents below:
+```python
+if __name__ == '__main__':
+    uvicorn.run('main:app',port=8888,host='localhost',reload=True) # 将port=8888改为想要发布的端口即可
+```
