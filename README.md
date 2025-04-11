@@ -40,7 +40,7 @@ npm run lint
 
 # AiWeb_backEnd
 
-Here's detailed steps for deploying back-end project with python in Anaconda.
+Here's detailed steps for deploying back-end project on **Linux** with python in Anaconda.
 
 **Since I havenot wrapped the backend project into docker, so for now, just run the project on the host machine.**
 
