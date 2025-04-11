@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang='ts'>
-import {IconCommunity,FloatingAvatar} from '@/components';
-import LogInput from '@/components/LogInput.vue';
+import {IconCommunity,FloatingAvatar,LogInput} from '@/components';
 import { onMounted, ref } from 'vue';
 const floating_container = ref<HTMLElement|null>(null);
 onMounted(()=>{

@@ -24,7 +24,7 @@
 import {ref,computed} from 'vue'
 import FormRegister from './Form/FormRegister.vue';
 import FormLogin from './Form/FormLogin.vue';
-import IconLogo from '@/components/icons/IconLogo.vue';
+import IconLogo from '@/components/common/icons/IconLogo.vue';
 
 const emit = defineEmits(['close'])
 

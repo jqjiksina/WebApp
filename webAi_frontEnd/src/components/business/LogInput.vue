@@ -11,8 +11,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { chatApi } from '@/api/chatApi';
-import { useChatSessionStore } from '@/store/chatSession';
+import { chatApi } from '@/api/chat/chatApi';
+import { useChatSessionStore } from '@/store';
 import type { LogInputRequest } from '@/types/input';
 
 const chatSessionStore = useChatSessionStore()

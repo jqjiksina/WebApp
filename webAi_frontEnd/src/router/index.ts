@@ -1,53 +1,61 @@
-import { useUsersStore } from "@/store/user";
-import { createRouter} from "vue-router"
-//引入路由器模式
-import { createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router'
+import { useUsersStore } from '@/store/modules/user'
+import type { Params_Login } from '@/types/formSubmit'
 
-//创建路由器，路由与组件绑定
 const router = createRouter({
-  history:createWebHistory(),
-  //管理路由
-   routes:[{
-      path: "/",
-      name: 'root',
-      component: () => import('@/views/Root/index.vue'),
-      children:[
-        {
-          path: "",
-          name: "home",
-          component: () => import('@/views/Home/index.vue')
-        },{
-          path: "/session/:session_id",
-          name: 'log',
-          component: () => import('@/views/ChatLog/index.vue'),
-          props: true
-        },{
-          path: "/:patchMatch(.*)*",
-          redirect: '/'
-        }
-      ]
+  history: createWebHistory(),
+  routes: [
+    {
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/user/Login.vue')
     },
-   ]
+    {
+      path: '/',
+      component: () => import('@/views/user/Home/index.vue')
+    },
+    {
+      path: '/schedule',
+      name: 'Schedule',
+      component: () => import('@/views/schedule/index.vue')
+    },
+    {
+      path: '/education',
+      name: 'Education',
+      component: () => import('@/views/education/index.vue')
+    },
+    {
+      path: '/student',
+      name: 'Student',
+      component: () => import('@/views/student/index.vue')
+    },
+    {
+      path: '/analysis',
+      name: 'Analysis',
+      component: () => import('@/views/analysis/index.vue')
+    }
+  ]
 })
 
-// // 全局前置守卫
-// router.beforeEach(async (to) => {
-//   const isPublicRoute = ['/auth/login', '/auth/register'].includes(to.path)
-//   const isAuthenticated = !!useUsersStore().getToken
+// 路由守卫 - 模拟正常登录状态
+router.beforeEach((to, from, next) => {
+  const userStore = useUsersStore()
+  if (to.path === '/login') {
+    next()
+    return
+  }
+  // 模拟有效的token
+  if (!userStore.getToken) {
+    userStore.updateToken('mock_token')
+    const mockUser: Params_Login = {
+      username: 'test_user',
+      password: 'test_password',
+      code: 'test'
+    }
+    userStore.updateUser(mockUser)
+  }
 
-//   console.log("router guard! isPublicRoute:",isPublicRoute,"isAuthenticated:",isAuthenticated)
+  next()
+})
 
-//   // 已登录用户访问公开路由 → 重定向到首页
-//   if (isAuthenticated && isPublicRoute) {
-//     return '/'
-//   }
-
-//   // 未登录用户访问私有路由 → 重定向到登录页
-//   if (!isAuthenticated && !isPublicRoute) {
-//     return '/login'
-//   }
-
-//   return
-// })
-
-export default router;
+export default router

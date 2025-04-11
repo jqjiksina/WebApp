@@ -15,18 +15,18 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { AxiosError } from 'axios'  // 需先安装：npm install axios
-import { userApi } from '@/api/userApi'
-import { useUsersStore } from '@/store/user'
-import { chatApi } from '@/api/chatApi'
-import { useChatSessionStore } from '@/store/chatSession'
+import { AxiosError } from 'axios'
+import { userApi } from '@/api/user/userApi'
+import { useUsersStore } from '@/store/modules/user'
+import { chatApi } from '@/api/chat/chatApi'
+import { useChatSessionStore } from '@/store/modules/chatSession'
 import type { Params_Login } from '@/types/formSubmit'
 import router from '@/router'
 
 const emit = defineEmits(['close'])
 
 const formData = ref<Params_Login>({
-  username: '19374114256', // phone or email
+  username: '19374114256',
   password: '12345678',
   code: 'test'
 })
@@ -34,10 +34,7 @@ const formData = ref<Params_Login>({
 const userStore = useUsersStore()
 const sessionStore = useChatSessionStore()
 
-/**
- * 验证登录表单
- */
-const validate_form = ()=>{
+const validate_form = () => {
   if (formData.value.code != "test") return false
   return true
 }
@@ -54,29 +51,24 @@ const formLogin = async () => {
     userStore.updateUser(formData.value)
     chatApi.getChatSession()
     console.log('登录成功，Response:', response.data)
-    console.log("logStore:",sessionStore.getSessions)
-    // const redirect = router.currentRoute.value.query.redirect
+    console.log("logStore:", sessionStore.getSessions)
     router.push('/')
     emit('close')
   } catch (error) {
     console.error('错误详情:', error)
     if (! (error instanceof AxiosError)) return;
     if (error.response) {
-      // 服务器返回了4xx/5xx响应
       console.log('状态码:', error.response.status)
       console.log('响应头:', error.response.headers)
     } else if (error.request) {
-      // 请求已发出但无响应
       console.log('请求对象:', error.request)
       alert('服务器未响应，请检查后端是否运行')
     } else {
-      // 其他错误（如配置错误）
       console.log('错误信息:', error.message)
     }
   }
 }
 </script>
-
 
 <style scoped>
 :root{
@@ -86,7 +78,6 @@ const formLogin = async () => {
 
 .log-input{
   height: 100%;
-
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
@@ -100,25 +91,29 @@ const formLogin = async () => {
   display: flex;
   justify-content: space-around;
 }
+
 input[type='submit']{
   margin: 0 2px;
-  width:100%;height:100%;
+  width:100%;
+  height:100%;
   background-color: rgb(134, 179, 236);
   border-radius: 5px;
   border-top: 0;
   border-left: 0;
   border-bottom: 1px solid rgb(185, 184, 184);
   border-right: 1px solid rgb(185, 184, 184);
-  &:hover{
-    background-color: rgb(114,159,216);
-    cursor: pointer;
-  }
-  &:active{
-    border-bottom: 0;
-    border-right: 0;
-    border-top: 1px solid rgb(185, 184, 184);
-    border-left: 1px solid rgb(185, 184, 184);
-  }
+}
+
+input[type='submit']:hover{
+  background-color: rgb(114,159,216);
+  cursor: pointer;
+}
+
+input[type='submit']:active{
+  border-bottom: 0;
+  border-right: 0;
+  border-top: 1px solid rgb(185, 184, 184);
+  border-left: 1px solid rgb(185, 184, 184);
 }
 
 input[type='text'],input[type='password']{
@@ -127,7 +122,7 @@ input[type='text'],input[type='password']{
   margin: 2px 0;
   background-color: rgb(187, 186, 186);
   font-size: calc(var(--input-height,1.5rem) - 0.2rem);
-  display: block; /*关键，取消input的默认inline*/
+  display: block;
 }
 
 .log-container{

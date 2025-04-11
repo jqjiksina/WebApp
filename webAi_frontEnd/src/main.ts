@@ -5,7 +5,8 @@ import router from '@/router'
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import axios from 'axios';
-
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 
 // // 初始化自动登录
 // const initAuth = async () => {
@@ -28,17 +29,18 @@ const app = createApp(App);
 
 //挂载方法
 app.config.globalProperties['$assert']=(exp:boolean)=>{
-  if(!exp) throw Error("error");
+if(!exp) throw Error("error");
 };
 
 
 app.use(createPinia().use(piniaPluginPersistedstate))
-  .use(router);
+  .use(router)
+  .use(ElementPlus)
 
 app.mount('#app')
 
-import { useUsersStore } from './store/user'
-import { userApi } from './api/userApi';
+import { useUsersStore } from './store/modules/user'
+import { userApi } from './api/user/userApi';
 import type{Request_Login} from '@/types/formSubmit'
 const userStore = useUsersStore()
 // 每 5 分钟刷新一次 Token

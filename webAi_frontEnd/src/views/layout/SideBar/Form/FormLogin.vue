@@ -1,56 +1,63 @@
+<template>
+  <div class="log-container">
+    <form class="log-form" onsubmit='return false'>
+      <div class="log-input">
+        <input type="text" placeholder="phone or email" v-model='formData.username'  />
+        <input type="password" placeholder="password" v-model='formData.password'  />
+        <input type="text" placeholder="code" v-model='formData.code'  />
+      </div>
+      <div class='submit'>
+        <input type='submit' @click="formLogin()" value="Login"/>
+      </div>
+    </form>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import { AxiosError } from 'axios'  // 需先安装：npm install axios
-import { userApi } from '@/api/userApi'
-import type { Params_Register } from '@/types/formSubmit'
+import { userApi } from '@/api'
+import { useUsersStore } from '@/store'
+import { chatApi } from '@/api'
+import { useChatSessionStore } from '@/store'
+import type { Params_Login } from '@/types/formSubmit'
+import router from '@/router'
 
-const formData = ref<Params_Register>({
-  phone: '19374114256',
-  email: 'test@emain',
-  username: 'test_name',
+const emit = defineEmits(['close'])
+
+const formData = ref<Params_Login>({
+  username: '19374114256', // phone or email
   password: '12345678',
-  password_again: '12345678',
   code: 'test'
 })
 
+const userStore = useUsersStore()
+const sessionStore = useChatSessionStore()
+
 /**
- * 验证注册表单，字段值不满足条件时alert
- * @param formData.value
+ * 验证登录表单
  */
 const validate_form = ()=>{
-  if (formData.value.password_again !== formData.value.password){
-    alert('两次密码不相同！')
-    return false
-  }
-  if (formData.value.password.length < 8) {
-    alert('密码长度不足!')
-    return false
-  }
-  if(!formData.value.email?.includes('@')) {
-    alert('邮箱格式不正确!')
-    return false
-  }
-  if(formData.value.phone?.length != 11) {
-    alert('电话号码格式错误！')
-    return false
-  }
-  if(formData.value.username.length < 3) {
-    alert('用户名过短！')
-    return false
-  }
-  if(formData.value.code != 'test'){
-    alert('验证码错误！')
-    return false
-  }
+  if (formData.value.code != "test") return false
   return true
 }
 
-const formRegister = async () => {
-  if(!validate_form()) return
-  console.log('提交注册表单...', formData.value)
+const formLogin = async () => {
+  if (!validate_form()) {
+    alert("验证码不正确！")
+    return
+  }
+  console.log("提交登录表单...")
   try {
-    const response = await userApi.register(formData.value);
-    console.log('注册成功:', response?.data)
+    const response = await userApi.login(formData.value);
+    userStore.updateToken(response.data.access_token)
+    userStore.updateUser(formData.value)
+    chatApi.getChatSession()
+    console.log('登录成功，Response:', response.data)
+    console.log("logStore:",sessionStore.getSessions)
+    // const redirect = router.currentRoute.value.query.redirect
+    router.push('/')
+    emit('close')
   } catch (error) {
     console.error('错误详情:', error)
     if (! (error instanceof AxiosError)) return;
@@ -70,23 +77,6 @@ const formRegister = async () => {
 }
 </script>
 
-<template>
-  <div class="log-container">
-    <form class="log-form" onsubmit='return false'>
-      <div class="log-input">
-        <input type="text" placeholder="phone" v-model='formData.phone'  />
-        <input type="text" placeholder="username" v-model='formData.username'  />
-        <input type="password" placeholder="password" v-model='formData.password'  />
-        <input type="password" placeholder="password" v-model='formData.password_again'  />
-        <input type="text" placeholder="email" v-model='formData.email'  />
-        <input type="text" placeholder="code" v-model='formData.code'  />
-      </div>
-      <div class='submit'>
-        <input type='submit' @click="formRegister()" value="Register"/>
-      </div>
-    </form>
-  </div>
-</template>
 
 <style scoped>
 :root{

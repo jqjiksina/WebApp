@@ -1,6 +1,6 @@
 import axios from "axios";
 import type{Request_Login,Response_Login,Response_register, Request_Register} from '@/types/formSubmit'
-import { useUsersStore } from "@/store/user";
+import { useUsersStore } from "@/store/modules/user";
 import { computed } from "vue";
 
 axios.interceptors.request.use(config => {
