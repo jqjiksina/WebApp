@@ -1,10 +1,10 @@
 CALL conda.bat activate webAi
 
-cd ragflow/docker
+:: cd ragflow/docker
 
-docker compose up -d % 启动ragflow %
+:: docker compose up -d % 启动ragflow %
 
-cd ../../
+:: cd ../../
 
 :: cd ../../ollama
 

@@ -1,3 +1,4 @@
+import { useUsersStore } from '@/store'
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
@@ -14,7 +15,8 @@ const service: AxiosInstance = axios.create({
 service.interceptors.request.use(
   (config) => {
     // 在这里可以添加 token 等认证信息
-    const token = localStorage.getItem('token')
+    console.log("[Debug] service.interceptors.request:add token!")
+    const token = useUsersStore().getToken
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }

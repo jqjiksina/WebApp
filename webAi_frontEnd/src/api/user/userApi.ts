@@ -1,13 +1,13 @@
 import axios from "axios";
 import type{Request_Login,Response_Login,Response_register, Request_Register} from '@/types/formSubmit'
 import { useUsersStore } from "@/store/modules/user";
-import { computed } from "vue";
+// import { computed } from "vue";
 
 axios.interceptors.request.use(config => {
-  const token = computed(()=>useUsersStore().getToken)
-  console.log("axio interpret! token: ",token.value)
-  if (token.value) {
-  config.headers.Authorization = `Bearer ${token.value}`;
+  const token = useUsersStore().getToken
+  console.log("axio interpret! token: ",token)
+  if (token) {
+  config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
   });

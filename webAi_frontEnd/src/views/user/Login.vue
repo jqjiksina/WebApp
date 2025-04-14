@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="login-container">
     <div class="login-wrapper">
@@ -5,8 +6,8 @@
         <div class="logo">
           <img src="@/assets/logo.svg" alt="Logo">
         </div>
-        <h1>智能排班系统</h1>
-        <p>高效、智能、便捷的排班管理平台</p>
+        <h1>HUST_AI系统</h1>
+        <p>高效、智能、便捷的HUSTer系统平台</p>
       </div>
       <div class="login-right">
         <el-card class="login-card">

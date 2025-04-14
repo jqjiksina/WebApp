@@ -22,7 +22,14 @@ const router = createRouter({
     {
       path: '/education',
       name: 'Education',
-      component: () => import('@/views/education/index.vue')
+      component: () => import('@/views/education/index.vue'),
+      // children: [
+      //   {
+      //     path: 'resume',
+      //     name: 'Resume',
+      //     component: () => import('@/views/education/resume/index.vue')
+      //   }
+      // ]
     },
     {
       path: '/student',

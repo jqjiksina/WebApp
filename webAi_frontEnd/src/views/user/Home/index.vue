@@ -19,6 +19,12 @@ onMounted(()=>{
         <p>test_2</p>
       </div>
     </div>
+    <!-- <iframe
+    src="http://localhost:8081/chat/share?shared_id=3bfb2be8176f11f0b9b02231d20fc9ca&from=chat&auth=gwNDg0ZmFhMTc3ZjExZjBiZjBiNGE1NG"
+    style="width: 100%; height: 100%; min-height: 600px"
+    frameborder="0"
+    >
+    </iframe> -->
 
     <div class="chat-input">
       <!-- <FormTest/> -->

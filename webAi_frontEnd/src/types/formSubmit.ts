@@ -49,4 +49,9 @@ interface Params_Register extends Request_Register {
   code: string  // 验证码
 }
 
-export type {Params_Login,Response_Login,Params_Register,Response_register,Request_Login,Request_Register }
+interface Params_User{
+  username : string
+  password : string
+}
+
+export type {Params_Login,Response_Login,Params_Register,Response_register,Request_Login,Request_Register,Params_User}

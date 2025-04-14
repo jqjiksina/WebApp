@@ -43,18 +43,20 @@ import { useUsersStore } from './store/modules/user'
 import { userApi } from './api/user/userApi';
 import type{Request_Login} from '@/types/formSubmit'
 const userStore = useUsersStore()
-// 每 5 分钟刷新一次 Token
+// 每 10 分钟刷新一次 Token
 setInterval(async () => {
-  console.log("refresh token!")
   const token = userStore.getToken
   if (token) {
     try {
-      const user = userStore.getUser
-      const request : Request_Login = {username : user.username.value,password : user.password.value}
+      const username = userStore.username
+      const password = userStore.password
+      console.log("refresh token! user:",username,password,"token:",token)
+      const request : Request_Login = {username : username,password : password}
       const response = await userApi.login(request)
       userStore.updateToken(response.data.access_token)
+      console.log("refresh token done:",response.data.access_token)
     } catch (error) {
-      userStore.clearToken()
+      console.log("refresh token error!")
     }
   }
-}, 300_000) // 5分钟
+}, 600_000) // 5分钟
