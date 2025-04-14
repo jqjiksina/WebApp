@@ -4,8 +4,8 @@ from sqlalchemy import Column, Integer
 from traitlets import default
 
 class Request_ChatLog(BaseModel):
-    session_id: Optional[str]
-    content : str
+    session_id: Optional[str] = Field(default=None)
+    content : str = Field(default=...)
     
 class Response_PostChatLog(BaseModel):
     session_id : Optional[str] = Field(default=None)

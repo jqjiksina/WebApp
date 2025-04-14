@@ -16,22 +16,22 @@ from sqlalchemy.orm import relationship,declarative_base,Mapped,mapped_column
 BaseModel = declarative_base()
 
 # 定义 Group 类
-class Group(BaseModel):
-    '''群组表，存储群组及与其绑定的assitant id，每个Group有且只有一个assitant'''
-    __tablename__ = "group"
+# class Group(BaseModel):
+#     '''群组表，存储群组及与其绑定的assitant id，每个Group有且只有一个assitant'''
+#     __tablename__ = "group"
     
-    id : Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
+#     id : Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
     
-    name : Mapped[int] = mapped_column(String(63),primary_key=True, unique=True)
-    creator_id : Mapped[str] = mapped_column(String(63), nullable=True)
-    created_time : Mapped[str] = mapped_column(TIMESTAMP, nullable=False, 
-                                               server_default=text("CURRENT_TIMESTAMP"))
-    updated_time : Mapped[str] = mapped_column(TIMESTAMP, nullable=False, 
-                                               server_default=text("CURRENT_TIMESTAMP"),
-                                               onupdate=text("CURRENT_TIMESTAMP"))
-    assistant_id : Mapped[str] = mapped_column(String(63))
+#     name : Mapped[int] = mapped_column(String(63),primary_key=True, unique=True)
+#     creator_id : Mapped[str] = mapped_column(String(63), nullable=True)
+#     created_time : Mapped[str] = mapped_column(TIMESTAMP, nullable=False, 
+#                                                server_default=text("CURRENT_TIMESTAMP"))
+#     updated_time : Mapped[str] = mapped_column(TIMESTAMP, nullable=False, 
+#                                                server_default=text("CURRENT_TIMESTAMP"),
+#                                                onupdate=text("CURRENT_TIMESTAMP"))
+#     assistant_id : Mapped[str] = mapped_column(String(63))
     
-    have_users : Mapped[List["User"]] = relationship("User",secondary="rel_user_group",back_populates="of_groups",uselist=True)
+#     have_users : Mapped[List["User"]] = relationship("User",secondary="rel_user_group",back_populates="of_groups",uselist=True)
 
 # 定义 User 类
 class User(BaseModel):
@@ -41,8 +41,8 @@ class User(BaseModel):
     id : Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
     external_id : Mapped[str] = mapped_column(String(63),unique=True, index=True, default=str(uuid.uuid4())  # "f47ac10b-58cc-4372-a567-0e02b2c3d479"
 )
-    
     name : Mapped[str] = mapped_column(String(32))
+    universal_number : Mapped[str] = mapped_column(String(11), unique=True, index=True, nullable=False)
     phone : Mapped[str] = mapped_column(String(11), unique=True, index=True, nullable=True)
     email : Mapped[str] = mapped_column(String(20), unique=True, index=True, nullable=True)
     hashed_password : Mapped[str] = mapped_column(String(255))
@@ -52,58 +52,62 @@ class User(BaseModel):
     updated_time : Mapped[str] = mapped_column(TIMESTAMP, nullable=False, 
                                                server_default=text("CURRENT_TIMESTAMP"),
                                                onupdate=text("CURRENT_TIMESTAMP"))
-    assitant_ids : Mapped[List[str]] = mapped_column(String(63),nullable=True)
     
-    # current_group : Mapped[Group] = relationship(Group,back_populates="have_users",uselist=False)
-    of_groups : Mapped[List[Group]] = relationship(Group,secondary="rel_user_group",back_populates="have_users",uselist=True)
-    # have_sessions : Mapped[List["ChatSession"]] = relationship("ChatSession",back_populates="of_user",uselist=True,lazy="select") # 一对多
+    dataset_id : Mapped[str] = mapped_column(String(63),unique=True,nullable=True)  # 专属数据库
+    assistant_id : Mapped[str] = mapped_column(String(63),nullable=True)            # 专属助理
     
-    __table_args__ = (
-        CheckConstraint('phone is not null or email is not null' , name = 'ck_phone_emial'),
-        {}
-    )
     
-class Enum_Role(enum.Enum):
-    admin = "admin"
-    member = "member"
     
-class Rel_UserGroup(BaseModel):
-    '''User和所属的Group的关系'''
-    __tablename__ = 'rel_user_group'
-    user_id : Mapped[int] = mapped_column(Integer,ForeignKey(User.id))
-    group_id : Mapped[int] = mapped_column(Integer,ForeignKey(Group.id))
-    role : Mapped[str] = mapped_column(Enum(Enum_Role),
-                                       default=Enum_Role.member)
-    joined_time : Mapped[str] = mapped_column(TIMESTAMP, nullable=False,
-                                              server_default=text("CURRENT_TIMESTAMP"))
+    # assitant_ids : Mapped[List[str]] = mapped_column(String(63),nullable=True)
     
-    __table_args__ = (
-        PrimaryKeyConstraint(user_id,group_id,name="pk_user_group"),
-        {}
-    )
+    # of_groups : Mapped[List[Group]] = relationship(Group,secondary="rel_user_group",back_populates="have_users",uselist=True)
     
-class Enum_Request(enum.Enum):
-    '''群组申请状态枚举'''
-    approved = "approved"
-    rejected = "rejected"
-    pending = "pending"
+    # __table_args__ = (
+    #     CheckConstraint('phone is not null or email is not null' , name = 'ck_phone_emial'),
+    #     {}
+    # )
     
-class JoinGroupRecord(BaseModel):
-    '''加入群组申请记录表'''
-    __tablename__ = 'join_group_record'
-    user_id : Mapped[int] = mapped_column(Integer, ForeignKey(User.id))
-    group_id : Mapped[int] = mapped_column(Integer,ForeignKey(Group.id))
+# class Enum_Role(enum.Enum):
+#     admin = "admin"
+#     member = "member"
     
-    status : Mapped[str] = mapped_column(Enum(Enum_Request))
-    added_time : Mapped[str] = mapped_column(TIMESTAMP, nullable=False, 
-                                             server_default=text('CURRENT_TIMESTAMP'))
-    processed_time : Mapped[str] = mapped_column(TIMESTAMP,nullable=True, 
-                                                 server_default=None,
-                                                 onupdate=text("CURRENT_TIMESTAMP"))
-    __table_args__ = (
-        PrimaryKeyConstraint(user_id,group_id,name="pk_join_group_record"),
-        {}
-    )
+# class Rel_UserGroup(BaseModel):
+#     '''User和所属的Group的关系'''
+#     __tablename__ = 'rel_user_group'
+#     user_id : Mapped[int] = mapped_column(Integer,ForeignKey(User.id))
+#     group_id : Mapped[int] = mapped_column(Integer,ForeignKey(Group.id))
+#     role : Mapped[str] = mapped_column(Enum(Enum_Role),
+#                                        default=Enum_Role.member)
+#     joined_time : Mapped[str] = mapped_column(TIMESTAMP, nullable=False,
+#                                               server_default=text("CURRENT_TIMESTAMP"))
+    
+#     __table_args__ = (
+#         PrimaryKeyConstraint(user_id,group_id,name="pk_user_group"),
+#         {}
+#     )
+    
+# class Enum_Request(enum.Enum):
+#     '''群组申请状态枚举'''
+#     approved = "approved"
+#     rejected = "rejected"
+#     pending = "pending"
+    
+# class JoinGroupRecord(BaseModel):
+#     '''加入群组申请记录表'''
+#     __tablename__ = 'join_group_record'
+#     user_id : Mapped[int] = mapped_column(Integer, ForeignKey(User.id))
+#     group_id : Mapped[int] = mapped_column(Integer,ForeignKey(Group.id))
+    
+#     status : Mapped[str] = mapped_column(Enum(Enum_Request))
+#     added_time : Mapped[str] = mapped_column(TIMESTAMP, nullable=False, 
+#                                              server_default=text('CURRENT_TIMESTAMP'))
+#     processed_time : Mapped[str] = mapped_column(TIMESTAMP,nullable=True, 
+#                                                  server_default=None,
+#                                                  onupdate=text("CURRENT_TIMESTAMP"))
+#     __table_args__ = (
+#         PrimaryKeyConstraint(user_id,group_id,name="pk_join_group_record"),
+#         {}
+#     )
     
     
 # class ChatSession(Base):
@@ -132,10 +136,10 @@ class JoinGroupRecord(BaseModel):
     
 #     Index('idx_userId_chatSessionId_id',user_id,chatSession_id,id)
     
-class Client(BaseModel): # 客户端
-    __tablename__ =  "client"
+# class Client(BaseModel): # 客户端
+#     __tablename__ =  "client"
     
-    id : Mapped[int] = mapped_column(Integer, index= True, primary_key=True)
+#     id : Mapped[int] = mapped_column(Integer, index= True, primary_key=True)
     
-    secret : Mapped[str] = mapped_column(String(255), unique= True)
-    created_time : Mapped[str] =  mapped_column(TIMESTAMP, default = datetime.utcnow())
+#     secret : Mapped[str] = mapped_column(String(255), unique= True)
+#     created_time : Mapped[str] =  mapped_column(TIMESTAMP, default = datetime.utcnow())
