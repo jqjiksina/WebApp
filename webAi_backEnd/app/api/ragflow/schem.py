@@ -98,6 +98,10 @@ class ChunkMethod(str, Enum):
     ONE = "one"
     KNOWLEDGE_GRAPH = "knowledge_graph"
     EMAIL = "email"
+    
+class Permission(str, Enum):
+    ME = "me"
+    TEAM = "team"
 
 # ========== Datasets 嵌套配置模型 ==========
 class RaptorConfig(BaseModel):
@@ -231,10 +235,10 @@ class Reference(BaseModel):
 class SuccessData(BaseModel):
     answer: str
     reference: Union[Reference, Dict] = Field(default_factory=dict)
-    audio_binary: Optional[bytes] = None
-    id: Optional[str] = None
-    session_id: str
-    prompt: Optional[str] = None
+    audio_binary: Optional[bytes] = Field(default=None)
+    id: Optional[str] = Field(default=None)
+    session_id: str = Field(default=...)
+    prompt: Optional[str] = Field(default=None)
 
 class Error_Chat(BaseModel):
     code: int = Field(..., examples=[102])
@@ -243,7 +247,7 @@ class Error_Chat(BaseModel):
 class Response_Chat(BaseModel):
     code: int
     message: str = ""
-    data: Union[SuccessData, bool, None] = None
+    data: Optional[Union[SuccessData, bool]] = None
 
     @classmethod
     def success(cls, response : "Response_Chat")-> bool:

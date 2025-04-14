@@ -15,3 +15,4 @@ ollama/models/manifests/registry.ollama.ai/library/deepseek-r1/1.5b
 ollama/models/manifests/registry.ollama.ai/library/deepseek-r1/7b
 ollama/models/manifests/registry.ollama.ai/library/deepseek-r1/latest
 ollama/models/manifests/registry.ollama.ai/library/qwen2.5/0.5b
+.env

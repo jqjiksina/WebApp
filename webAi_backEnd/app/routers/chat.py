@@ -1,31 +1,46 @@
-from typing import List, Literal
+from typing import List, Literal, Optional
+
+from pydantic import Field
+from sqlalchemy import update
+from database.core import get_async_db
 from discord import HTTPException
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import and_, insert, select, update
-from sqlalchemy.orm import selectinload
-from api.ragflow.schem import Response_Chat, Response_GetSessions
-from dependencies.auth import check_group_member, get_current_user
+from api.ragflow.schem import ChatAssistantConfig, Response_Chat
+from dependencies.index import  get_current_user
 from schema.chat import LogItem, Request_ChatLog, Response_GetChatLog, Response_PostChatLog, Response_ChatSession, SessionItem
-from database.core import get_async_db
+from database.models import User
+
+from api.ragflow.ragflow import rag_client
+from config import Config
 from sqlalchemy.ext.asyncio import AsyncSession
-from database.models import BaseModel, User, Group, Rel_UserGroup
-from schema.response import Response
 
-from api.ragflow.ragflow import handle_user_question,rag_client
-
+# assitant_id = Config.DEFAULT_ASSISTANT_ID # 测试用，正常应该根据用户得到专属助理
 
 
 router = APIRouter(
     tags=["chatSession"])
 
+def get_assistant_id(user : User =  Depends(get_current_user),
+                    db : AsyncSession = Depends(get_async_db)
+                    )->str:
+    print("[Debug] get_assistant_id...")
+    assistant_id = user.assistant_id
+    if not assistant_id:
+        assistant = ChatAssistantConfig(name=f"{user.name}_{user.external_id}_assistant")
+        response = rag_client.createAssistant(assistant)
+        db.execute(update(User).where(User.id==user.id).values(assistant_id=response["data"]["id"]))
+        print("[Debug] get_assistant_id done(new):",response["data"]["id"])
+        return response["data"]["id"]
+    print("[Debug] get_assistant_id done:",assistant_id)
+    return assistant_id
+
 @router.get('/chatSession')
 async def getChatSession(user : User =  Depends(get_current_user),
-                         group : Group = Depends(check_group_member)
+                         assistant_id : str = Depends(get_assistant_id)
                          )->Response_ChatSession:
     '''获取用户在对应群组的assitant所拥有的与自己相关的chatsession列表'''
     print("[Debug] getChatSession...")
-    assitant_id = group.assistant_id
-    sessions = rag_client.getSessionList(assitant_id,user_id=user.external_id)
+    sessions = rag_client.getSessionList(assistant_id,user_id=user.external_id)
     sessions = sessions.data
     if not sessions:
         print("sessions empty")
@@ -41,12 +56,12 @@ async def getChatSession(user : User =  Depends(get_current_user),
 
 @router.get('/chatLog')
 async def getChatLog(session_id : str, 
-                     user: User = Depends(get_current_user), 
-                     group : Group = Depends(check_group_member)):
+                     user: User = Depends(get_current_user),
+                     assistant_id : str = Depends(get_assistant_id)
+                     ):
     '''获取一个chatsession中的所有chatlog'''
     
-    assitant_id = group.assistant_id
-    sessions = rag_client.getSessionList(assitant_id,user_id=user.external_id,session_id=session_id)
+    sessions = rag_client.getSessionList(assistant_id,user_id=user.external_id,session_id=session_id)
     sessions = sessions.data
     if not sessions:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
@@ -56,7 +71,7 @@ async def getChatLog(session_id : str,
     for session in sessions:
         for message in session.messages:
             item = LogItem(role = message.role,
-                        content =  message.content)
+                        content = message.content)
             log_list.append(item)
     
     print("[Debug] log_list:",str(log_list)[:100])
@@ -68,16 +83,15 @@ async def getChatLog(session_id : str,
     return Response_GetChatLog(logs = log_list)
 
 @router.post('/chatLog')
-async def postChatLog(message : Request_ChatLog, 
+async def postChatLog(request : Request_ChatLog,
                       user : User = Depends(get_current_user),
-                      group : Group = Depends(check_group_member)):
+                      assistant_id : str = Depends(get_assistant_id)
+                      ):
     '''    提交一次信息，发往ai接口进行处理后，加入信息到数据库    '''
-    assitant_id = group.assistant_id
-    
-    print("message.session_id:",message.session_id)
-    response = rag_client.chat(assitant_id,
-                               message.content,
-                               message.session_id,
+    print("session_id:",request.session_id)
+    response = rag_client.chat(assistant_id,
+                               request.content,
+                               request.session_id,
                                user.external_id)
     if (Response_Chat.is_error(response)):
         raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
@@ -85,7 +99,7 @@ async def postChatLog(message : Request_ChatLog,
     if not response.data :
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
-    # response = handle_user_question(message.content,"4a3516d6111811f094600242ac130005")
+    # response = handle_user_question(content,"4a3516d6111811f094600242ac130005")
     if Response_Chat.is_stream_end(response):
         return Response_PostChatLog()
     elif type(response.data) != Literal[True]:
