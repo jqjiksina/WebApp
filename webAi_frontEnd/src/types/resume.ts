@@ -8,7 +8,16 @@ export interface Resume {
 }
 
 export interface ResumeFeedback {
-  suggestions: string[]
   score: number
-  improvements: string[]
+  suggestions: string[]
+}
+
+export interface ResumeChatResponse {
+  session_id: string
+  content: string
+}
+
+export interface ResumeChatRequest {
+  session_id: string
+  content: string
 }

@@ -15,3 +15,21 @@ interface LogsRecord{
 }
 
 export type{Log, LogsRecord}
+
+export interface ChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+  isStreaming?: boolean
+}
+
+export interface ChatRequest {
+  session_id: string
+  content: string
+}
+
+export interface ChatResponse {
+  data:{
+    session_id: string
+    answer: string
+  }
+}

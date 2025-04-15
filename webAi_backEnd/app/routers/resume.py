@@ -4,7 +4,7 @@ from api.ragflow.schem import Response_Chat
 from schema.chat import Request_ChatLog, Response_PostChatLog
 from database.core import get_async_db
 from fastapi import APIRouter, File, UploadFile, HTTPException,Depends, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pathlib import Path
 import uuid
 import shutil
@@ -13,6 +13,7 @@ from dependencies.index import get_current_user
 from database.models import User
 from sqlalchemy.ext.asyncio import AsyncSession
 import subprocess
+import json
 
 router = APIRouter(
     tags=["resume"])
@@ -68,26 +69,57 @@ async def chat_resume(request : Request_ChatLog,
     # 如果第一次开始对话，那么创建会话
     # 否则直接在指定session_id上继续对话
     assistant_id = user.assistant_id
-    print("chat_resume...")
-    response = rag_client.chat(assistant_id,
-                               request.content,
-                               request.session_id,
-                               user.external_id)
-    if (Response_Chat.is_error(response)):
-        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
-                            detail="输入cotent为空")
-    if not response.data :
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    print("[Debug] chat_resume on session_id:",request.session_id)
     
-    # response = handle_user_question(content,"4a3516d6111811f094600242ac130005")
-    if Response_Chat.is_stream_end(response):
-        return Response_PostChatLog()
-    elif type(response.data) != Literal[True]:
+    try:
+        # 如果没有session_id，创建一个新的会话
+        if not request.session_id:
+            # 创建新会话
+            session_response = rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
+            if session_response and session_response.get("data"):
+                request.session_id = session_response["data"]["id"]
+        
+        # 设置流式传输
+        response = rag_client.chat(assistant_id,
+                                 request.content,
+                                 request.session_id,
+                                 user.external_id,
+                                 stream=True)
+        stream = True
+        # 对于流式响应，直接返回生成器
+        if stream:
+            async def generate():
+                for chunk in response:
+                    # print("one stream:",chunk)
+                    
+                    yield f"data: {chunk}\n\n"
+            print("stream down")
+            return StreamingResponse(
+                generate(),
+                media_type="text/event-stream",
+                headers={
+                    "Cache-Control": "no-cache",
+                    "Connection": "keep-alive",
+                }
+            )
+        
+        # 非流式响应的处理
+        if Response_Chat.is_error(response):
+            raise HTTPException(status_code=status.HTTP_204_NO_CONTENT,
+                              detail="输入content为空")
+        if not response.data:
+            raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
         return Response_PostChatLog(
             session_id=response.data.session_id,
             content=response.data.answer
         )
-    
+    except Exception as e:
+        print(f"[Error] chat_resume error: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"处理请求时发生错误: {str(e)}"
+        )
 
 # 添加文件大小限制中间件（可选）
 # @app.middleware("http")

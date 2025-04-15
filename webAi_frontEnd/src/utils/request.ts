@@ -4,8 +4,8 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 // 创建 axios 实例
 const service: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-  timeout: 10000,
+  baseURL: import.meta.env.VITE_BACK_END_URL,
+  timeout: 600000,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -30,6 +30,10 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response: AxiosResponse) => {
+    // 如果是流式响应，直接返回原始响应
+    if (response.config.responseType === 'stream') {
+      return response
+    }
     return response.data
   },
   (error) => {
@@ -51,7 +55,7 @@ const request = {
     return service.get(url, config)
   },
 
-  post<T>(url: string, data?: Record<string, unknown>, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
+  post<T>(url: string, data?: Record<string, unknown>, config?: AxiosRequestConfig): Promise<ApiResponse<T> | AxiosResponse> {
     return service.post(url, data, config)
   },
 

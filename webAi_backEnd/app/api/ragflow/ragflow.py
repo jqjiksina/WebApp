@@ -10,6 +10,7 @@ from pathlib import Path
 from re import L
 from typing import Optional
 import requests
+from fastapi.responses import StreamingResponse
 
 
 from .schem import ChatAssistantConfig, Response_Chat, Response_GetSessions
@@ -111,9 +112,35 @@ class RAGFlowClient:
         response = requests.post(
             f"{self.base_url}/api/v1/chats/{assitant_id}/completions",
             headers=self.headers,
-            json=payload
+            json=payload,
+            stream=stream
         )
         response.raise_for_status()
+        
+        if stream:
+            session_id = ""
+            def generate():
+                for line in response.iter_lines():
+                    if line:
+                        line = line.decode('utf-8')
+                        if line.startswith('data:'):
+                            data = json.loads(line[5:].strip())
+                            if data.get('code') == 0:
+                                if isinstance(data.get('data'), bool):
+                                    # 流式结束标记
+                                    yield json.dumps({
+                                        'type': 'end',
+                                        'session_id' : session_id
+                                        })
+                                else:
+                                    # 正常消息
+                                    session_id = data["data"]["session_id"]
+                                    yield json.dumps({
+                                        'type': 'text',
+                                        'content': data['data']['answer'],
+                                    })
+            return generate()
+        
         print("[Debug] Chat Response:",response.json())
         response = response.json()
         def parse_sse_data(sse_str: str) -> dict:
