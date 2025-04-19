@@ -21,9 +21,10 @@ export const userApi = {
 }
    */
   login: async (params: Request_Login, timeout_ = 5000) => {
-    console.log('http://' + import.meta.env.VITE_BACK_END_URL +'/auth/login');
+    const url = 'http://' + import.meta.env.VITE_BACK_END_URL +'/api/auth/login';
+    console.log("login url:",url);
     const response = await axios.post<Response_Login>(
-      'http://' + import.meta.env.VITE_BACK_END_URL +'/auth/login', params,{
+      url, params,{
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
@@ -39,7 +40,7 @@ export const userApi = {
    */
   register: async (params: Request_Register, timeout_ = 5000) => {
     const response =  await axios.post<Response_register>(
-      'http://' + import.meta.env.VITE_BACK_END_URL +'/auth/register', params,{
+      'http://' + import.meta.env.VITE_BACK_END_URL +'/api/auth/register', params,{
       headers: {
         'Content-Type': 'application/json'
       },

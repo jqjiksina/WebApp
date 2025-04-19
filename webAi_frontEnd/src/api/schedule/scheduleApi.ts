@@ -6,10 +6,10 @@ export const scheduleApi = {
   getSchedules: () => request.get<Schedule[]>('/api/schedules'),
 
   // 创建排班
-  createSchedule: (data: ScheduleForm) => request.post<Schedule>('/api/schedules', data),
+  createSchedule: (data: ScheduleForm) => request.post<Schedule>('/api/schedules', data as unknown as Record<string, unknown>),
 
   // 更新排班
-  updateSchedule: (id: number, data: ScheduleForm) => request.put<Schedule>(`/api/schedules/${id}`, data),
+  updateSchedule: (id: number, data: ScheduleForm) => request.put<Schedule>(`/api/schedules/${id}`, data as unknown as Record<string, unknown>),
 
   // 删除排班
   deleteSchedule: (id: number) => request.delete(`/api/schedules/${id}`),
@@ -18,10 +18,10 @@ export const scheduleApi = {
   getEmployees: () => request.get<ScheduleEmployee[]>('/api/employees'),
 
   // 添加员工
-  addEmployee: (employee: ScheduleEmployee) => request.post<ScheduleEmployee>('/api/employees', employee),
+  addEmployee: (employee: ScheduleEmployee) => request.post<ScheduleEmployee>('/api/employees', employee as unknown as Record<string, unknown>),
 
   // 更新员工
-  updateEmployee: (id: number, employee: ScheduleEmployee) => request.put<ScheduleEmployee>(`/api/employees/${id}`, employee),
+  updateEmployee: (id: number, employee: ScheduleEmployee) => request.put<ScheduleEmployee>(`/api/employees/${id}`, employee as unknown as Record<string, unknown>),
 
   // 删除员工
   deleteEmployee: (id: number) => request.delete(`/api/employees/${id}`),

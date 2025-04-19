@@ -19,13 +19,13 @@
 <script setup lang="ts">
 // import { Draggable } from 'gsap/all';
 // import IconCommunity from './icons/IconCommunity.vue';
-import {chatApi } from '@/api/chatApi';
+import {chatApi } from '@/api/chat/chatApi';
 import SideBarMenu from '@/views/SideBar/SideBarMenu.vue';
 import router from '@/router';
-import { useChatSessionStore as useChatSessionStore } from '@/store/chatSession';
+import { useChatSessionStore as useChatSessionStore } from '@/store/modules/chatSession';
 
 import { computed, onBeforeMount, watch } from 'vue';
-import { useUsersStore } from '@/store/user';
+import { useUsersStore } from '@/store/modules/user';
 const store = useChatSessionStore()
 const chatSession = computed(()=>store.getSessions);
 

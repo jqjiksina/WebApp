@@ -29,11 +29,11 @@ export const useScheduleStore = defineStore('schedule', {
     },
 
     async generateSchedule() {
-      this.schedules = await scheduleApi.generateSchedule()
+      this.schedules = (await scheduleApi.generateSchedule()).data
     },
 
     async fetchEmployees() {
-      this.employees = await scheduleApi.getEmployees()
+      this.employees = (await scheduleApi.getEmployees()).data
     },
 
     async getSchedules() {

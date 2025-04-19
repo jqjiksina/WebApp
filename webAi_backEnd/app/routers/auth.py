@@ -15,7 +15,7 @@ from database.models import User  # 假设您已定义User模型
 from database.core import get_async_db
 from api.ragflow.ragflow import rag_client
 
-router = APIRouter(prefix="/auth", tags=["认证相关"])
+router = APIRouter(prefix="/api/auth", tags=["认证相关"])
 
 # ------------------------- 注册接口 -------------------------
 @router.post("/register", status_code=201)

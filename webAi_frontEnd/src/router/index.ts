@@ -45,7 +45,7 @@ const router = createRouter({
 })
 
 // 路由守卫 - 模拟正常登录状态
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const userStore = useUsersStore()
   if (to.path === '/login') {
     next()

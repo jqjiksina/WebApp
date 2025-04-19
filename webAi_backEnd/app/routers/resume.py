@@ -120,6 +120,16 @@ async def chat_resume(request : Request_ChatLog,
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"处理请求时发生错误: {str(e)}"
         )
+        
+@router.get("/api/resume/newSession")
+async def new_session(user : User = Depends(get_current_user)):
+    '''创建新的会话'''
+    assistant_id = user.assistant_id
+    session_response = rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
+    if session_response and session_response.get("data"):
+        return {"code" : 200,
+                "message" : "new session succeed",
+                "data":{"session_id" : session_response["data"]["id"]}}
 
 # 添加文件大小限制中间件（可选）
 # @app.middleware("http")

@@ -10,7 +10,7 @@ import Header from '@/components/layout/Header.vue'
 onBeforeMount(async ()=>{
   // const userStore = useUsersStore()
   // const user = userStore.getUser
-  const user = useUsersStore()
+  let user = useUsersStore()
   if (!user || (!user.phone && !user.email)) {
     console.log("userStore数据空",user)
     return

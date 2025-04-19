@@ -4,7 +4,6 @@ import App from '@/App.vue'
 import router from '@/router'
 import { createPinia } from "pinia";
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-import axios from 'axios';
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
@@ -32,8 +31,11 @@ app.config.globalProperties['$assert']=(exp:boolean)=>{
 if(!exp) throw Error("error");
 };
 
+// 创建pinia并添加持久化插件
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
 
-app.use(createPinia().use(piniaPluginPersistedstate))
+app.use(pinia)
   .use(router)
   .use(ElementPlus)
 
@@ -59,4 +61,4 @@ setInterval(async () => {
       console.log("refresh token error!")
     }
   }
-}, 600_000) // 5分钟
+}, 600_000) // 10分钟

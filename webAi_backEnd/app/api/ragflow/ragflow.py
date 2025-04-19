@@ -138,6 +138,7 @@ class RAGFlowClient:
                                     yield json.dumps({
                                         'type': 'text',
                                         'content': data['data']['answer'],
+                                        'session_id' : session_id
                                     })
             return generate()
         

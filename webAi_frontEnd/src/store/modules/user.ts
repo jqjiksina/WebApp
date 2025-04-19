@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import {ref, computed} from 'vue'
-import type{Params_Login, Params_Register, Params_User} from '@/types/formSubmit'
+import type{Params_User} from '@/types/formSubmit'
 
 // 第一个参数是应用程序中 store 的唯一 id
 export const useUsersStore = defineStore('users', ()=>{
@@ -35,7 +35,7 @@ export const useUsersStore = defineStore('users', ()=>{
       return
   }
 
-  return {getToken, getUser, updateToken, getUid, updateUser, clearToken,phone,email,password,username}
+  return {getToken, getUser, updateToken, getUid, updateUser, clearToken,phone,email,password,username,token}
 },{
-  persist:true
+  persist: true
 })

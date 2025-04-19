@@ -125,7 +125,7 @@ onMounted(() => {
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick, onMounted } from 'vue'
+import { ref, watch, nextTick} from 'vue'
 
 const props = defineProps({
   modelValue: Boolean,

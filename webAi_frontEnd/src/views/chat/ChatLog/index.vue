@@ -1,12 +1,12 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import {computed, onMounted, ref, watch, type ComputedRef} from 'vue';
-import { useLogsStore } from '@/store/chatLog';
+import { useLogsStore } from '@/store/modules/chatLog';
 import { FloatingAvatar } from '@/components';
 import type {Log} from '@/types/chat'
-import { chatApi } from '@/api/chatApi';
+import { chatApi } from '@/api/chat/chatApi';
 import LogInput from '@/components/LogInput.vue';
-import { useUsersStore } from '@/store/user';
+import { useUsersStore } from '@/store/modules/user';
 
 const logItems : ComputedRef<Log[]> = computed(()=>useLogsStore().getLogs); // 一定要用computed！才能保证变量保持响应性！
 
