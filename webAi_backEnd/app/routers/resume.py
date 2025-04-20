@@ -14,6 +14,7 @@ from database.models import User
 from sqlalchemy.ext.asyncio import AsyncSession
 import subprocess
 import json
+import time
 
 router = APIRouter(
     tags=["resume"])
@@ -45,14 +46,14 @@ async def upload_resume(file: UploadFile = File(...),
     # 可以在此处调用RAGFlow的文档处理接口
     # 示例伪代码：
     if not user.dataset_id:
-        response = rag_client.createDataset(f'{user.name}_{user.external_id}',f"{user.name}_{user.external_id}'s dataset")
+        response = await rag_client.createDataset(f'{user.name}_{user.external_id}',f"{user.name}_{user.external_id}'s dataset")
         user.dataset_id = response["data"]["id"]
         await db.execute(update(User).where(User.id == user.id).values(dataset_id = user.dataset_id))
         
-    response = rag_client.uploadDocuments(user.dataset_id,file_path)
+    response = await rag_client.uploadDocuments(user.dataset_id,file_path)
     # 上传完毕后删除服务器中转临时文件
     subprocess.call(["rm",file_path])
-    response = rag_client.parseDocuments(user.dataset_id,[response["data"][0]["id"]])
+    response = await rag_client.parseDocuments(user.dataset_id,[response["data"][0]["id"]])
     
     # ========================================
 
@@ -75,7 +76,7 @@ async def chat_resume(request : Request_ChatLog,
         # 如果没有session_id，创建一个新的会话
         if not request.session_id:
             # 创建新会话
-            session_response = rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
+            session_response = await rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
             if session_response and session_response.get("data"):
                 request.session_id = session_response["data"]["id"]
         
@@ -89,11 +90,9 @@ async def chat_resume(request : Request_ChatLog,
         # 对于流式响应，直接返回生成器
         if stream:
             async def generate():
-                for chunk in response:
+                async for chunk in response:
                     # print("one stream:",chunk)
-                    
                     yield f"data: {chunk}\n\n"
-            print("stream down")
             return StreamingResponse(
                 generate(),
                 media_type="text/event-stream",
@@ -125,8 +124,8 @@ async def chat_resume(request : Request_ChatLog,
 async def new_session(user : User = Depends(get_current_user)):
     '''创建新的会话'''
     assistant_id = user.assistant_id
-    session_response = rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
-    if session_response and session_response.get("data"):
+    session_response = await rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
+    if session_response and session_response["data"]:
         return {"code" : 200,
                 "message" : "new session succeed",
                 "data":{"session_id" : session_response["data"]["id"]}}
@@ -144,4 +143,4 @@ async def new_session(user : User = Depends(get_current_user)):
 #             content={"error": "文件大小超过50MB限制"}
 #         )
     
-    # return await call_next(request)
+#     return await call_next(request)

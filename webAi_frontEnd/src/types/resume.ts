@@ -31,7 +31,7 @@ export interface ChatMessage {
 export interface ChatSessionState {
   typingIndex: number
   isStreaming: boolean
-  lastContent: string   //用于缓存最新次流式传输接收的结果
+  lastContent: string   //用于缓存最新的打字机结果
 }
 
 export interface ChatSession {

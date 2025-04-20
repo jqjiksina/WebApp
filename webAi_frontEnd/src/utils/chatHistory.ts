@@ -1,14 +1,17 @@
 import { useUsersStore } from '@/store'
 import type { ChatHistory, ChatSession, ChatMessage, ChatSessionState } from '@/types/resume'
 import { ElMessage } from 'element-plus'
-import { nextTick, ref, Ref } from 'vue'
+import { nextTick, ref, Ref} from 'vue'
 
 const STORAGE_KEY = `${useUsersStore().username}-resume_chat_history`
 
 export class ChatHistoryManager {
   private static instance: ChatHistoryManager
-  private history: ChatHistory
-  private activeStreamingSessions: Set<string> = new Set()
+  private history= ref<ChatHistory>({
+    sessions: [],
+    current_session_id: null
+  })
+  private activeStreamingSessions = ref(new Set<string>());
   private eventListeners: Map<string, Set<EventListener>> = new Map()
   // private mode : string = "resume"
 
@@ -16,9 +19,10 @@ export class ChatHistoryManager {
   private messages : Ref<ChatMessage[]> = ref([])
   private messagesContainer = ref<HTMLElement | null>(null)
   private active_session_id = ref("")
+  private inputMessage = ref("")
 
   private constructor() {
-    this.history = this.loadHistory()
+    this.history.value = this.loadHistory()
     // 初始化状态
     this.initializeSessionStates()
   }
@@ -32,8 +36,8 @@ export class ChatHistoryManager {
 
   private initializeSessionStates() {
     // 确保每个会话都有状态对象
-    if (this.history.sessions) {
-      this.history.sessions.forEach(session => {
+    if (this.history.value.sessions) {
+      this.history.value.sessions.forEach(session => {
         if (!session.state) {
           session.state = this.createDefaultSessionState()
         }
@@ -56,12 +60,15 @@ export class ChatHistoryManager {
     }
   }
 
+  /**
+   * 保存历史记录到浏览器缓存
+   */
   private saveHistory() {
     try {
       // 保存前进行深拷贝，避免引用问题
-      const historyToSave = JSON.parse(JSON.stringify(this.history));
+      const historyToSave = JSON.parse(JSON.stringify(this.history.value));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(historyToSave));
-      console.log("历史记录已保存，会话数量:", this.history.sessions.length);
+      console.log("历史记录已保存，会话数量:", this.history.value.sessions.length);
     } catch (error) {
       console.error("保存历史记录失败:", error);
     }
@@ -78,11 +85,13 @@ export class ChatHistoryManager {
   // 获取会话的上下文
   public setChatContext(messages : Ref<ChatMessage[]>,
     messagesContainer:Ref<HTMLElement | null>,
-    active_session_id : Ref<string>
+    active_session_id : Ref<string>,
+    inputMessage : Ref<string>
   ){
     this.messages = messages
     this.messagesContainer = messagesContainer
     this.active_session_id = active_session_id
+    this.inputMessage = inputMessage
   }
   /**
  * 打字机效果 - 针对特定会话
@@ -108,10 +117,7 @@ export class ChatHistoryManager {
     }
     
     // 更新会话状态的打字索引
-    this.updateSessionState(session_id, { 
-      typingIndex: currentIndex,
-      lastContent: content  // 同时保存完整内容
-    });
+    this.updateTypingIndex(session_id, currentIndex);
     
     // 只有当前活跃会话才更新UI
     if (this.active_session_id.value === session_id && this.messages.value?.length > 0) {
@@ -130,13 +136,6 @@ export class ChatHistoryManager {
       if (this.isSessionStreaming(session_id)) {
         // 递归调用以处理下一个字符
         this.typeWriter(session_id, content, currentIndex + 1);
-      } else if (this.active_session_id.value === session_id) {
-        // 会话结束时确保显示完整内容
-        const lastMessage = this.messages.value[this.messages.value.length - 1];
-        if (lastMessage?.role === 'assistant' && lastMessage.content !== content) {
-          lastMessage.content = content;
-          this.scrollToBottom();
-        }
       }
     }, 20); // 调整打字速度
   }
@@ -151,14 +150,14 @@ export class ChatHistoryManager {
       title,
       state: this.createDefaultSessionState()
     }
-    this.history.sessions.push(newSession)
-    this.active_session_id.value = this.history.current_session_id = session_id
+    this.history.value.sessions.push(newSession)
+    this.active_session_id.value = this.history.value.current_session_id = session_id
     this.saveHistory()
     return newSession
   }
 
   public addMessage(session_id: string, message: ChatMessage) {
-    const session = this.history.sessions.find(s => s.session_id === session_id)
+    const session = this.history.value.sessions.find(s => s.session_id === session_id)
     if (session) {
       session.messages.push(message)
       session.updated_at = Date.now()
@@ -167,49 +166,34 @@ export class ChatHistoryManager {
   }
 
   public getCurrentSession(): ChatSession | null {
-    if (!this.history.current_session_id) return null
-    return this.history.sessions.find(s => s.session_id === this.history.current_session_id) || null
+    if (!this.history.value.current_session_id) return null
+    return this.history.value.sessions.find(s => s.session_id === this.history.value.current_session_id) || null
   }
 
   public getSession(session_id: string): ChatSession | null {
-    return this.history.sessions.find(s => s.session_id === session_id) || null
+    return this.history.value.sessions.find(s => s.session_id === session_id) || null
   }
 
-  public getAllSessions(): ChatSession[] {
-    return this.history.sessions.sort((a, b) => b.updated_at - a.updated_at)
+  /**
+   * 将所有会话按照更新时间顺序返回
+   */
+  public getAllSessions(): Ref<ChatSession[]> {
+    return ref(this.history.value.sessions.sort((a, b) => b.updated_at - a.updated_at))
   }
 
-  public switchSession(session_id: string) {
-    if (this.history.sessions.some(s => s.session_id === session_id)) {
-      this.active_session_id.value = this.history.current_session_id = session_id
-      this.saveHistory()
-    }
-  }
-
+  /**
+   * 切换到指定会话
+   * @param sessionId 会话ID
+   */
   public async switchToSession(sessionId: string){
     console.log('切换到会话:', sessionId)
-    
-    // 如果当前有活跃会话，保存当前会话状态
-    if (this.active_session_id.value) {
-      this.saveSession(this.active_session_id.value)
-    }
-    
-    // 更新当前会话ID
     this.active_session_id.value = sessionId
-    
-    // 获取会话消息并更新显示
-    const session = this.getSession(sessionId)
-    if (session) {
-      this.messages.value = [...session.messages]
-      
-      // 重置打字索引
-      this.resetTypingIndex(sessionId)
-      
-      console.log('加载会话消息:', this.messages.value.length, '条消息')
-    } else {
-      this.messages.value = []
-      console.log('创建新会话')
-    }
+    this.loadSession()
+    this.inputMessage.value = ''
+    // 滚动到底部
+    await nextTick(() => {
+      this.scrollToBottom()
+    })
   }
 
   public deleteSession(session_id: string) {
@@ -218,11 +202,11 @@ export class ChatHistoryManager {
       this.stopSessionStreaming(session_id)
     }
     
-    this.history.sessions = this.history.sessions.filter(s => s.session_id !== session_id)
-    if (this.history.current_session_id === session_id) {
-      this.history.current_session_id = this.history.sessions[0]?.session_id || null
-      if (this.history.current_session_id){
-        this.active_session_id.value = this.history.current_session_id
+    this.history.value.sessions = this.history.value.sessions.filter(s => s.session_id !== session_id)
+    if (this.history.value.current_session_id === session_id) {
+      this.history.value.current_session_id = this.history.value.sessions[0]?.session_id || null
+      if (this.history.value.current_session_id){
+        this.active_session_id.value = this.history.value.current_session_id
         this.loadSession()
       }
       else{
@@ -252,13 +236,25 @@ export class ChatHistoryManager {
     return session ? session.state : null
   }
 
-  // 更新会话状态
+  /**
+   * 更新会话状态，可选：typeIndex、isStreaming、lastContent
+   * @param session_id 会话ID
+   * @param updates 更新内容
+   */ 
   public updateSessionState(session_id: string, updates: Partial<ChatSessionState>) {
     const session = this.getSession(session_id)
     if (session) {
       session.state = { ...session.state, ...updates }
       this.saveHistory()
     }
+  }
+
+  public resetSessionState(session_id: string){
+    this.updateSessionState(session_id,{
+      typingIndex: -1,
+      isStreaming: false,
+      lastContent: ''
+    })
   }
 
   // 获取打字索引
@@ -280,13 +276,13 @@ export class ChatHistoryManager {
 
   // 标记会话为活跃状态（正在接收流式消息）
   public startSessionStreaming(session_id: string) {
-    this.activeStreamingSessions.add(session_id)
+    this.activeStreamingSessions.value.add(session_id)
     this.updateSessionState(session_id, { isStreaming: true })
   }
 
   // 取消会话的活跃状态
   public stopSessionStreaming(session_id: string) {
-    this.activeStreamingSessions.delete(session_id)
+    this.activeStreamingSessions.value.delete(session_id)
     this.updateSessionState(session_id, { isStreaming: false })
     // 移除该会话的所有事件监听器
     this.removeAllSessionListeners(session_id)
@@ -294,14 +290,18 @@ export class ChatHistoryManager {
   }
   // 取消所有会话的活跃状态
   public clearSessionsStreaming() {
-    this.activeStreamingSessions.clear()
-    this.history.sessions.forEach(session=>{
+    this.activeStreamingSessions.value.clear()
+    this.history.value.sessions.forEach(session=>{
       session.state.isStreaming = false
     })
     this.clearEvnetListeners()
   }
 
-  // 保存当前会话消息
+  /**
+   * 保存指定会话的消息
+   * @param session_id 
+   * @returns 
+   */
   public saveSession(session_id: string) {
     try {
       const session = this.getSession(session_id);
@@ -326,15 +326,18 @@ export class ChatHistoryManager {
       session.messages = messagesToSave;
       session.updated_at = Date.now();
       
-      // 立即保存历史记录
+      // 立即保存历史记录到浏览器缓存
       this.saveHistory();
     } catch (error) {
       console.error(`保存会话 ${session_id} 失败:`, error);
     }
   }
 
+  /**
+   * 加载当前会话的消息
+   */
   public loadSession(){
-    console.log(`加载会话 ${this.active_session_id.value} 的历史消息`)
+  console.log(`加载会话 ${this.active_session_id.value} 的历史消息`)
     const currentSession = this.getSession(this.active_session_id.value)
     
     if (currentSession) {
@@ -342,7 +345,7 @@ export class ChatHistoryManager {
       this.messages.value = [...currentSession.messages]
       
       // 如果会话正在流式接收，恢复状态
-      if (this.isSessionStreaming(this.active_session_id.value)) {
+      if (this.isSessionStreaming(this.active_session_id.value).value) {
         console.log(`会话 ${this.active_session_id.value} 正在流式接收中`)
         const sessionState = this.getSessionState(this.active_session_id.value)
         
@@ -378,8 +381,8 @@ export class ChatHistoryManager {
   }
 
   // 检查会话是否正在接收流式消息
-  public isSessionStreaming(session_id: string): boolean {
-    return this.activeStreamingSessions.has(session_id)
+  public isSessionStreaming(session_id: string) {
+    return ref(this.activeStreamingSessions.value.has(session_id))
   }
 
   // 添加会话特定的事件监听器
@@ -484,13 +487,19 @@ export class ChatHistoryManager {
         const currentIndex = this.getTypingIndex(session_id);
         this.typeWriter(session_id, content, currentIndex >= 0 ? currentIndex : 0);
         this.scrollToBottom();
+      }else{
+        // 否则直接将打字索引更新到最新
+        this.updateTypingIndex(session_id,content.length)
       }
     }) as EventListener;
     
     // 保存处理器引用并注册
     this.addSessionListener(session_id, "sse-message", messageHandler);
     
-    // 完成处理器 - 处理会话结束事件
+    /** 完成处理器 - 处理会话结束事件；
+     *  特别注意：事件触发时，TypeWriter可能并没有结束
+     * @param event 事件对象，包含最后的完整内容
+     *  */ 
     const completionHandler = ((event: CustomEvent) => {
       console.log(`会话 ${session_id} 完成接收`);
       
@@ -506,13 +515,18 @@ export class ChatHistoryManager {
         finalContent = sessionState?.lastContent || '';
       }
       
+      // 停止会话流式接收状态，这会触发typeWriter的结束
+      this.stopSessionStreaming(session_id);
+      this.updateTypingIndex(session_id,finalContent.length)
+      this.resetSessionState(session_id)
+
       // 创建最终消息
       const finalMessage: ChatMessage = {
         role: "assistant", 
         content: finalContent, 
         timestamp: Date.now()
       };
-      
+
       // 当前活跃会话直接更新UI
       if (session_id === this.active_session_id.value && this.messages.value.length > 0) {
         const lastMessage = this.messages.value[this.messages.value.length - 1];
@@ -538,9 +552,6 @@ export class ChatHistoryManager {
         // 保存更改
         this.saveHistory();
       }
-      
-      // 停止会话流式接收状态
-      this.stopSessionStreaming(session_id);
     }) as EventListener;
     
     this.addSessionListener(session_id, "sse-session-completed", completionHandler);

@@ -4,17 +4,24 @@ import { useUsersStore } from '@/store'
 import type { AxiosProgressEvent } from 'axios'
 
 const store = useUsersStore()
+const session_controller = new Map<string,AbortController>()  // 建立对应于会话id的 abort ontrolller
+
 
 export const resumeApi = {
   // 对话接口
-  chat: async (resume_session_id: string, content: string) => {
-    console.log(`[Debug] chat begin for session: ${resume_session_id}`)
-    let resultSessionId = resume_session_id
+  // to-do : 立即中断链接的逻辑加入
+  chat: async (session_id: string, content: string) => {
+    console.log(`[Debug] chat begin for session: ${session_id}`)
+    let currentSessionId;
     
     try {
+      // 创建一个新的abort controller
+      let controller = new AbortController()
+      session_controller.set(session_id,controller)
+
       await request.post(
         'http://' + import.meta.env.VITE_BACK_END_URL + '/api/resume/chat',
-        { session_id: resume_session_id, content: content },
+        { session_id: session_id, content: content },
         {
           headers: {
             'Authorization': `Bearer ${store.getToken}`,
@@ -22,6 +29,7 @@ export const resumeApi = {
             'Cache-Control': 'no-cache'
           },
           responseType: 'text',
+          signal: controller.signal,
           onDownloadProgress: (progressEvent: AxiosProgressEvent) => {
             // 获取当前接收到的数据
             const chunk = progressEvent.event?.target?.responseText
@@ -48,7 +56,7 @@ export const resumeApi = {
                   
                   console.log("Parsed JSON:", jsonData)
                   
-                  const currentSessionId = jsonData.session_id
+                  currentSessionId = jsonData.session_id
                   
                   if (jsonData.type === 'text') {
                     console.log("Dispatching text event for session:", currentSessionId)
@@ -62,8 +70,10 @@ export const resumeApi = {
                     window.dispatchEvent(event)
                   } else if (jsonData.type === 'end') {
                     // 更新结果会话ID
-                    resultSessionId = jsonData.session_id
                     console.log(`Chat completed for session ${currentSessionId}`)
+
+                    // 销毁map中的映射
+                    session_controller.delete(currentSessionId)
                     
                     // 触发会话完成事件
                     const completionEvent = new CustomEvent(`sse-session-completed-${currentSessionId}`, { 
@@ -80,7 +90,7 @@ export const resumeApi = {
                   try {
                     // 如果发生错误但能够解析出会话ID，则触发该会话的错误事件
                     const match = line.match(/"session_id"\s*:\s*"([^"]+)"/)
-                    const errorSessionId = match ? match[1] : resume_session_id
+                    const errorSessionId = match ? match[1] : session_id
                     
                     // 触发错误事件但继续处理其他数据行
                     const errorEvent = new CustomEvent(`sse-error-${errorSessionId}`, { 
@@ -97,18 +107,31 @@ export const resumeApi = {
         }
       )
     } catch (error) {
-      console.error(`[Error] chat failed for session ${resume_session_id}:`, error)
+      console.error(`[Error] chat failed for session ${session_id}:`, error)
       // 触发错误事件
-      const errorEvent = new CustomEvent(`sse-error-${resume_session_id}`, { 
-        detail: { error, session_id: resume_session_id } 
+      const errorEvent = new CustomEvent(`sse-error-${session_id}`, { 
+        detail: { error, session_id: session_id } 
       })
       window.dispatchEvent(errorEvent)
       
       throw error
     }
     
-    console.log(`[Debug] chat finished for session ${resume_session_id}, returned ID: ${resultSessionId}`)
-    return resultSessionId
+    console.log(`[Debug] chat finished for session ${currentSessionId}`)
+    return currentSessionId
+  },
+
+  /**
+   * 中断对应会话
+   * @param session_id 要中断的会话id
+   */
+  abortChat: (session_id: string) => {
+    // 先查询map找到对应会话的controller
+    const controller = session_controller.get(session_id)
+    if (controller) {
+      controller.abort()
+      session_controller.delete(session_id)
+    }
   },
 
   // 上传简历文件

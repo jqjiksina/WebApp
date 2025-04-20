@@ -9,6 +9,9 @@
             <el-button type="primary" @click="showSessionList = !showSessionList">
               {{ showSessionList ? '隐藏会话列表' : '显示会话列表' }}
             </el-button>
+            <el-button type="primary" @click="toggleAvatarMode">
+              {{ showAvatar ? '隐藏数字人' : '显示数字人' }}
+            </el-button>
           </div>
           <el-upload
             class="upload-demo"
@@ -36,7 +39,7 @@
                 v-for="session in sessions"
                 :key="session.session_id"
                 class="session-item"
-                :class="{ active: session.session_id === resume_session_id, 'is-streaming': isSessionStreaming(session.session_id) }"
+                :class="{ active: session.session_id === activeSessionId, 'is-streaming': isSessionStreaming(session.session_id) }"
                 @click="switchToSession(session.session_id)"
               >
                 <div class="session-title">{{ session.title }}</div>
@@ -68,7 +71,7 @@
                   <el-avatar :size="32" :src="message.role === 'user' ? userAvatar : aiAvatar" />
                   <span class="message-role">{{ message.role === 'user' ? '我' : '简历助手' }}</span>
                 </div>
-                <div class="message-text" v-html="message.content" :class="{'message-stream': message.role === 'assistant' && ((chatHistory.isSessionStreaming(resume_session_id) && index === messages.length - 1))}"></div>
+                <div class="message-text" v-html="message.content" :class="{'message-stream': message.role === 'assistant' && ((isStreaming && index === messages.length - 1))}"></div>
               </div>
             </div>
           </div>
@@ -85,9 +88,14 @@
             <el-button 
               type="primary" 
               @click="sendMessage" 
-              :loading="loading"
+              :loading="isStreaming"
               :disabled="isStreaming"
             >发送</el-button>
+            <el-button
+              type="danger"
+              @click="stopStreamming"
+              v-if="isStreaming"
+              >停止</el-button>
           </div>
         </div>
       </div>
@@ -96,7 +104,7 @@
 </template>
 
 <script setup lang="ts" name="ResumeChat">
-import { ref, onMounted, nextTick, computed, onBeforeUnmount } from 'vue'
+import { ref, onMounted, computed, onBeforeUnmount } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete } from '@element-plus/icons-vue'
 import { resumeApi } from '@/api/resume/resumeApi'
@@ -105,23 +113,31 @@ import type { ChatMessage } from '@/types/resume'
 
 const messages = ref<ChatMessage[]>([])
 const inputMessage = ref('')
-const loading = ref(false)
 const messagesContainer = ref<HTMLElement | null>(null)
-const resume_session_id = ref("")
+const activeSessionId = ref("")
 const showSessionList = ref(false)
+const showAvatar = ref(false)
 const chatHistory = ChatHistoryManager.getInstance()
-chatHistory.setChatContext(messages,messagesContainer,resume_session_id)
+chatHistory.setChatContext(messages,messagesContainer,activeSessionId,inputMessage)
 
 
-const isStreaming = computed(() => {
-  // 当前选中的会话是否在流式接收
-  return resume_session_id.value ? chatHistory.isSessionStreaming(resume_session_id.value) : false
-})
+const isStreaming = computed(() => chatHistory.isSessionStreaming(activeSessionId.value).value)
+const sessions = computed(() => chatHistory.getAllSessions().value)
 
 const userAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 const aiAvatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
 
-const sessions = computed(() => chatHistory.getAllSessions())
+
+const stopStreamming = () => {  //停止接受
+  if (isStreaming.value) {
+    chatHistory.stopSessionStreaming(activeSessionId.value);
+    chatHistory.removeAllSessionListeners(activeSessionId.value);
+    chatHistory.saveSession(activeSessionId.value);
+    // 中断chat函数发出的流式传输连接
+    resumeApi.abortChat(activeSessionId.value);
+    ElMessage.info('流式传输已中断');
+  }
+}
 
 // 格式化时间
 const formatTime = (timestamp: number) => {
@@ -131,53 +147,16 @@ const formatTime = (timestamp: number) => {
 
 // 检查会话是否正在流式接收
 const isSessionStreaming = (session_id: string) => {
-  return chatHistory.isSessionStreaming(session_id)
+  return chatHistory.isSessionStreaming(session_id).value
 }
 
-/**
- * 切换到指定会话
- * @param {string} sessionId - 要切换到的会话ID
- */
 const switchToSession = async (sessionId: string) => {
-  console.log('切换到会话:', sessionId)
-  
-  // 如果当前有活跃会话，保存当前会话状态
-  if (resume_session_id.value) {
-    chatHistory.saveSession(resume_session_id.value)
-  }
-  
-  // 更新当前会话ID
-  resume_session_id.value = sessionId
-  
-  // 获取会话消息并更新显示
-  const session = chatHistory.getSession(sessionId)
-  if (session) {
-    messages.value = [...session.messages]
-    
-    // 重置打字索引
-    chatHistory.resetTypingIndex(sessionId)
-    
-    console.log('加载会话消息:', messages.value.length, '条消息')
-  } else {
-    messages.value = []
-    console.log('创建新会话')
-  }
-  
-  // 重置输入框
-  inputMessage.value = ''
-  
-  // 重置打字机状态
-  // const currentIndex = chatHistory.getTypingIndex(sessionId)
-  
-  // 滚动到底部
-  await nextTick(() => {
-    chatHistory.scrollToBottom()
-  })
+  chatHistory.switchToSession(sessionId)
 }
 
 // 删除会话
 const deleteSession = async (session_id: string) => {
-  if (chatHistory.isSessionStreaming(session_id)) {
+  if (chatHistory.isSessionStreaming(session_id).value) {
     ElMessage.warning('无法删除正在进行的会话')
     return
   }
@@ -197,16 +176,18 @@ const deleteSession = async (session_id: string) => {
   }
 }
 
-// 创建新会话
+/** 创建临时新会话，如果没发送消息，实际没有创建新会话到历史记录，仅仅是发送欢迎语
+ * 在调用chat时才会真正创建新会话
+ *  */ 
 const createNewSession = () => {
-  resume_session_id.value = ""
+  activeSessionId.value = ""  // 标记当前会话是临时会话，需要调用chat才会创建新会话
   messages.value = []
   chatHistory.showWelcomeMessage()
   showSessionList.value = false
 }
 
 /**
- * 处理对话发送和接收
+ * 核心逻辑，处理对话发送和接收
  */
 const handleChat = async () => {
   if (!inputMessage.value.trim()) return
@@ -235,21 +216,22 @@ const handleChat = async () => {
   messages.value.push(aiMessage)
   chatHistory.scrollToBottom()
 
-  let initialSessionId = resume_session_id.value
+  let initialSessionId = activeSessionId.value
   // 如果没有会话ID，先创建新会话
   if (!initialSessionId) {
     try {
       // 发送初始请求创建会话
       initialSessionId = await resumeApi.createNewSession()
       if (initialSessionId) {
-        resume_session_id.value = initialSessionId
+        activeSessionId.value = initialSessionId
         // 创建新会话并保存用户消息
         chatHistory.createSession(initialSessionId, userMessageContent.substring(0, 30) + '...')
         chatHistory.addMessage(initialSessionId, userMessage)
+        
         console.log('创建新会话:', initialSessionId)
       }
     } catch (error) {
-      console.error('handleChat--创建会话失败:', error)
+      console.error('创建会话失败:', error)
       messages.value[messages.value.length - 1].content = '创建会话失败，请重试'
       return
     }
@@ -266,7 +248,7 @@ const handleChat = async () => {
     chatHistory.startSessionStreaming(initialSessionId)
     chatHistory.resetTypingIndex(initialSessionId)
     
-    // 保存当前会话状态，以便在切换会话时还能恢复
+    // 保存当前会话状态
     chatHistory.saveSession(initialSessionId)
     
     // 发送请求前确保会话ID正确
@@ -289,22 +271,20 @@ const handleChat = async () => {
 }
 
 /**
- * 发送消息并处理加载状态
+ * 发送消息
  */
 const sendMessage = async () => {
   if (!inputMessage.value.trim()) return
   
   // 如果当前会话正在流式接收，不允许发送新消息
-  if (resume_session_id.value && chatHistory.isSessionStreaming(resume_session_id.value)) {
+  if (activeSessionId.value && chatHistory.isSessionStreaming(activeSessionId.value).value) {
     ElMessage.warning('请等待当前回复完成')
     return
   }
   
-  loading.value = true
   try {
     await handleChat()
   } finally {
-    loading.value = false
   }
 }
 
@@ -319,8 +299,8 @@ const handleUploadSuccess = async (_response: any) => {
     }
     messages.value.push(welcomeMessage)
     
-    if (resume_session_id.value) {
-      chatHistory.addMessage(resume_session_id.value, welcomeMessage)
+    if (activeSessionId.value) {
+      chatHistory.addMessage(activeSessionId.value, welcomeMessage)
     }
   } catch (error) {
     console.error("[Debug] handleUploadSuccess error:", error)
@@ -363,6 +343,13 @@ onMounted(() => {
 })
 
 /**
+ * 切换数字人形象模式
+ */
+const toggleAvatarMode = () => {
+  showAvatar.value = !showAvatar.value
+}
+
+/**
  * 滚动消息容器到底部
  */
 // const scrollToBottom = async () => {
@@ -376,7 +363,6 @@ onMounted(() => {
 <style scoped>
 .resume-container {
   padding: 20px;
-  height: 100%;
 }
 
 .resume-card {
@@ -495,12 +481,12 @@ onMounted(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
+  max-height: 100vh;
 }
 
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  max-height: 100vh;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -579,5 +565,9 @@ onMounted(() => {
   animation: blink 1s infinite;
   margin-left: 2px;
   display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #409eff;
+  vertical-align: middle;
 }
 </style>
