@@ -13,6 +13,7 @@ export class ChatHistoryManager {
   })
   private activeStreamingSessions = ref(new Set<string>());
   private eventListeners: Map<string, Set<EventListener>> = new Map()
+  private typeWriters : Set<string> = new Set<string>(); // 存储对应会话的typeWriter，标志其是否正在运行
   // private mode : string = "resume"
 
   //上下文
@@ -99,22 +100,35 @@ export class ChatHistoryManager {
  * @param text 要显示的完整文本
  * @param startIndex 开始打字的位置
  */
-  private typeWriter(session_id: string, text: string, startIndex: number){
-    if (!text) {
-      console.warn(`打字机效果: 会话 ${session_id} 的文本为空`);
+  private typeWriter(session_id: string, startIndex: number){
+    // if (!text) {
+    //   console.warn(`打字机效果: 会话 ${session_id} 的文本为空`);
+    //   return;
+    // }
+    if (!this.typeWriters.has(session_id)){
+      console.warn(`打字机效果: 会话 ${session_id} 未注册打字机`);
+      return;
+    }
+
+    const state = this.getSessionState(session_id) //要打印的文本
+    if (!state){
+      console.error(`打字机效果: 会话 ${session_id} 未找到状态`);
       return;
     }
     
     // 确保文本是字符串
-    const content = String(text);
+    const content = String(state.lastContent);
+    console.log(`开始打字机效果: 会话 ${session_id}, 文本长度: ${content.length}`);
     
     // 获取当前打字索引
     let currentIndex = Math.max(this.getTypingIndex(session_id), startIndex);
+    console.log(`当前索引: ${currentIndex}, 开始索引: ${startIndex}`);
     
     // 已完成打字或超出范围
-    if (currentIndex >= content.length) {
-      return;
-    }
+    // if (currentIndex >= content.length) {
+      // console.log(`打字机效果完成: 会话 ${session_id}`);
+      // return;
+    // }
     
     // 更新会话状态的打字索引
     this.updateTypingIndex(session_id, currentIndex);
@@ -126,18 +140,39 @@ export class ChatHistoryManager {
       if (lastMessage?.role === 'assistant') {
         // 更新显示的内容
         lastMessage.content = content.substring(0, currentIndex + 1);
+        console.log(`更新内容: ${lastMessage.content}`);
         this.scrollToBottom();
       }
     }
     
     // 继续下一个字符
-    setTimeout(() => {
-      // 检查会话是否仍在流式接收
-      if (this.isSessionStreaming(session_id)) {
-        // 递归调用以处理下一个字符
-        this.typeWriter(session_id, content, currentIndex + 1);
-      }
-    }, 20); // 调整打字速度
+
+    // setTimeout(() => {
+    //   // 检查会话是否仍在流式接收
+    //   if (this.isSessionStreaming(session_id)) {
+    //     // 递归调用以处理下一个字符
+    //     this.typeWriter(session_id, content, currentIndex + 1);
+    //   } else {
+    //     console.log(`会话 ${session_id} 已停止流式接收`);
+    //   }
+    // }, 20); // 调整打字速度
+    if (this.active_session_id.value !== session_id){ //如果切换到了其他会话，那么设置100ms为间隔的轮询，并且设置打字索引为最新值
+      setTimeout(() => {
+        this.typeWriter(session_id, content.length-1);
+      }, 20);
+      return;
+    }
+
+    if (currentIndex >= content.length){  // 如果流水响应迟迟没来，等待100ms后新的流水数据响应或者注销typeWriters
+      setTimeout(() => {
+        this.typeWriter(session_id, currentIndex);
+      }, 20); // 调整打字速度
+      return;
+    }
+                
+    setTimeout(() => {//否则20ms后打下一个字符
+      this.typeWriter(session_id, currentIndex + 1)
+    }, 20)
   }
 
   public createSession(session_id: string, title: string): ChatSession {
@@ -355,11 +390,11 @@ export class ChatHistoryManager {
           if (lastMessage.role === 'assistant') {
             const typingIndex = this.getTypingIndex(this.active_session_id.value)
             if (typingIndex >= 0 && typingIndex < sessionState.lastContent.length) {
-              lastMessage.content = sessionState.lastContent.substring(0, typingIndex + 1)
-              console.log(`恢复打字效果，索引: ${typingIndex}`)
+              // lastMessage.content = sessionState.lastContent.substring(0, typingIndex + 1)
+              // console.log(`恢复打字效果，索引: ${typingIndex}`)
               
               // 恢复打字机效果
-              this.typeWriter(this.active_session_id.value, sessionState.lastContent, typingIndex)
+              // this.typeWriter(this.active_session_id.value, typingIndex)
             } else {
               // 显示完整内容
               lastMessage.content = sessionState.lastContent
@@ -457,43 +492,44 @@ export class ChatHistoryManager {
     // 移除已存在的处理器
     this.removeAllSessionListeners(session_id)
     console.log(`创建会话 ${session_id} 的消息处理器`)
+
+    const startHandler = ((_event: CustomEvent) => {
+      // 注册当前会话的打字机
+      this.typeWriters.add(session_id)
+      //开始打字
+      this.typeWriter(session_id,0)
+    }) as EventListener;
     
     // 消息处理器 - 处理流式数据
     const messageHandler = ((event: CustomEvent) => {
       const data = event.detail;
-      let content = '';
-      
-      // 解析内容
-      if (data && data.content) {
-        if (typeof data.content === 'object' && data.content.type === 'text') {
-          content = data.content.content || '';
-        } else if (typeof data.content === 'string') {
-          content = data.content;
-        }
-      }
+      const content = data.content;
       
       if (!content) {
         console.warn(`收到会话 ${session_id} 的空消息`);
         return;
+      } else {
+        // console.log(`收到会话 ${session_id} 的消息， 更新内容`);
       }
       
       // 保存最新内容到会话状态
       this.updateSessionState(session_id, {
-        lastContent: content
+        lastContent: data.content
       });
       
-      // 只有当前会话才启动打字机效果
-      if (this.active_session_id.value === session_id) {
-        const currentIndex = this.getTypingIndex(session_id);
-        this.typeWriter(session_id, content, currentIndex >= 0 ? currentIndex : 0);
-        this.scrollToBottom();
-      }else{
-        // 否则直接将打字索引更新到最新
-        this.updateTypingIndex(session_id,content.length)
-      }
+      // // 只有当前会话才尝试启动打字机效果
+      // if (this.active_session_id.value === session_id) {
+      //   const currentIndex = this.getTypingIndex(session_id);
+      //   this.typeWriter(session_id, currentIndex >= 0 ? currentIndex : 0);
+      //   this.scrollToBottom();
+      // }else{
+      //   // 否则直接将打字索引更新到最新
+      //   this.updateTypingIndex(session_id,data.content.length)
+      // }
     }) as EventListener;
     
     // 保存处理器引用并注册
+    this.addSessionListener(session_id, "sse-message-start", startHandler);
     this.addSessionListener(session_id, "sse-message", messageHandler);
     
     /** 完成处理器 - 处理会话结束事件；
@@ -515,7 +551,8 @@ export class ChatHistoryManager {
         finalContent = sessionState?.lastContent || '';
       }
       
-      // 停止会话流式接收状态，这会触发typeWriter的结束
+      // 停止会话流式接收状态，注销typeWriters,这会触发会话对应的typeWriter的结束
+      this.typeWriters.delete(session_id)
       this.stopSessionStreaming(session_id);
       this.updateTypingIndex(session_id,finalContent.length)
       this.resetSessionState(session_id)

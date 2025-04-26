@@ -64,6 +64,68 @@
 
         <!-- 聊天区域 -->
         <div class="chat-container">
+          <!-- 数字人视频区域 -->
+          <div v-if="showAvatar" class="avatar-container">
+            <!-- 方案1: WebRTC连接 (目前有代理问题) -->
+            <div v-if="useDirectConnection" class="webrtc-container">
+              <video
+                ref="avatarVideo"
+                autoplay
+                playsinline
+                :poster="avatarPoster"
+                :class="{'speaking': isSpeaking}"
+              ></video>
+              <div class="avatar-status">
+                <div v-if="connecting" class="connecting-status">
+                  <i class="el-icon-loading"></i> 正在连接数字人...
+                </div>
+                <div v-else-if="isSpeaking" class="speaking-status">
+                  <span class="status-dot"></span> 正在说话...
+                </div>
+                <div v-else class="idle-status">
+                  <span class="status-dot idle"></span> 已连接
+                </div>
+              </div>
+              <div class="avatar-controls">
+                <el-button 
+                  size="small" 
+                  :icon="isAvatarMuted ? 'el-icon-turn-off-microphone' : 'el-icon-microphone'" 
+                  :type="isAvatarMuted ? 'danger' : 'default'"
+                  @click="toggleAvatarMute"
+                >
+                  {{ isAvatarMuted ? '取消静音' : '静音' }}
+                </el-button>
+                <el-button 
+                  size="small" 
+                  icon="el-icon-refresh" 
+                  @click="reconnectAvatar"
+                >
+                  重新连接
+                </el-button>
+              </div>
+            </div>
+            
+            <!-- 方案2: iframe直接嵌入 (备选方案) -->
+            <div v-else class="iframe-container">
+              <iframe 
+                :src="`http://222.20.98.159:8010/dashboard.html`" 
+                frameborder="0"
+                allowfullscreen
+                allow="microphone; camera"
+              ></iframe>
+              <div class="avatar-note">
+                <p>使用数字人内置界面，支持完整功能</p>
+                <el-button 
+                  size="small" 
+                  type="primary" 
+                  @click="useDirectConnection = true"
+                >
+                  切换到直接连接模式
+                </el-button>
+              </div>
+            </div>
+          </div>
+
           <div class="chat-messages" ref="messagesContainer">
             <div v-for="(message, index) in messages" :key="index" :class="['message', message.role]">
               <div class="message-content">
@@ -85,17 +147,19 @@
               @keyup.enter.ctrl="sendMessage"
               :disabled="isStreaming"
             />
-            <el-button 
-              type="primary" 
-              @click="sendMessage" 
-              :loading="isStreaming"
-              :disabled="isStreaming"
-            >发送</el-button>
-            <el-button
-              type="danger"
-              @click="stopStreamming"
-              v-if="isStreaming"
-              >停止</el-button>
+            <div class="button-container">
+              <el-button 
+                type="primary" 
+                @click="sendMessage" 
+                :loading="isStreaming"
+                :disabled="isStreaming"
+              >发送</el-button>
+              <el-button
+                type="danger"
+                @click="stopStreamming"
+                v-if="isStreaming"
+                >停止</el-button>
+            </div>
           </div>
         </div>
       </div>
@@ -104,7 +168,7 @@
 </template>
 
 <script setup lang="ts" name="ResumeChat">
-import { ref, onMounted, computed, onBeforeUnmount } from 'vue'
+import { ref, onMounted, computed, onBeforeUnmount, watch } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete } from '@element-plus/icons-vue'
 import { resumeApi } from '@/api/resume/resumeApi'
@@ -120,13 +184,22 @@ const showAvatar = ref(false)
 const chatHistory = ChatHistoryManager.getInstance()
 chatHistory.setChatContext(messages,messagesContainer,activeSessionId,inputMessage)
 
+// 数字人相关状态
+const avatarVideo = ref<HTMLVideoElement | null>(null)
+const isSpeaking = ref(false)
+const connecting = ref(false)
+const peerConnection = ref<RTCPeerConnection | null>(null)
+const avatarPoster = ref('/avatar-placeholder.png') // 默认海报图片
+const digitalPersonAPI = '/digitalperson'  // 通过Nginx代理
+const sessionId = ref(0) // 数字人会话ID，默认为0
+const isAvatarMuted = ref(false) // 数字人是否静音
+const useDirectConnection = ref(false) // 是否使用直接连接模式，默认使用iframe
 
 const isStreaming = computed(() => chatHistory.isSessionStreaming(activeSessionId.value).value)
 const sessions = computed(() => chatHistory.getAllSessions().value)
 
 const userAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 const aiAvatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
-
 
 const stopStreamming = () => {  //停止接受
   if (isStreaming.value) {
@@ -184,6 +257,238 @@ const createNewSession = () => {
   messages.value = []
   chatHistory.showWelcomeMessage()
   showSessionList.value = false
+}
+
+// 创建WebRTC连接
+const createWebRTCConnection = async () => {
+  try {
+    connecting.value = true
+    console.log('开始创建WebRTC连接...')
+    console.log('数字人API地址:', digitalPersonAPI)
+    
+    // 创建PeerConnection
+    peerConnection.value = new RTCPeerConnection({
+      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+    })
+    
+    // 监听ICE候选
+    peerConnection.value.onicecandidate = event => {
+      if (event.candidate) {
+        console.log('发现新的ICE候选:', event.candidate)
+      }
+    }
+    
+    // 处理远程流
+    peerConnection.value.ontrack = event => {
+      if (avatarVideo.value && event.streams[0]) {
+        console.log('收到远程视频流')
+        avatarVideo.value.srcObject = event.streams[0]
+        connecting.value = false
+      }
+    }
+    
+    // 创建offer
+    const offer = await peerConnection.value.createOffer({
+      offerToReceiveVideo: true,
+      offerToReceiveAudio: true
+    })
+    
+    await peerConnection.value.setLocalDescription(offer)
+    
+    // 发送offer到服务器，获取answer - 使用webrtc端点
+    const response = await fetch(`${digitalPersonAPI}/webrtc?sessionid=${sessionId.value}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sdp: peerConnection.value.localDescription
+      })
+    })
+    
+    if (!response.ok) {
+      throw new Error(`无法连接到数字人服务: ${response.status} ${response.statusText}`)
+    }
+    
+    const answerData = await response.json()
+    console.log('收到WebRTC应答:', answerData)
+    
+    if (!answerData.sdp) {
+      throw new Error('WebRTC应答格式不正确，缺少SDP数据')
+    }
+    
+    const remoteDesc = new RTCSessionDescription(answerData.sdp)
+    await peerConnection.value.setRemoteDescription(remoteDesc)
+    
+    console.log('WebRTC连接创建成功')
+    
+    // 连接成功后发送一条欢迎消息
+    setTimeout(async () => {
+      if (showAvatar.value) {
+        await sendTextToDigitalPerson('你好，我是您的简历助手。点击"显示数字人"按钮可以切换我的显示状态。')
+      }
+    }, 1000)
+  } catch (error) {
+    console.error('创建WebRTC连接失败:', error)
+    connecting.value = false
+    ElMessage.error('连接数字人失败，请稍后再试')
+  }
+}
+
+// 检查数字人是否在说话
+const checkIsSpeaking = async () => {
+  try {
+    const response = await fetch(`${digitalPersonAPI}/is_speaking`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionid: sessionId.value })
+    })
+    
+    if (!response.ok) {
+      throw new Error(`检查说话状态失败: ${response.status} ${response.statusText}`)
+    }
+    
+    const data = await response.json()
+    console.log('数字人说话状态:', data)
+    return data.is_speaking === true
+  } catch (error) {
+    console.error('检查数字人说话状态失败:', error)
+    return false
+  }
+}
+
+// 定期检查数字人说话状态
+let speakingCheckInterval: number | null = null
+
+// 发送文本给数字人
+const sendTextToDigitalPerson = async (text: string) => {
+  try {
+    console.log(`向数字人发送文本: "${text}"`)
+    
+    // 检查数字人连接是否已建立
+    if (!peerConnection.value || peerConnection.value.connectionState !== 'connected') {
+      console.warn('数字人WebRTC连接未建立或状态异常')
+      // 尝试重新建立连接
+      if (showAvatar.value) {
+        await createWebRTCConnection()
+      }
+    }
+    
+    const response = await fetch(`${digitalPersonAPI}/human`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionid: sessionId.value,
+        type: 'chat',
+        text: text
+      })
+    })
+    
+    if (!response.ok) {
+      throw new Error(`发送文本到数字人失败: ${response.status} ${response.statusText}`)
+    }
+    
+    const result = await response.json()
+    console.log('数字人API响应:', result)
+    
+    // 设置为正在说话状态
+    isSpeaking.value = true
+    
+    // 开始检查说话状态
+    if (speakingCheckInterval) {
+      clearInterval(speakingCheckInterval)
+    }
+    
+    speakingCheckInterval = window.setInterval(async () => {
+      try {
+        const speaking = await checkIsSpeaking()
+        isSpeaking.value = speaking
+        
+        if (!speaking) {
+          console.log('数字人已停止说话')
+          clearInterval(speakingCheckInterval!)
+          speakingCheckInterval = null
+        }
+      } catch (error) {
+        console.error('检查数字人说话状态失败:', error)
+        clearInterval(speakingCheckInterval!)
+        speakingCheckInterval = null
+        isSpeaking.value = false
+      }
+    }, 1000)
+    
+  } catch (error) {
+    console.error('向数字人发送文本失败:', error)
+    isSpeaking.value = false
+    ElMessage.warning('数字人服务暂时不可用')
+  }
+}
+
+// 监视数字人显示状态
+watch(showAvatar, async (newValue) => {
+  if (newValue) {
+    // 显示数字人时，创建WebRTC连接
+    await createWebRTCConnection()
+  } else {
+    // 隐藏数字人时，关闭连接
+    if (peerConnection.value) {
+      peerConnection.value.close()
+      peerConnection.value = null
+    }
+    
+    if (speakingCheckInterval) {
+      clearInterval(speakingCheckInterval)
+      speakingCheckInterval = null
+    }
+    
+    isSpeaking.value = false
+    connecting.value = false
+  }
+})
+
+// 监听消息内容变化，在数字人模式下让数字人播报助手回复
+watch(() => messages.value[messages.value.length - 1]?.content, async (newContent, oldContent) => {
+  if (showAvatar.value && 
+      messages.value.length > 0 && 
+      messages.value[messages.value.length - 1]?.role === 'assistant' && 
+      newContent && 
+      newContent !== oldContent && 
+      !isStreaming.value) {
+    // 当助手消息完整显示后，让数字人播报内容
+    // 移除HTML标签，获取纯文本
+    const plainText = newContent.replace(/<[^>]*>/g, '')
+    
+    if (useDirectConnection.value) {
+      // 方案1: 直接API调用
+      await sendTextToDigitalPerson(plainText)
+    } else {
+      // 方案2: 通过iframe发送消息
+      sendMessageToIframe(plainText)
+    }
+  }
+})
+
+// 通过iframe向数字人发送消息
+const sendMessageToIframe = (text: string) => {
+  const iframe = document.querySelector('.iframe-container iframe') as HTMLIFrameElement
+  if (iframe && iframe.contentWindow) {
+    console.log(`通过iframe向数字人发送消息: "${text}"`)
+    
+    // 使用postMessage发送消息到iframe
+    try {
+      iframe.contentWindow.postMessage({
+        type: 'chat',
+        text: text,
+        sessionid: 0
+      }, '*') // 使用'*'允许任何来源，但在生产环境中应该指定确切的目标源
+      
+      ElMessage.success('消息已发送给数字人')
+    } catch (error) {
+      console.error('向iframe发送消息失败:', error)
+      ElMessage.warning('无法向数字人发送消息')
+    }
+  } else {
+    console.warn('找不到数字人iframe')
+    ElMessage.warning('数字人界面未就绪')
+  }
 }
 
 /**
@@ -266,8 +571,68 @@ const handleChat = async () => {
   } catch (error) {
     console.error('对话失败:', error)
     chatHistory.stopSessionStreaming(initialSessionId)
-    
   }
+}
+
+// 监听iframe中数字人状态的消息
+onMounted(() => {
+  chatHistory.loadSession()
+  if (messages.value.length === 0) {
+    chatHistory.showWelcomeMessage()
+  }
+  
+  // 监听来自iframe的消息
+  window.addEventListener('message', (event) => {
+    // 安全检查 - 确保消息来自我们的数字人服务
+    if (event.origin !== 'http://222.20.98.159:8010') {
+      return
+    }
+    
+    try {
+      const data = event.data
+      if (data && data.type) {
+        console.log('从数字人iframe收到消息:', data)
+        
+        // 处理不同类型的消息
+        if (data.type === 'status' && data.is_speaking !== undefined) {
+          isSpeaking.value = data.is_speaking
+        } else if (data.type === 'error') {
+          ElMessage.error(`数字人错误: ${data.message || '未知错误'}`)
+        }
+      }
+    } catch (error) {
+      console.error('处理iframe消息失败:', error)
+    }
+  })
+})
+
+// 组件卸载前清理资源
+onBeforeUnmount(() => {
+  console.log("resume component unmounted!")
+  // 清理所有活跃的消息处理器
+  chatHistory.clearEvnetListeners()
+  chatHistory.clearSessionsStreaming()
+  
+  // 清理数字人资源
+  if (peerConnection.value) {
+    peerConnection.value.close()
+    peerConnection.value = null
+  }
+  
+  if (speakingCheckInterval) {
+    clearInterval(speakingCheckInterval)
+    speakingCheckInterval = null
+  }
+  
+  // 移除消息监听器
+  window.removeEventListener('message', () => {})
+})
+
+/**
+ * 切换数字人形象模式
+ */
+const toggleAvatarMode = () => {
+  showAvatar.value = !showAvatar.value
 }
 
 /**
@@ -323,41 +688,38 @@ const beforeUpload = (_file: File) => {
   return true
 }
 
-// 组件卸载前清理所有事件监听器
-onBeforeUnmount(() => {
-  console.log("resume component unmounted!")
-  // 清理所有活跃的消息处理器
-  chatHistory.clearEvnetListeners()
-  chatHistory.clearSessionsStreaming()
-  // for (const [session_id] of activeMessageHandlers) {
-  //   removeMessageHandler(session_id)
-  // }
-})
-
-// 初始化对话
-onMounted(() => {
-  chatHistory.loadSession()
-  if (messages.value.length === 0) {
-    chatHistory.showWelcomeMessage()
+// 切换数字人静音状态
+const toggleAvatarMute = () => {
+  if (avatarVideo.value && avatarVideo.value.srcObject) {
+    const audioTracks = (avatarVideo.value.srcObject as MediaStream).getAudioTracks()
+    audioTracks.forEach(track => {
+      track.enabled = isAvatarMuted.value
+    })
+    isAvatarMuted.value = !isAvatarMuted.value
+    
+    ElMessage.success(isAvatarMuted.value ? '数字人已静音' : '数字人已取消静音')
   }
-})
-
-/**
- * 切换数字人形象模式
- */
-const toggleAvatarMode = () => {
-  showAvatar.value = !showAvatar.value
 }
 
-/**
- * 滚动消息容器到底部
- */
-// const scrollToBottom = async () => {
-//   await nextTick()
-//   if (messagesContainer.value) {
-//     messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight
-//   }
-// }
+// 重新连接数字人
+const reconnectAvatar = async () => {
+  // 关闭现有连接
+  if (peerConnection.value) {
+    peerConnection.value.close()
+    peerConnection.value = null
+  }
+  
+  if (speakingCheckInterval) {
+    clearInterval(speakingCheckInterval)
+    speakingCheckInterval = null
+  }
+  
+  isSpeaking.value = false
+  isAvatarMuted.value = false
+  
+  // 重新创建连接
+  await createWebRTCConnection()
+}
 </script>
 
 <style scoped>
@@ -569,5 +931,112 @@ const toggleAvatarMode = () => {
   height: 1em;
   background-color: #409eff;
   vertical-align: middle;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 数字人相关样式 */
+.avatar-container {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.avatar-container video {
+  width: 360px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ebeef5;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+}
+
+.avatar-container video.speaking {
+  box-shadow: 0 0 15px 5px rgba(64, 158, 255, 0.5);
+}
+
+.avatar-status {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #606266;
+}
+
+.connecting-status {
+  display: flex;
+  align-items: center;
+  color: #e6a23c;
+}
+
+.speaking-status {
+  display: flex;
+  align-items: center;
+  color: #409eff;
+  animation: pulse 1.5s infinite;
+}
+
+.avatar-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #409eff;
+  margin-right: 5px;
+  animation: pulse 1.5s infinite;
+}
+
+.status-dot.idle {
+  background-color: #67c23a;
+  animation: none;
+}
+
+.idle-status {
+  display: flex;
+  align-items: center;
+  color: #67c23a;
+}
+
+.iframe-container {
+  width: 100%;
+  height: 450px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f9f9f9;
+}
+
+.iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.avatar-note {
+  margin-top: 10px;
+  text-align: center;
+  color: #606266;
+  font-size: 14px;
+}
+
+.webrtc-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

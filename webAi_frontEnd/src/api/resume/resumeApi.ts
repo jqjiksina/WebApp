@@ -12,7 +12,7 @@ export const resumeApi = {
   // to-do : 立即中断链接的逻辑加入
   chat: async (session_id: string, content: string) => {
     console.log(`[Debug] chat begin for session: ${session_id}`)
-    let currentSessionId;
+    let currentSessionId = "";
     
     try {
       // 创建一个新的abort controller
@@ -56,15 +56,21 @@ export const resumeApi = {
                   
                   console.log("Parsed JSON:", jsonData)
                   
-                  currentSessionId = jsonData.session_id
+                  if (currentSessionId === "") { // 标志会话流式传输开始
+                    currentSessionId = jsonData.session_id
+                    console.log(`会话 ${currentSessionId} 流式传输开始`)
+                    const event = new CustomEvent(`sse-message-start-${currentSessionId}`)
+                    window.dispatchEvent(event)
+                    //continue
+                  }
+                  
                   
                   if (jsonData.type === 'text') {
                     console.log("Dispatching text event for session:", currentSessionId)
                     // 触发会话特定的事件
                     const event = new CustomEvent(`sse-message-${currentSessionId}`, { 
                       detail: {
-                        content: jsonData.content,
-                        session_id: currentSessionId
+                        content: jsonData.content
                       } 
                     })
                     window.dispatchEvent(event)
@@ -78,7 +84,6 @@ export const resumeApi = {
                     // 触发会话完成事件
                     const completionEvent = new CustomEvent(`sse-session-completed-${currentSessionId}`, { 
                       detail: { 
-                        session_id: currentSessionId ,
                         content : jsonData.content
                       } 
                     })
