@@ -14,6 +14,8 @@ from config import Config
 from database.models import User  # 假设您已定义User模型
 from database.core import get_async_db
 from api.ragflow.ragflow import rag_client
+from dependencies.index import  get_current_user
+
 
 router = APIRouter(prefix="/api/auth", tags=["认证相关"])
 
@@ -107,3 +109,11 @@ async def login(
             "username": user.name
         }
     }
+    
+@router.get("/check")
+async def check(
+    user: User = Depends(get_current_user)
+):
+    """检查用户是否登录"""
+    print("[Debug] user check:",user.id)
+    return True

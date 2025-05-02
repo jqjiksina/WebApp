@@ -25,6 +25,12 @@
           </div>
         </el-tab-pane>
 
+        <el-tab-pane label="Ai面试" name="interview" keep-alive="True">
+          <div class="content">
+            <Interview/>
+          </div>
+        </el-tab-pane>
+
         <el-tab-pane label="心理预警" name="psychological">
           <div class="content">
             <h3>心理风险识别</h3>
@@ -45,6 +51,7 @@
 <script setup lang="ts" name="AcademicAnalysis">
 import { computed, onMounted, ref } from 'vue'
 import Resume from './resume/index.vue'
+import Interview from './interview/index.vue'
 
 const activeTab = ref('academic')
 

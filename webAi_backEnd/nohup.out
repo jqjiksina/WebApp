@@ -7042,3 +7042,1826 @@ INFO:     10.19.102.64:0 - "POST /api/auth/login HTTP/1.0" 200 OK
 [Debug] getting db...
 [Debug] user login: Admin
 INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+INFO:     10.10.95.62:0 - "GET /api/resume/newSession HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] chat_resume on session_id: f3bd3e8a228a11f08a2e529bb6126436
+INFO:     10.10.95.62:0 - "POST /api/resume/chat HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.10.95.62:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.54.237:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.54.237:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.54.237:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+INFO:     10.10.212.178:0 - "GET /api/resume/newSession HTTP/1.0" 401 Unauthorized
+[Debug] getting db...
+[Debug] getting current user...
+INFO:     10.10.212.178:0 - "GET /api/resume/newSession HTTP/1.0" 401 Unauthorized
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.52.222:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.100.98:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.100.98:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+WARNING:  StatReload detected changes in 'app/routers/resume.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2393141]
+INFO:     Started server process [1041441]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+creating table...
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] chat_resume on session_id: 19b810b81dc411f09e02529bb6126436
+INFO:     10.19.50.188:0 - "POST /api/resume/chat HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] chat_resume on session_id: f3bd3e8a228a11f08a2e529bb6126436
+INFO:     10.19.50.188:0 - "POST /api/resume/chat HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+INFO:     10.19.50.188:0 - "GET /api/resume/newSession HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] chat_resume on session_id: db28aad225d011f09f76529bb6126436
+INFO:     10.19.50.188:0 - "POST /api/resume/chat HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] chat_resume on session_id: db28aad225d011f09f76529bb6126436
+INFO:     10.19.50.188:0 - "POST /api/resume/chat HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1041441]
+INFO:     Started server process [1712493]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1712493]
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 3, in <module>
+    from .database import init_db
+ImportError: attempted relative import with no known parent package
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from app.dependencies import get_current_user
+ModuleNotFoundError: No module named 'app'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from dependencies import get_current_user
+ImportError: cannot import name 'get_current_user' from 'dependencies' (unknown location)
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from dependencies import get_current_user
+ImportError: cannot import name 'get_current_user' from 'dependencies' (unknown location)
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from dependencies import get_current_user
+ImportError: cannot import name 'get_current_user' from 'dependencies' (unknown location)
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from ..dependencies import get_current_user
+ImportError: attempted relative import beyond top-level package
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from dependencies import get_current_user
+ImportError: cannot import name 'get_current_user' from 'dependencies' (unknown location)
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 6, in <module>
+    from dependencies import get_current_user
+ImportError: cannot import name 'get_current_user' from 'dependencies' (unknown location)
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/video_history.py", line 7, in <module>
+    from schema.user import User
+ModuleNotFoundError: No module named 'schema.user'
+WARNING:  StatReload detected changes in 'app/routers/video_history.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/digital_person.py", line 5, in <module>
+    from ..dependencies import get_current_user
+ImportError: attempted relative import beyond top-level package
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/digital_person.py", line 5, in <module>
+    from dependencies import get_current_user
+ImportError: cannot import name 'get_current_user' from 'dependencies' (unknown location)
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/digital_person.py", line 5, in <module>
+    from dependencies import get_current_user
+ImportError: cannot import name 'get_current_user' from 'dependencies' (unknown location)
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Started server process [1877914]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1877914]
+INFO:     Started server process [1878357]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1878357]
+INFO:     Started server process [1878422]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1878422]
+INFO:     Started server process [1878719]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1878719]
+INFO:     Started server process [1878886]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+creating table...
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1878886]
+INFO:     Started server process [1880444]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/config.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1880444]
+INFO:     Started server process [1882397]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/__init__.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1882397]
+INFO:     Started server process [1882589]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1882589]
+INFO:     Started server process [1883302]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1883302]
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Started server process [1883450]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1883450]
+INFO:     Started server process [1883515]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+creating table...
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1883515]
+INFO:     Started server process [1889683]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1889683]
+INFO:     Started server process [1890245]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+creating table...
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] user login: test_user
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 401 Unauthorized
+[Debug] getting db...
+[Debug] user login: test_user
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 401 Unauthorized
+[Debug] getting db...
+[Debug] user login: test_user
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 401 Unauthorized
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1890245]
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/auth.py", line 113, in <module>
+    user: User = Depends(get_current_user),
+NameError: name 'get_current_user' is not defined
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/auth.py", line 113, in <module>
+    user: User = Depends(get_current_user),
+NameError: name 'get_current_user' is not defined
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/auth.py", line 113, in <module>
+    user: User = Depends(get_current_user),
+NameError: name 'get_current_user' is not defined
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+INFO:     Started server process [2057223]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2057223]
+INFO:     Started server process [2057334]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2057334]
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+INFO:     Started server process [2057491]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2057491]
+INFO:     Started server process [2057556]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2057556]
+INFO:     Started server process [2057691]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2057691]
+INFO:     Started server process [2057775]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/auth.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2057775]
+INFO:     Started server process [2057910]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/dependencies/index.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2057910]
+INFO:     Started server process [2058004]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/dependencies/index.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2058004]
+WARNING:  StatReload detected changes in 'app/dependencies/index.py'. Reloading...
+INFO:     Started server process [2058141]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [2058209]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/dependencies/index.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2058209]
+INFO:     Started server process [2058274]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+creating table...
+[Debug] getting db...
+[Debug] getting current user...
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 401 Unauthorized
+[Debug] getting db...
+[Debug] user login: Admin
+INFO:     10.19.50.188:0 - "POST /api/auth/login HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+[Debug] getting db...
+[Debug] getting current user...
+[Debug] get current user done
+[Debug] user check: 1
+INFO:     10.19.50.188:0 - "GET /api/auth/check HTTP/1.0" 200 OK
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2058274]
+INFO:     Started server process [2065880]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2065880]
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 116, in spawn_main
+    exitcode = _main(fd, parent_sentinel)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 125, in _main
+    prepare(preparation_data)
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 236, in prepare
+    _fixup_main_from_path(data['init_main_from_path'])
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/multiprocessing/spawn.py", line 287, in _fixup_main_from_path
+    main_content = runpy.run_path(main_path,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/opt/anaconda3/envs/webAi/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/main.py", line 8, in <module>
+    from routers import auth,chat,resume,video_history,digital_person
+  File "/home/jhyang/AiWeb/webAi_backEnd/app/routers/digital_person.py", line 79
+    
+    ^
+SyntaxError: expected 'except' or 'finally' block
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Started server process [2067091]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2067091]
+INFO:     Started server process [2067310]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2067310]
+INFO:     Started server process [2067375]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2067375]
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Started server process [2067523]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2067523]
+INFO:     Started server process [2067606]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2067606]
+INFO:     Started server process [2067728]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2067728]
+INFO:     Started server process [2067793]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2067793]
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Started server process [2067944]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [2068017]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2068017]
+INFO:     Started server process [2068082]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2068082]
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Started server process [2068346]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routers/digital_person.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [2068346]
+INFO:     Started server process [2068429]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

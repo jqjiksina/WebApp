@@ -47,12 +47,20 @@ export const userApi = {
       timeout: timeout_
     })
     return response
+  },
+  /**
+   * 向后端请求刷新token有效期
+   * @param timeout_ 超时时间
+   * @returns 返回是否认证成功
+   */
+  check_auth: async (timeout_ = 5000) => {
+    const response = await axios.get<boolean>(
+      'http://' + import.meta.env.VITE_BACK_END_URL +'/api/auth/check',
+      {
+        headers: {
+        'Content-Type': 'application/json'
+      },
+      timeout: timeout_})
+    return response
   }
-  // /**
-  //  * 向后端请求刷新token有效期
-  //  *
-  //  */
-  // refresh: async (timeout_ = 5000) => {
-  //   const response = await axios.get('http://' + import.meta.env.VITE_BACK_END_URL +'/auth/refresh')
-  // }
 }

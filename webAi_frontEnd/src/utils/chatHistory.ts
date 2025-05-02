@@ -3,40 +3,29 @@ import type { ChatHistory, ChatSession, ChatMessage, ChatSessionState } from '@/
 import { ElMessage } from 'element-plus'
 import { nextTick, ref, Ref} from 'vue'
 
-const STORAGE_KEY = `${useUsersStore().username}-resume_chat_history`
-
 export class ChatHistoryManager {
-  private static instance: ChatHistoryManager
-  private history= ref<ChatHistory>({
+  private history = ref<ChatHistory>({
     sessions: [],
     current_session_id: null
   })
   private activeStreamingSessions = ref(new Set<string>());
   private eventListeners: Map<string, Set<EventListener>> = new Map()
-  private typeWriters : Set<string> = new Set<string>(); // 存储对应会话的typeWriter，标志其是否正在运行
-  // private mode : string = "resume"
+  private typeWriters: Set<string> = new Set<string>();
+  private storageKey: string;
 
   //上下文
-  private messages : Ref<ChatMessage[]> = ref([])
+  private messages: Ref<ChatMessage[]> = ref([])
   private messagesContainer = ref<HTMLElement | null>(null)
   private active_session_id = ref("")
   private inputMessage = ref("")
 
-  private constructor() {
+  constructor(moduleName: string) {
+    this.storageKey = `${useUsersStore().username}-${moduleName}_chat_history`
     this.history.value = this.loadHistory()
-    // 初始化状态
     this.initializeSessionStates()
   }
 
-  public static getInstance(): ChatHistoryManager {
-    if (!ChatHistoryManager.instance) {
-      ChatHistoryManager.instance = new ChatHistoryManager()
-    }
-    return ChatHistoryManager.instance
-  }
-
   private initializeSessionStates() {
-    // 确保每个会话都有状态对象
     if (this.history.value.sessions) {
       this.history.value.sessions.forEach(session => {
         if (!session.state) {
@@ -47,7 +36,7 @@ export class ChatHistoryManager {
   }
 
   private loadHistory(): ChatHistory {
-    const stored = localStorage.getItem(STORAGE_KEY)
+    const stored = localStorage.getItem(this.storageKey)
     if (stored) {
       try {
         return JSON.parse(stored)
@@ -66,9 +55,8 @@ export class ChatHistoryManager {
    */
   private saveHistory() {
     try {
-      // 保存前进行深拷贝，避免引用问题
       const historyToSave = JSON.parse(JSON.stringify(this.history.value));
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(historyToSave));
+      localStorage.setItem(this.storageKey, JSON.stringify(historyToSave));
       console.log("历史记录已保存，会话数量:", this.history.value.sessions.length);
     } catch (error) {
       console.error("保存历史记录失败:", error);
@@ -101,10 +89,6 @@ export class ChatHistoryManager {
  * @param startIndex 开始打字的位置
  */
   private typeWriter(session_id: string, startIndex: number){
-    // if (!text) {
-    //   console.warn(`打字机效果: 会话 ${session_id} 的文本为空`);
-    //   return;
-    // }
     if (!this.typeWriters.has(session_id)){
       console.warn(`打字机效果: 会话 ${session_id} 未注册打字机`);
       return;
@@ -124,12 +108,6 @@ export class ChatHistoryManager {
     let currentIndex = Math.max(this.getTypingIndex(session_id), startIndex);
     console.log(`当前索引: ${currentIndex}, 开始索引: ${startIndex}`);
     
-    // 已完成打字或超出范围
-    // if (currentIndex >= content.length) {
-      // console.log(`打字机效果完成: 会话 ${session_id}`);
-      // return;
-    // }
-    
     // 更新会话状态的打字索引
     this.updateTypingIndex(session_id, currentIndex);
     
@@ -145,17 +123,6 @@ export class ChatHistoryManager {
       }
     }
     
-    // 继续下一个字符
-
-    // setTimeout(() => {
-    //   // 检查会话是否仍在流式接收
-    //   if (this.isSessionStreaming(session_id)) {
-    //     // 递归调用以处理下一个字符
-    //     this.typeWriter(session_id, content, currentIndex + 1);
-    //   } else {
-    //     console.log(`会话 ${session_id} 已停止流式接收`);
-    //   }
-    // }, 20); // 调整打字速度
     if (this.active_session_id.value !== session_id){ //如果切换到了其他会话，那么设置100ms为间隔的轮询，并且设置打字索引为最新值
       setTimeout(() => {
         this.typeWriter(session_id, content.length-1);

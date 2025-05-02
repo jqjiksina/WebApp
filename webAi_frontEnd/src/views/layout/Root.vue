@@ -1,5 +1,5 @@
 <!-- eslint-disable vue/multi-word-component-names -->
-<template>
+<!-- <template>
   <div class="root-container">
     <RouterView />
   </div>
@@ -13,4 +13,4 @@
 .root-container {
   height: 100%;
 }
-</style>
+</style> -->

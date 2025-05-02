@@ -8,6 +8,7 @@
         </div>
         <h1>HUST_AI系统</h1>
         <p>高效、智能、便捷的HUSTer系统平台</p>
+        <p>默认账号:Admin；默认密码：admin</p>
       </div>
       <div class="login-right">
         <el-card class="login-card">

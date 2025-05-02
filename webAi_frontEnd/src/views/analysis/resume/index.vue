@@ -66,6 +66,16 @@
         <div class="chat-container">
           <!-- 数字人视频区域 -->
           <div v-if="showAvatar" class="avatar-container">
+            <div class="avatar-note">
+                <p>切换数字人连接模式:{{link_mode}}</p>
+                <el-button 
+                  size="small" 
+                  type="primary" 
+                  @click="useDirectConnection = !useDirectConnection"
+                >
+                  切换
+                </el-button>
+            </div>
             <!-- 方案1: WebRTC连接 (目前有代理问题) -->
             <div v-if="useDirectConnection" class="webrtc-container">
               <video
@@ -104,7 +114,7 @@
                 </el-button>
               </div>
             </div>
-            
+          
             <!-- 方案2: iframe直接嵌入 (备选方案) -->
             <div v-else class="iframe-container">
               <iframe 
@@ -113,16 +123,6 @@
                 allowfullscreen
                 allow="microphone; camera"
               ></iframe>
-              <div class="avatar-note">
-                <p>使用数字人内置界面，支持完整功能</p>
-                <el-button 
-                  size="small" 
-                  type="primary" 
-                  @click="useDirectConnection = true"
-                >
-                  切换到直接连接模式
-                </el-button>
-              </div>
             </div>
           </div>
 
@@ -181,19 +181,20 @@ const messagesContainer = ref<HTMLElement | null>(null)
 const activeSessionId = ref("")
 const showSessionList = ref(false)
 const showAvatar = ref(false)
-const chatHistory = ChatHistoryManager.getInstance()
+const chatHistory = new ChatHistoryManager('resume')
 chatHistory.setChatContext(messages,messagesContainer,activeSessionId,inputMessage)
 
 // 数字人相关状态
+const link_mode = computed(()=>useDirectConnection.value?"直连":"嵌入")
 const avatarVideo = ref<HTMLVideoElement | null>(null)
 const isSpeaking = ref(false)
 const connecting = ref(false)
 const peerConnection = ref<RTCPeerConnection | null>(null)
 const avatarPoster = ref('/avatar-placeholder.png') // 默认海报图片
-const digitalPersonAPI = '/digitalperson'  // 通过Nginx代理
+const digitalPersonAPI = 'http://222.20.98.159:5180/digitalperson'  // 通过Nginx代理
 const sessionId = ref(0) // 数字人会话ID，默认为0
 const isAvatarMuted = ref(false) // 数字人是否静音
-const useDirectConnection = ref(false) // 是否使用直接连接模式，默认使用iframe
+const useDirectConnection = ref(true) // 是否使用直接连接模式，默认使用iframe
 
 const isStreaming = computed(() => chatHistory.isSessionStreaming(activeSessionId.value).value)
 const sessions = computed(() => chatHistory.getAllSessions().value)
@@ -264,7 +265,6 @@ const createWebRTCConnection = async () => {
   try {
     connecting.value = true
     console.log('开始创建WebRTC连接...')
-    console.log('数字人API地址:', digitalPersonAPI)
     
     // 创建PeerConnection
     peerConnection.value = new RTCPeerConnection({
@@ -295,27 +295,44 @@ const createWebRTCConnection = async () => {
     
     await peerConnection.value.setLocalDescription(offer)
     
-    // 发送offer到服务器，获取answer - 使用webrtc端点
-    const response = await fetch(`${digitalPersonAPI}/webrtc?sessionid=${sessionId.value}`, {
+    // 发送offer到服务器，获取answer
+    if (!peerConnection.value.localDescription) {
+      throw new Error('本地描述为空')
+    }
+    const response = await fetch(`${digitalPersonAPI}/offer`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        sdp: peerConnection.value.localDescription
+        sdp: peerConnection.value.localDescription.sdp,
+        type: 'offer'
       })
     })
     
     if (!response.ok) {
-      throw new Error(`无法连接到数字人服务: ${response.status} ${response.statusText}`)
+      const errorData = await response.json()
+      if (response.status === 429) {
+        ElMessage.error('数字人服务已达到最大会话数限制，请稍后再试')
+      } else {
+        throw new Error(`无法连接到数字人服务: ${errorData.msg || response.statusText}`)
+      }
+      return
     }
     
     const answerData = await response.json()
     console.log('收到WebRTC应答:', answerData)
     
-    if (!answerData.sdp) {
-      throw new Error('WebRTC应答格式不正确，缺少SDP数据')
+    if (!answerData.sdp || !answerData.type || !answerData.sessionid) {
+      throw new Error('WebRTC应答格式不正确，缺少必要参数')
     }
     
-    const remoteDesc = new RTCSessionDescription(answerData.sdp)
+    // 保存会话ID
+    sessionId.value = answerData.sessionid
+    
+    // 创建远程描述
+    const remoteDesc = new RTCSessionDescription({
+      sdp: answerData.sdp,
+      type: answerData.type
+    })
     await peerConnection.value.setRemoteDescription(remoteDesc)
     
     console.log('WebRTC连接创建成功')
@@ -378,7 +395,8 @@ const sendTextToDigitalPerson = async (text: string) => {
       body: JSON.stringify({
         sessionid: sessionId.value,
         type: 'chat',
-        text: text
+        text: text,
+        interrupt: false
       })
     })
     
@@ -614,19 +632,64 @@ onBeforeUnmount(() => {
   chatHistory.clearSessionsStreaming()
   
   // 清理数字人资源
+  cleanupDigitalPerson()
+  
+  // 移除消息监听器
+  window.removeEventListener('message', () => {})
+})
+
+// 添加页面刷新时的清理逻辑
+window.addEventListener('beforeunload', () => {
+  console.log("页面即将刷新，清理数字人资源")
+  cleanupDigitalPerson()
+})
+
+// 添加数字人资源清理函数
+const cleanupDigitalPerson = () => {
+  // 关闭WebRTC连接
   if (peerConnection.value) {
     peerConnection.value.close()
     peerConnection.value = null
   }
   
+  // 清理说话状态检查定时器
   if (speakingCheckInterval) {
     clearInterval(speakingCheckInterval)
     speakingCheckInterval = null
   }
   
-  // 移除消息监听器
-  window.removeEventListener('message', () => {})
-})
+  // 重置状态
+  isSpeaking.value = false
+  connecting.value = false
+  isAvatarMuted.value = false
+  
+  // 如果数字人正在显示，发送关闭信号
+  if (showAvatar.value) {
+    if (useDirectConnection.value) {
+      // 方案1: 直接API调用关闭
+      fetch(`${digitalPersonAPI}/close`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionid: sessionId.value })
+      }).catch(error => {
+        console.error('关闭数字人连接失败:', error)
+      })
+    } else {
+      // 方案2: 通过iframe发送关闭信号
+      const iframe = document.querySelector('.iframe-container iframe') as HTMLIFrameElement
+      if (iframe && iframe.contentWindow) {
+        try {
+          iframe.contentWindow.postMessage({
+            type: 'close',
+            sessionid: sessionId.value
+          }, '*')
+        } catch (error) {
+          console.error('向iframe发送关闭信号失败:', error)
+        }
+      }
+    }
+  }
+}
 
 /**
  * 切换数字人形象模式
