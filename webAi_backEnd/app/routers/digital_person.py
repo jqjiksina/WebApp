@@ -19,7 +19,7 @@ async def create_digital_person_session(current_user: User = Depends(get_current
         session_id = f"{current_user.id}_{int(time.time())}"
         
         # 创建用户专属的视频存储目录
-        video_dir = os.path.join('videos', current_user.username)
+        video_dir = os.path.join('videos', current_user.id)
         os.makedirs(video_dir, exist_ok=True)
         
         return {
@@ -33,7 +33,7 @@ async def create_digital_person_session(current_user: User = Depends(get_current
 async def get_digital_person_sessions(current_user: User = Depends(get_current_user)):
     """获取用户的数字人会话列表"""
     try:
-        video_dir = os.path.join( 'videos', current_user.username)
+        video_dir = os.path.join( 'videos', current_user.id)
         if not os.path.exists(video_dir):
             return []
             
@@ -72,10 +72,9 @@ async def get_digital_person_video(filename: str, current_user: User = Depends(g
 async def record(session_id: str,current_user: User = Depends(get_current_user)):
     '''    数字人录制视频开始 or 暂停    '''
     try:
-        # 验证会话ID是否属于当前用户
+        # todo: 验证会话ID是否属于当前用户
         if not session_id.startswith(str(current_user.id)):
             raise HTTPException(status_code=403, detail="Invalid session")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
             
-        

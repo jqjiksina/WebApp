@@ -23,9 +23,13 @@ class RAGFlowClient:
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json"
         }
-    async def getAssistantList(self, filter_params:dict = {})-> dict:
+    async def getAssistantList(self, filter_params:dict = {}, is_agent : bool = False)-> dict:
         '''获取助理列表'''
-        url = f"{self.base_url}/api/v1/chats"
+        if is_agent:
+            url = f"{self.base_url}/api/v1/agents"
+        else:
+            url = f"{self.base_url}/api/v1/chats"
+            
         if filter_params.get("page"):
             url += f'?page={filter_params["page"]}"'
         else:
@@ -90,22 +94,30 @@ class RAGFlowClient:
             )
             response.raise_for_status()
             return response.json()
-    async def createSession(self,assistant_id : str, name : str = "test", user_id : str | None = None)-> dict:
+    async def createSession(self,assistant_id : str, name : str = "test", user_id : str | None = None, is_agent : bool = False)-> dict:
         "在指定助理基础上开启会话"
+        if is_agent:
+            url = f"{self.base_url}/api/v1/agents/{assistant_id}/sessions"
+        else:
+            url = f"{self.base_url}/api/v1/chats/{assistant_id}/sessions"
         payload = {
             "name" : name,
             "user_id" : user_id
         }
         async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.post(
-                f"{self.base_url}/api/v1/chats/{assistant_id}/sessions",
+                url,
                 headers=self.headers,
                 json=payload
             )
             response.raise_for_status()
             return response.json()
-    async def chat(self, assistant_id: str, question: str, session_id : Optional[str] = None, user_id : Optional[str] = None, stream: bool = False):
+    async def chat(self, assistant_id: str, question: str, session_id : Optional[str] = None, user_id : Optional[str] = None, stream: bool = False, is_agent: bool = False):
         """对指定assistant，在指定会话中（若空则新建后再）进行一次对话"""
+        if is_agent:
+            url = f"{self.base_url}/api/v1/agents/{assistant_id}/completions"
+        else:
+            url = f"{self.base_url}/api/v1/chats/{assistant_id}/completions"
         payload = {
             "question": question,
             "stream": stream, 
@@ -116,7 +128,7 @@ class RAGFlowClient:
         if stream:
             async with httpx.AsyncClient(timeout=300.0) as client:
                 async with client.stream("POST",
-                                    f"{self.base_url}/api/v1/chats/{assistant_id}/completions",
+                                    url,
                                     headers=self.headers,
                                     json=payload) as response:
                     response.raise_for_status()
@@ -126,6 +138,7 @@ class RAGFlowClient:
                             line = line.strip()
                             if line.startswith('data:'):
                                 data = json.loads(line[5:].strip())
+                                print("[Debug] Chat Response:",data)
                                 if data.get('code') == 0:
                                     if isinstance(data.get('data'), bool):
                                         # 流式结束标记
@@ -133,9 +146,12 @@ class RAGFlowClient:
                                             'type': 'end',
                                             'session_id' : session_id
                                             })
+                                    elif is_agent and "running_status" in data.get("data"): # 说明agent还在运行
+                                        print("[Debug] Agent is running...")
                                     else:
                                         # 正常消息
-                                        session_id = data["data"]["session_id"]
+                                        if ("session_id" in data["data"]):
+                                            session_id = data["data"]["session_id"]
                                         yield json.dumps({
                                             'type': 'text',
                                             'content': data['data']['answer'],
@@ -144,7 +160,7 @@ class RAGFlowClient:
         else:
             async with httpx.AsyncClient(timeout=300.0) as client:
                 response = await client.post(
-                    f"{self.base_url}/api/v1/chats/{assistant_id}/completions",
+                    url,
                     headers=self.headers,
                     json=payload
                 )
@@ -164,10 +180,10 @@ class RAGFlowClient:
                     print("[Debug] parsed_response:",parsed_response)
                     if question == "":
                         yield parsed_response
-                    # 如果question不为空，重新发送questiond到现在会话
+                    # 如果question不为空，重新发送question到现在会话
                     payload["session_id"] = parsed_response.data.session_id
                     response = await client.post(
-                        f"{self.base_url}/api/v1/chats/{assistant_id}/completions",
+                        url,
                         headers=self.headers,
                         json=payload
                     )
@@ -210,12 +226,17 @@ class RAGFlowClient:
             return Response_GetSessions(**response.json())
     
     async def deleteSession(self,assitant_id:str,
-                      ids : list[str] = []
+                      ids : list[str] = [],
+                      is_agent : bool = False
                       )-> dict:
         "删除assitant_id指定的assitant下，ids列表对应的所有会话，如果为空，则删除所有会话"
+        if is_agent:
+            url = f"{self.base_url}/api/v1/agents/{assitant_id}/sessions"
+        else:
+            url = f"{self.base_url}/api/v1/chats/{assitant_id}/sessions"
         payload = {"ids" : ids}
         async with httpx.AsyncClient(timeout=60.0) as client:
-            response = await client.delete(f"{self.base_url}/api/v1/chats/{assitant_id}/sessions", headers=self.headers, json=payload)
+            response = await client.delete(url, headers=self.headers, json=payload)
             response.raise_for_status()
             return response.json()
     

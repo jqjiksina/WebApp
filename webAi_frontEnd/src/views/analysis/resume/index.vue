@@ -9,9 +9,9 @@
             <el-button type="primary" @click="showSessionList = !showSessionList">
               {{ showSessionList ? '隐藏会话列表' : '显示会话列表' }}
             </el-button>
-            <el-button type="primary" @click="toggleAvatarMode">
+            <!-- <el-button type="primary" @click="toggleAvatarMode">
               {{ showAvatar ? '隐藏数字人' : '显示数字人' }}
-            </el-button>
+            </el-button> -->
           </div>
           <el-upload
             class="upload-demo"
@@ -64,68 +64,6 @@
 
         <!-- 聊天区域 -->
         <div class="chat-container">
-          <!-- 数字人视频区域 -->
-          <div v-if="showAvatar" class="avatar-container">
-            <div class="avatar-note">
-                <p>切换数字人连接模式:{{link_mode}}</p>
-                <el-button 
-                  size="small" 
-                  type="primary" 
-                  @click="useDirectConnection = !useDirectConnection"
-                >
-                  切换
-                </el-button>
-            </div>
-            <!-- 方案1: WebRTC连接 (目前有代理问题) -->
-            <div v-if="useDirectConnection" class="webrtc-container">
-              <video
-                ref="avatarVideo"
-                autoplay
-                playsinline
-                :poster="avatarPoster"
-                :class="{'speaking': isSpeaking}"
-              ></video>
-              <div class="avatar-status">
-                <div v-if="connecting" class="connecting-status">
-                  <i class="el-icon-loading"></i> 正在连接数字人...
-                </div>
-                <div v-else-if="isSpeaking" class="speaking-status">
-                  <span class="status-dot"></span> 正在说话...
-                </div>
-                <div v-else class="idle-status">
-                  <span class="status-dot idle"></span> 已连接
-                </div>
-              </div>
-              <div class="avatar-controls">
-                <el-button 
-                  size="small" 
-                  :icon="isAvatarMuted ? 'el-icon-turn-off-microphone' : 'el-icon-microphone'" 
-                  :type="isAvatarMuted ? 'danger' : 'default'"
-                  @click="toggleAvatarMute"
-                >
-                  {{ isAvatarMuted ? '取消静音' : '静音' }}
-                </el-button>
-                <el-button 
-                  size="small" 
-                  icon="el-icon-refresh" 
-                  @click="reconnectAvatar"
-                >
-                  重新连接
-                </el-button>
-              </div>
-            </div>
-          
-            <!-- 方案2: iframe直接嵌入 (备选方案) -->
-            <div v-else class="iframe-container">
-              <iframe 
-                :src="`http://222.20.98.159:8010/dashboard.html`" 
-                frameborder="0"
-                allowfullscreen
-                allow="microphone; camera"
-              ></iframe>
-            </div>
-          </div>
-
           <div class="chat-messages" ref="messagesContainer">
             <div v-for="(message, index) in messages" :key="index" :class="['message', message.role]">
               <div class="message-content">
@@ -148,12 +86,12 @@
               :disabled="isStreaming"
             />
             <div class="button-container">
-              <el-button 
-                type="primary" 
-                @click="sendMessage" 
+            <el-button 
+              type="primary" 
+              @click="sendMessage" 
                 :loading="isStreaming"
-                :disabled="isStreaming"
-              >发送</el-button>
+              :disabled="isStreaming"
+            >发送</el-button>
               <el-button
                 type="danger"
                 @click="stopStreamming"
@@ -168,7 +106,7 @@
 </template>
 
 <script setup lang="ts" name="ResumeChat">
-import { ref, onMounted, computed, onBeforeUnmount, watch } from 'vue'
+import { ref, onMounted, computed, onBeforeUnmount, } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete } from '@element-plus/icons-vue'
 import { resumeApi } from '@/api/resume/resumeApi'
@@ -180,21 +118,8 @@ const inputMessage = ref('')
 const messagesContainer = ref<HTMLElement | null>(null)
 const activeSessionId = ref("")
 const showSessionList = ref(false)
-const showAvatar = ref(false)
 const chatHistory = new ChatHistoryManager('resume')
 chatHistory.setChatContext(messages,messagesContainer,activeSessionId,inputMessage)
-
-// 数字人相关状态
-const link_mode = computed(()=>useDirectConnection.value?"直连":"嵌入")
-const avatarVideo = ref<HTMLVideoElement | null>(null)
-const isSpeaking = ref(false)
-const connecting = ref(false)
-const peerConnection = ref<RTCPeerConnection | null>(null)
-const avatarPoster = ref('/avatar-placeholder.png') // 默认海报图片
-const digitalPersonAPI = 'http://222.20.98.159:5180/digitalperson'  // 通过Nginx代理
-const sessionId = ref(0) // 数字人会话ID，默认为0
-const isAvatarMuted = ref(false) // 数字人是否静音
-const useDirectConnection = ref(true) // 是否使用直接连接模式，默认使用iframe
 
 const isStreaming = computed(() => chatHistory.isSessionStreaming(activeSessionId.value).value)
 const sessions = computed(() => chatHistory.getAllSessions().value)
@@ -260,254 +185,254 @@ const createNewSession = () => {
   showSessionList.value = false
 }
 
-// 创建WebRTC连接
-const createWebRTCConnection = async () => {
-  try {
-    connecting.value = true
-    console.log('开始创建WebRTC连接...')
+// // 创建WebRTC连接
+// const createWebRTCConnection = async () => {
+//   try {
+//     connecting.value = true
+//     console.log('开始创建WebRTC连接...')
     
-    // 创建PeerConnection
-    peerConnection.value = new RTCPeerConnection({
-      iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-    })
+//     // 创建PeerConnection
+//     peerConnection.value = new RTCPeerConnection({
+//       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+//     })
     
-    // 监听ICE候选
-    peerConnection.value.onicecandidate = event => {
-      if (event.candidate) {
-        console.log('发现新的ICE候选:', event.candidate)
-      }
-    }
+//     // 监听ICE候选
+//     peerConnection.value.onicecandidate = event => {
+//       if (event.candidate) {
+//         console.log('发现新的ICE候选:', event.candidate)
+//       }
+//     }
     
-    // 处理远程流
-    peerConnection.value.ontrack = event => {
-      if (avatarVideo.value && event.streams[0]) {
-        console.log('收到远程视频流')
-        avatarVideo.value.srcObject = event.streams[0]
-        connecting.value = false
-      }
-    }
+//     // 处理远程流
+//     peerConnection.value.ontrack = event => {
+//       if (avatarVideo.value && event.streams[0]) {
+//         console.log('收到远程视频流')
+//         avatarVideo.value.srcObject = event.streams[0]
+//         connecting.value = false
+//       }
+//     }
     
-    // 创建offer
-    const offer = await peerConnection.value.createOffer({
-      offerToReceiveVideo: true,
-      offerToReceiveAudio: true
-    })
+//     // 创建offer
+//     const offer = await peerConnection.value.createOffer({
+//       offerToReceiveVideo: true,
+//       offerToReceiveAudio: true
+//     })
     
-    await peerConnection.value.setLocalDescription(offer)
+//     await peerConnection.value.setLocalDescription(offer)
     
-    // 发送offer到服务器，获取answer
-    if (!peerConnection.value.localDescription) {
-      throw new Error('本地描述为空')
-    }
-    const response = await fetch(`${digitalPersonAPI}/offer`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sdp: peerConnection.value.localDescription.sdp,
-        type: 'offer'
-      })
-    })
+//     // 发送offer到服务器，获取answer
+//     if (!peerConnection.value.localDescription) {
+//       throw new Error('本地描述为空')
+//     }
+//     const response = await fetch(`${digitalPersonAPI}/offer`, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({
+//         sdp: peerConnection.value.localDescription.sdp,
+//         type: 'offer'
+//       })
+//     })
     
-    if (!response.ok) {
-      const errorData = await response.json()
-      if (response.status === 429) {
-        ElMessage.error('数字人服务已达到最大会话数限制，请稍后再试')
-      } else {
-        throw new Error(`无法连接到数字人服务: ${errorData.msg || response.statusText}`)
-      }
-      return
-    }
+//     if (!response.ok) {
+//       const errorData = await response.json()
+//       if (response.status === 429) {
+//         ElMessage.error('数字人服务已达到最大会话数限制，请稍后再试')
+//       } else {
+//         throw new Error(`无法连接到数字人服务: ${errorData.msg || response.statusText}`)
+//       }
+//       return
+//     }
     
-    const answerData = await response.json()
-    console.log('收到WebRTC应答:', answerData)
+//     const answerData = await response.json()
+//     console.log('收到WebRTC应答:', answerData)
     
-    if (!answerData.sdp || !answerData.type || !answerData.sessionid) {
-      throw new Error('WebRTC应答格式不正确，缺少必要参数')
-    }
+//     if (!answerData.sdp || !answerData.type || !answerData.sessionid) {
+//       throw new Error('WebRTC应答格式不正确，缺少必要参数')
+//     }
     
-    // 保存会话ID
-    sessionId.value = answerData.sessionid
+//     // 保存会话ID
+//     sessionId.value = answerData.sessionid
     
-    // 创建远程描述
-    const remoteDesc = new RTCSessionDescription({
-      sdp: answerData.sdp,
-      type: answerData.type
-    })
-    await peerConnection.value.setRemoteDescription(remoteDesc)
+//     // 创建远程描述
+//     const remoteDesc = new RTCSessionDescription({
+//       sdp: answerData.sdp,
+//       type: answerData.type
+//     })
+//     await peerConnection.value.setRemoteDescription(remoteDesc)
     
-    console.log('WebRTC连接创建成功')
+//     console.log('WebRTC连接创建成功')
     
-    // 连接成功后发送一条欢迎消息
-    setTimeout(async () => {
-      if (showAvatar.value) {
-        await sendTextToDigitalPerson('你好，我是您的简历助手。点击"显示数字人"按钮可以切换我的显示状态。')
-      }
-    }, 1000)
-  } catch (error) {
-    console.error('创建WebRTC连接失败:', error)
-    connecting.value = false
-    ElMessage.error('连接数字人失败，请稍后再试')
-  }
-}
+//     // 连接成功后发送一条欢迎消息
+//     setTimeout(async () => {
+//       if (showAvatar.value) {
+//         await sendTextToDigitalPerson('你好，我是您的简历助手。点击"显示数字人"按钮可以切换我的显示状态。')
+//       }
+//     }, 1000)
+//   } catch (error) {
+//     console.error('创建WebRTC连接失败:', error)
+//     connecting.value = false
+//     ElMessage.error('连接数字人失败，请稍后再试')
+//   }
+// }
 
-// 检查数字人是否在说话
-const checkIsSpeaking = async () => {
-  try {
-    const response = await fetch(`${digitalPersonAPI}/is_speaking`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessionid: sessionId.value })
-    })
+// // 检查数字人是否在说话
+// const checkIsSpeaking = async () => {
+//   try {
+//     const response = await fetch(`${digitalPersonAPI}/is_speaking`, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ sessionid: sessionId.value })
+//     })
     
-    if (!response.ok) {
-      throw new Error(`检查说话状态失败: ${response.status} ${response.statusText}`)
-    }
+//     if (!response.ok) {
+//       throw new Error(`检查说话状态失败: ${response.status} ${response.statusText}`)
+//     }
     
-    const data = await response.json()
-    console.log('数字人说话状态:', data)
-    return data.is_speaking === true
-  } catch (error) {
-    console.error('检查数字人说话状态失败:', error)
-    return false
-  }
-}
+//     const data = await response.json()
+//     console.log('数字人说话状态:', data)
+//     return data.is_speaking === true
+//   } catch (error) {
+//     console.error('检查数字人说话状态失败:', error)
+//     return false
+//   }
+// }
 
-// 定期检查数字人说话状态
-let speakingCheckInterval: number | null = null
+// // 定期检查数字人说话状态
+// let speakingCheckInterval: number | null = null
 
-// 发送文本给数字人
-const sendTextToDigitalPerson = async (text: string) => {
-  try {
-    console.log(`向数字人发送文本: "${text}"`)
+// // 发送文本给数字人
+// const sendTextToDigitalPerson = async (text: string) => {
+//   try {
+//     console.log(`向数字人发送文本: "${text}"`)
     
-    // 检查数字人连接是否已建立
-    if (!peerConnection.value || peerConnection.value.connectionState !== 'connected') {
-      console.warn('数字人WebRTC连接未建立或状态异常')
-      // 尝试重新建立连接
-      if (showAvatar.value) {
-        await createWebRTCConnection()
-      }
-    }
+//     // 检查数字人连接是否已建立
+//     if (!peerConnection.value || peerConnection.value.connectionState !== 'connected') {
+//       console.warn('数字人WebRTC连接未建立或状态异常')
+//       // 尝试重新建立连接
+//       if (showAvatar.value) {
+//         await createWebRTCConnection()
+//       }
+//     }
     
-    const response = await fetch(`${digitalPersonAPI}/human`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionid: sessionId.value,
-        type: 'chat',
-        text: text,
-        interrupt: false
-      })
-    })
+//     const response = await fetch(`${digitalPersonAPI}/human`, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({
+//         sessionid: sessionId.value,
+//         type: 'chat',
+//         text: text,
+//         interrupt: false
+//       })
+//     })
     
-    if (!response.ok) {
-      throw new Error(`发送文本到数字人失败: ${response.status} ${response.statusText}`)
-    }
+//     if (!response.ok) {
+//       throw new Error(`发送文本到数字人失败: ${response.status} ${response.statusText}`)
+//     }
     
-    const result = await response.json()
-    console.log('数字人API响应:', result)
+//     const result = await response.json()
+//     console.log('数字人API响应:', result)
     
-    // 设置为正在说话状态
-    isSpeaking.value = true
+//     // 设置为正在说话状态
+//     isSpeaking.value = true
     
-    // 开始检查说话状态
-    if (speakingCheckInterval) {
-      clearInterval(speakingCheckInterval)
-    }
+//     // 开始检查说话状态
+//     if (speakingCheckInterval) {
+//       clearInterval(speakingCheckInterval)
+//     }
     
-    speakingCheckInterval = window.setInterval(async () => {
-      try {
-        const speaking = await checkIsSpeaking()
-        isSpeaking.value = speaking
+//     speakingCheckInterval = window.setInterval(async () => {
+//       try {
+//         const speaking = await checkIsSpeaking()
+//         isSpeaking.value = speaking
         
-        if (!speaking) {
-          console.log('数字人已停止说话')
-          clearInterval(speakingCheckInterval!)
-          speakingCheckInterval = null
-        }
-      } catch (error) {
-        console.error('检查数字人说话状态失败:', error)
-        clearInterval(speakingCheckInterval!)
-        speakingCheckInterval = null
-        isSpeaking.value = false
-      }
-    }, 1000)
+//         if (!speaking) {
+//           console.log('数字人已停止说话')
+//           clearInterval(speakingCheckInterval!)
+//           speakingCheckInterval = null
+//         }
+//       } catch (error) {
+//         console.error('检查数字人说话状态失败:', error)
+//         clearInterval(speakingCheckInterval!)
+//         speakingCheckInterval = null
+//         isSpeaking.value = false
+//       }
+//     }, 1000)
     
-  } catch (error) {
-    console.error('向数字人发送文本失败:', error)
-    isSpeaking.value = false
-    ElMessage.warning('数字人服务暂时不可用')
-  }
-}
+//   } catch (error) {
+//     console.error('向数字人发送文本失败:', error)
+//     isSpeaking.value = false
+//     ElMessage.warning('数字人服务暂时不可用')
+//   }
+// }
 
-// 监视数字人显示状态
-watch(showAvatar, async (newValue) => {
-  if (newValue) {
-    // 显示数字人时，创建WebRTC连接
-    await createWebRTCConnection()
-  } else {
-    // 隐藏数字人时，关闭连接
-    if (peerConnection.value) {
-      peerConnection.value.close()
-      peerConnection.value = null
-    }
+// // 监视数字人显示状态
+// watch(showAvatar, async (newValue) => {
+//   if (newValue) {
+//     // 显示数字人时，创建WebRTC连接
+//     await createWebRTCConnection()
+//   } else {
+//     // 隐藏数字人时，关闭连接
+//     if (peerConnection.value) {
+//       peerConnection.value.close()
+//       peerConnection.value = null
+//     }
     
-    if (speakingCheckInterval) {
-      clearInterval(speakingCheckInterval)
-      speakingCheckInterval = null
-    }
+//     if (speakingCheckInterval) {
+//       clearInterval(speakingCheckInterval)
+//       speakingCheckInterval = null
+//     }
     
-    isSpeaking.value = false
-    connecting.value = false
-  }
-})
+//     isSpeaking.value = false
+//     connecting.value = false
+//   }
+// })
 
-// 监听消息内容变化，在数字人模式下让数字人播报助手回复
-watch(() => messages.value[messages.value.length - 1]?.content, async (newContent, oldContent) => {
-  if (showAvatar.value && 
-      messages.value.length > 0 && 
-      messages.value[messages.value.length - 1]?.role === 'assistant' && 
-      newContent && 
-      newContent !== oldContent && 
-      !isStreaming.value) {
-    // 当助手消息完整显示后，让数字人播报内容
-    // 移除HTML标签，获取纯文本
-    const plainText = newContent.replace(/<[^>]*>/g, '')
+// // 监听消息内容变化，在数字人模式下让数字人播报助手回复
+// watch(() => messages.value[messages.value.length - 1]?.content, async (newContent, oldContent) => {
+//   if (showAvatar.value && 
+//       messages.value.length > 0 && 
+//       messages.value[messages.value.length - 1]?.role === 'assistant' && 
+//       newContent && 
+//       newContent !== oldContent && 
+//       !isStreaming.value) {
+//     // 当助手消息完整显示后，让数字人播报内容
+//     // 移除HTML标签，获取纯文本
+//     const plainText = newContent.replace(/<[^>]*>/g, '')
     
-    if (useDirectConnection.value) {
-      // 方案1: 直接API调用
-      await sendTextToDigitalPerson(plainText)
-    } else {
-      // 方案2: 通过iframe发送消息
-      sendMessageToIframe(plainText)
-    }
-  }
-})
+//     if (useDirectConnection.value) {
+//       // 方案1: 直接API调用
+//       await sendTextToDigitalPerson(plainText)
+//     } else {
+//       // 方案2: 通过iframe发送消息
+//       sendMessageToIframe(plainText)
+//     }
+//   }
+// })
 
-// 通过iframe向数字人发送消息
-const sendMessageToIframe = (text: string) => {
-  const iframe = document.querySelector('.iframe-container iframe') as HTMLIFrameElement
-  if (iframe && iframe.contentWindow) {
-    console.log(`通过iframe向数字人发送消息: "${text}"`)
+// // 通过iframe向数字人发送消息
+// const sendMessageToIframe = (text: string) => {
+//   const iframe = document.querySelector('.iframe-container iframe') as HTMLIFrameElement
+//   if (iframe && iframe.contentWindow) {
+//     console.log(`通过iframe向数字人发送消息: "${text}"`)
     
-    // 使用postMessage发送消息到iframe
-    try {
-      iframe.contentWindow.postMessage({
-        type: 'chat',
-        text: text,
-        sessionid: 0
-      }, '*') // 使用'*'允许任何来源，但在生产环境中应该指定确切的目标源
+//     // 使用postMessage发送消息到iframe
+//     try {
+//       iframe.contentWindow.postMessage({
+//         type: 'chat',
+//         text: text,
+//         sessionid: 0
+//       }, '*') // 使用'*'允许任何来源，但在生产环境中应该指定确切的目标源
       
-      ElMessage.success('消息已发送给数字人')
-    } catch (error) {
-      console.error('向iframe发送消息失败:', error)
-      ElMessage.warning('无法向数字人发送消息')
-    }
-  } else {
-    console.warn('找不到数字人iframe')
-    ElMessage.warning('数字人界面未就绪')
-  }
-}
+//       ElMessage.success('消息已发送给数字人')
+//     } catch (error) {
+//       console.error('向iframe发送消息失败:', error)
+//       ElMessage.warning('无法向数字人发送消息')
+//     }
+//   } else {
+//     console.warn('找不到数字人iframe')
+//     ElMessage.warning('数字人界面未就绪')
+//   }
+// }
 
 /**
  * 核心逻辑，处理对话发送和接收
@@ -598,30 +523,6 @@ onMounted(() => {
   if (messages.value.length === 0) {
     chatHistory.showWelcomeMessage()
   }
-  
-  // 监听来自iframe的消息
-  window.addEventListener('message', (event) => {
-    // 安全检查 - 确保消息来自我们的数字人服务
-    if (event.origin !== 'http://222.20.98.159:8010') {
-      return
-    }
-    
-    try {
-      const data = event.data
-      if (data && data.type) {
-        console.log('从数字人iframe收到消息:', data)
-        
-        // 处理不同类型的消息
-        if (data.type === 'status' && data.is_speaking !== undefined) {
-          isSpeaking.value = data.is_speaking
-        } else if (data.type === 'error') {
-          ElMessage.error(`数字人错误: ${data.message || '未知错误'}`)
-        }
-      }
-    } catch (error) {
-      console.error('处理iframe消息失败:', error)
-    }
-  })
 })
 
 // 组件卸载前清理资源
@@ -631,72 +532,7 @@ onBeforeUnmount(() => {
   chatHistory.clearEvnetListeners()
   chatHistory.clearSessionsStreaming()
   
-  // 清理数字人资源
-  cleanupDigitalPerson()
-  
-  // 移除消息监听器
-  window.removeEventListener('message', () => {})
 })
-
-// 添加页面刷新时的清理逻辑
-window.addEventListener('beforeunload', () => {
-  console.log("页面即将刷新，清理数字人资源")
-  cleanupDigitalPerson()
-})
-
-// 添加数字人资源清理函数
-const cleanupDigitalPerson = () => {
-  // 关闭WebRTC连接
-  if (peerConnection.value) {
-    peerConnection.value.close()
-    peerConnection.value = null
-  }
-  
-  // 清理说话状态检查定时器
-  if (speakingCheckInterval) {
-    clearInterval(speakingCheckInterval)
-    speakingCheckInterval = null
-  }
-  
-  // 重置状态
-  isSpeaking.value = false
-  connecting.value = false
-  isAvatarMuted.value = false
-  
-  // 如果数字人正在显示，发送关闭信号
-  if (showAvatar.value) {
-    if (useDirectConnection.value) {
-      // 方案1: 直接API调用关闭
-      fetch(`${digitalPersonAPI}/close`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionid: sessionId.value })
-      }).catch(error => {
-        console.error('关闭数字人连接失败:', error)
-      })
-    } else {
-      // 方案2: 通过iframe发送关闭信号
-      const iframe = document.querySelector('.iframe-container iframe') as HTMLIFrameElement
-      if (iframe && iframe.contentWindow) {
-        try {
-          iframe.contentWindow.postMessage({
-            type: 'close',
-            sessionid: sessionId.value
-          }, '*')
-        } catch (error) {
-          console.error('向iframe发送关闭信号失败:', error)
-        }
-      }
-    }
-  }
-}
-
-/**
- * 切换数字人形象模式
- */
-const toggleAvatarMode = () => {
-  showAvatar.value = !showAvatar.value
-}
 
 /**
  * 发送消息
@@ -751,38 +587,6 @@ const beforeUpload = (_file: File) => {
   return true
 }
 
-// 切换数字人静音状态
-const toggleAvatarMute = () => {
-  if (avatarVideo.value && avatarVideo.value.srcObject) {
-    const audioTracks = (avatarVideo.value.srcObject as MediaStream).getAudioTracks()
-    audioTracks.forEach(track => {
-      track.enabled = isAvatarMuted.value
-    })
-    isAvatarMuted.value = !isAvatarMuted.value
-    
-    ElMessage.success(isAvatarMuted.value ? '数字人已静音' : '数字人已取消静音')
-  }
-}
-
-// 重新连接数字人
-const reconnectAvatar = async () => {
-  // 关闭现有连接
-  if (peerConnection.value) {
-    peerConnection.value.close()
-    peerConnection.value = null
-  }
-  
-  if (speakingCheckInterval) {
-    clearInterval(speakingCheckInterval)
-    speakingCheckInterval = null
-  }
-  
-  isSpeaking.value = false
-  isAvatarMuted.value = false
-  
-  // 重新创建连接
-  await createWebRTCConnection()
-}
 </script>
 
 <style scoped>

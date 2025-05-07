@@ -17,6 +17,7 @@ class Config:
     RAGFLOW_BASE_URL = os.getenv("RAGFLOW_BASE_URL")
     RAGFLOW_API_KEY = os.getenv("RAGFLOW_API_KEY")
     DEFAULT_DATASET_ID = os.getenv("DEFAULT_DATASET_ID")
+    DDEFAULT_AGENT_ID = os.getenv("DDEFAULT_AGENT_ID")
 
     # 选填项（可设置默认值）
     DEBUG_MODE: bool = os.getenv("DEBUG_MODE", True)

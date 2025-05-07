@@ -55,6 +55,7 @@ class User(BaseModel):
     
     dataset_id : Mapped[str] = mapped_column(String(63),unique=True,nullable=True)  # 专属数据库
     assistant_id : Mapped[str] = mapped_column(String(63),nullable=True)            # 专属助理
+    digital_human_session_id : Mapped[int] = mapped_column(Integer,nullable=True) # 专属数字人会话id
     
     
     

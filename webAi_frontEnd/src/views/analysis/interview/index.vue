@@ -126,8 +126,10 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete } from '@element-plus/icons-vue'
 import { ChatHistoryManager } from '@/utils/chatHistory'
 import type { ChatMessage } from '@/types/resume'
-import { createSession, closeSession } from '@/api/digital-person'
+import { interviewApi } from '@/api/interview/interviewApi'
 import type { Response_Offer } from './Type'
+// import axios from 'axios'
+import { userApi } from '@/api'
 
 const messages = ref<ChatMessage[]>([])
 const inputMessage = ref('')
@@ -144,8 +146,7 @@ const connecting = ref(false)
 const peerConnection = ref<RTCPeerConnection | null>(null)
 const avatarPoster = ref('/avatar-placeholder.png')
 const digitalPersonAPI = 'digitalperson'
-const sessionId = ref(0)
-const digitalPersonSessionId = ref<string>('')
+const digitalPersonSessionId = ref()
 
 // 视频历史记录
 const videoHistory = ref<Array<{
@@ -154,7 +155,6 @@ const videoHistory = ref<Array<{
   duration: number
 }>>([])
 
-// const isStreaming = computed(() => chatHistory.isSessionStreaming(activeSessionId.value).value)
 const sessions = computed(() => chatHistory.getAllSessions().value)
 
 const userAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
@@ -175,9 +175,25 @@ const formatDuration = (seconds: number) => {
 
 // 切换会话
 const switchToSession = async (sessionId: string) => {
-  chatHistory.switchToSession(sessionId)
-  // 加载该会话的视频历史
-  await loadVideoHistory(sessionId)
+  try {
+    // 如果数字人会话不存在，先创建
+    if (!digitalPersonSessionId.value) {
+      await createWebRTCConnection()
+    }
+    
+    // 切换到新的面试会话
+    await chatHistory.switchToSession(sessionId)
+    
+    // 加载该会话的视频历史
+    await loadVideoHistory(sessionId)
+    
+    // 更新数字人会话ID
+    await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
+    
+  } catch (error) {
+    console.error('切换会话失败:', error)
+    ElMessage.error('切换会话失败，请重试')
+  }
 }
 
 // 删除会话
@@ -197,36 +213,40 @@ const deleteSession = async (session_id: string) => {
 }
 
 // 创建新会话
-const createNewSession = () => {
-  activeSessionId.value = ""
-  messages.value = []
-  videoHistory.value = []
-  chatHistory.showWelcomeMessage('您好！我是您的AI面试官。\n\n在面试过程中，我会：\n1. 提出专业问题\n2. 评估您的回答\n3. 提供改进建议\n\n准备好了吗？让我们开始吧！')
-  showSessionList.value = false
-}
-
-// 初始化数字人会话
-const initDigitalPersonSession = async () => {
+const createNewSession = async () => {
   try {
-    const response = await createSession()
-    digitalPersonSessionId.value = response.data.session_id
-    console.log('Digital person session created:', digitalPersonSessionId.value)
+    // 如果数字人会话不存在，先创建
+    if (!digitalPersonSessionId.value) {
+      await createWebRTCConnection()
+    }
+    
+    // 创建新的面试会话
+    activeSessionId.value = ""
+    messages.value = []
+    videoHistory.value = []
+    chatHistory.showWelcomeMessage('您好！我是您的AI面试官。\n\n在面试过程中，我会：\n1. 提出专业问题\n2. 评估您的回答\n3. 提供改进建议\n\n准备好了吗？让我们开始吧！')
+    showSessionList.value = false
+    
+    // 更新数字人会话ID
+    await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
+    
   } catch (error) {
-    console.error('Failed to create digital person session:', error)
+    console.error('创建新会话失败:', error)
+    ElMessage.error('创建新会话失败，请重试')
   }
 }
 
-// 关闭数字人会话
-const closeDigitalPersonSession = async () => {
-  if (digitalPersonSessionId.value) {
-    try {
-      await closeSession(digitalPersonSessionId.value)
-      console.log('Digital person session closed:', digitalPersonSessionId.value)
-    } catch (error) {
-      console.error('Failed to close digital person session:', error)
-    }
-  }
-}
+// 关闭面试会话
+// const closeInterviewSession = async () => {
+//   if (digitalPersonSessionId.value) {
+//     try {
+//       await closeSession(digitalPersonSessionId.value)
+//       console.log('Digital person session closed:', digitalPersonSessionId.value)
+//     } catch (error) {
+//       console.error('Failed to close digital person session:', error)
+//     }
+//   }
+// }
 
 
 // 加载视频历史
@@ -256,6 +276,13 @@ const createWebRTCConnection = async () => {
   try {
     connecting.value = true
     console.log('开始创建WebRTC连接...')
+
+    // 创建连接前先向后端验证用户身份
+    const authed = await userApi.check_auth()
+    if (!authed.data){
+      console.error("用户未登录！")
+      return
+    }
     
     peerConnection.value = new RTCPeerConnection({
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
@@ -282,7 +309,7 @@ const createWebRTCConnection = async () => {
     
     await peerConnection.value.setLocalDescription(offer)
 
-    const response = await fetch(`${digitalPersonAPI}/offer`, {
+    const response = await fetch(`digitalperson/offer`, { // 直接访问数字人服务
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -302,13 +329,19 @@ const createWebRTCConnection = async () => {
       throw new Error('WebRTC应答格式不正确，缺少必要参数') 
     }
     
-    sessionId.value = answerData.sessionid
+    digitalPersonSessionId.value = answerData.sessionid
+
+    console.log('数字人会话id:', digitalPersonSessionId.value)
     
     const remoteDesc = new RTCSessionDescription({
       sdp: answerData.sdp,
       type: answerData.type as RTCSdpType
     })
     await peerConnection.value.setRemoteDescription(remoteDesc)
+
+    // 创建webrtc链接成功后，将所连接的数字人会话id传到后端。
+    await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
+    console.log("[Debug] 设置数字人会话id完毕:",digitalPersonSessionId.value)
     
     console.log('WebRTC连接创建成功')
   } catch (error) {
@@ -319,78 +352,78 @@ const createWebRTCConnection = async () => {
 }
 
 // 开始录像,必须应该通过后端请求中介，进行多用户多会话管理！
-const startRecording = async () => {
-  try {
-    const response = await fetch(`${digitalPersonAPI}/record`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionid: sessionId.value,
-        type: 'start_record'
-      })
-    })
+// const startRecording = async () => {
+//   try {
+//     const response = await fetch(`${digitalPersonAPI}/record`, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({
+//         sessionid: sessionId.value,
+//         type: 'start_record'
+//       })
+//     })
     
-    if (!response.ok) {
-      throw new Error('开始录像失败')
-    }
+//     if (!response.ok) {
+//       throw new Error('开始录像失败')
+//     }
     
-    console.log('开始录像')
-  } catch (error) {
-    console.error('开始录像失败:', error)
-  }
-}
+//     console.log('开始录像')
+//   } catch (error) {
+//     console.error('开始录像失败:', error)
+//   }
+// }
 
 // 停止录像
-const stopRecording = async () => {
-  try {
-    const response = await fetch(`${digitalPersonAPI}/record`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionid: sessionId.value,
-        type: 'end_record'
-      })
-    })
+// const stopRecording = async () => {
+//   try {
+//     const response = await fetch(`${digitalPersonAPI}/record`, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({
+//         sessionid: sessionId.value,
+//         type: 'end_record'
+//       })
+//     })
     
-    if (!response.ok) {
-      throw new Error('停止录像失败')
-    }
+//     if (!response.ok) {
+//       throw new Error('停止录像失败')
+//     }
     
-    console.log('停止录像')
-    // 获取录像URL并添加到历史记录
-    await addVideoToHistory()
-  } catch (error) {
-    console.error('停止录像失败:', error)
-  }
-}
+//     console.log('停止录像')
+//     // 获取录像URL并添加到历史记录
+//     await addVideoToHistory()
+//   } catch (error) {
+//     console.error('停止录像失败:', error)
+//   }
+// }
 
 // 添加视频到历史记录
-const addVideoToHistory = async () => {
-  try {
-    const response = await fetch(`${digitalPersonAPI}/get_record`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionid: sessionId.value
-      })
-    })
+// const addVideoToHistory = async () => {
+//   try {
+//     const response = await fetch(`${digitalPersonAPI}/get_record`, {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({
+//         sessionid: sessionId.value
+//       })
+//     })
     
-    if (!response.ok) {
-      throw new Error('获取录像失败')
-    }
+//     if (!response.ok) {
+//       throw new Error('获取录像失败')
+//     }
     
-    const data = await response.json()
-    if (data.url) {
-      videoHistory.value.push({
-        url: data.url,
-        timestamp: Date.now(),
-        duration: data.duration || 0
-      })
-    }
-  } catch (error) {
-    console.error('添加视频到历史记录失败:', error)
-  }
-}
+//     const data = await response.json()
+//     if (data.url) {
+//       videoHistory.value.push({
+//         url: data.url,
+//         timestamp: Date.now(),
+//         duration: data.duration || 0
+//       })
+//     }
+//   } catch (error) {
+//     console.error('添加视频到历史记录失败:', error)
+//   }
+// }
 
 // 处理视频播放
 const handleVideoPlay = (index: number) => {
@@ -425,34 +458,36 @@ const sendMessage = async () => {
   inputMessage.value = ''
   
   // 开始录像
-  await startRecording()
+  // await startRecording()
   
   try {
-    // 发送消息到数字人
-    const response = await fetch(`${digitalPersonAPI}/human`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionid: sessionId.value,
-        type: 'chat',
-        text: userMessage.content,
-        interrupt: false
-      })
-    })
+    console.log("[Debug] 开始发送消息于会话:",activeSessionId.value)
+
+    const response = await interviewApi.chat(userMessage.content, activeSessionId.value)
+
+    console.log("[Debug] sendMessage Response:",response)
     
-    if (!response.ok) {
-      throw new Error('发送消息失败')
+    // if (response["code"] != 200) {
+    //   throw new Error('发送消息失败')
+    // }
+    if (!activeSessionId.value){ // 第一个对话
+      chatHistory.createSession(response.data.session_id,"面试会话")
     }
     
-    isSpeaking.value = true
+    chatHistory.addMessage(response.data.session_id,userMessage)
+    chatHistory.switchToSession(response.data.session_id)
+    activeSessionId.value = response.data.session_id
+
+    
+    // isSpeaking.value = true
     
     // 等待数字人回复完成
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    // await new Promise(resolve => setTimeout(resolve, 2000))
     
     // 停止录像
-    await stopRecording()
+    // await stopRecording()
     
-    isSpeaking.value = false
+    // isSpeaking.value = false
     
   } catch (error) {
     console.error('发送消息失败:', error)
@@ -463,17 +498,20 @@ const sendMessage = async () => {
 
 // 组件挂载时创建WebRTC连接
 onMounted(async () => {
-  await initDigitalPersonSession()
-  await createWebRTCConnection()
-  chatHistory.loadSession()
-  if (messages.value.length === 0) {
-    chatHistory.showWelcomeMessage()
+  try {
+    await createWebRTCConnection()
+    chatHistory.loadSession()
+    if (messages.value.length === 0) {
+      chatHistory.showWelcomeMessage()
+    }
+  } catch (error) {
+    console.error('初始化失败:', error)
+    ElMessage.error('初始化失败，请刷新页面重试')
   }
 })
 
-// 组件卸载前清理资源
+// 组件卸载前关闭webRTC连接
 onBeforeUnmount(async () => {
-  await closeDigitalPersonSession()
   if (peerConnection.value) {
     peerConnection.value.close()
     peerConnection.value = null

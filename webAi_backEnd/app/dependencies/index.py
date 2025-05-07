@@ -12,7 +12,7 @@ from database.core import get_async_db
 # from schemas import LoginPost, RegistryPost  # 根据前端接口生成
 from config import Config
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login") # tokenUrl指定获取token的url地址，以便于在受保护路由被访问时自动跳转到对应url获取token
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login") # tokenUrl指定获取token的url地址，以便于在受保护路由被访问时自动跳转到对应url获取token
 # 安全配置
 SECRET_KEY = Config.SECRET_KEY # 应从环境变量获取
 ALGORITHM = Config.JWT_ALGORITHM

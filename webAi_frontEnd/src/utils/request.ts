@@ -4,7 +4,7 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 // 创建 axios 实例
 const service: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACK_END_URL,
+  baseURL: import.meta.env.VITE_BACK_END_URL.startsWith('http://') ? import.meta.env.VITE_BACK_END_URL : 'http://' + import.meta.env.VITE_BACK_END_URL,
   timeout: 600000,
   headers: {
     'Content-Type': 'application/json'

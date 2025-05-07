@@ -49,7 +49,7 @@ export const userApi = {
     return response
   },
   /**
-   * 向后端请求刷新token有效期
+   * 向后端请求验证身份
    * @param timeout_ 超时时间
    * @returns 返回是否认证成功
    */
