@@ -112,6 +112,14 @@
                 :loading="isSpeaking"
                 :disabled="isSpeaking"
               >发送</el-button>
+              <el-button
+                type="primary"
+                :icon="isRecording ? VideoPause : Microphone"
+                @click="toggleRecording"
+                :class="{ 'recording': isRecording }"
+              >
+                {{ isRecording ? '停止录音' : '语音输入' }}
+              </el-button>
             </div>
           </div>
         </div>
@@ -123,7 +131,7 @@
 <script setup lang="ts" name="Interview">
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { Delete } from '@element-plus/icons-vue'
+import { Delete, Microphone, VideoPause } from '@element-plus/icons-vue'
 import { ChatHistoryManager } from '@/utils/chatHistory'
 import type { ChatMessage } from '@/types/resume'
 import { interviewApi } from '@/api/interview/interviewApi'
@@ -176,23 +184,15 @@ const formatDuration = (seconds: number) => {
 // 切换会话
 const switchToSession = async (sessionId: string) => {
   try {
-    // 如果数字人会话不存在，先创建
-    if (!digitalPersonSessionId.value) {
-      await createWebRTCConnection()
-    }
+    // 切换到新会话
+    chatHistory.switchToSession(sessionId)
+    activeSessionId.value = sessionId
     
-    // 切换到新的面试会话
-    await chatHistory.switchToSession(sessionId)
-    
-    // 加载该会话的视频历史
+    // 加载视频历史
     await loadVideoHistory(sessionId)
-    
-    // 更新数字人会话ID
-    await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
-    
   } catch (error) {
     console.error('切换会话失败:', error)
-    ElMessage.error('切换会话失败，请重试')
+    ElMessage.error('切换会话失败')
   }
 }
 
@@ -214,25 +214,23 @@ const deleteSession = async (session_id: string) => {
 
 // 创建新会话
 const createNewSession = async () => {
-  try {
-    // 如果数字人会话不存在，先创建
-    if (!digitalPersonSessionId.value) {
+  try { 
+    if (!digitalPersonSessionId.value){ // 保证webRTC正确连接，数字人推流正常
       await createWebRTCConnection()
     }
-    
-    // 创建新的面试会话
+
+       // 创建新会话
     activeSessionId.value = ""
     messages.value = []
     videoHistory.value = []
     chatHistory.showWelcomeMessage('您好！我是您的AI面试官。\n\n在面试过程中，我会：\n1. 提出专业问题\n2. 评估您的回答\n3. 提供改进建议\n\n准备好了吗？让我们开始吧！')
     showSessionList.value = false
     
-    // 更新数字人会话ID
+    // 设置用户的专属数字人会话id
     await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
-    
   } catch (error) {
     console.error('创建新会话失败:', error)
-    ElMessage.error('创建新会话失败，请重试')
+    ElMessage.error('创建新会话失败')
   }
 }
 
@@ -351,80 +349,6 @@ const createWebRTCConnection = async () => {
   }
 }
 
-// 开始录像,必须应该通过后端请求中介，进行多用户多会话管理！
-// const startRecording = async () => {
-//   try {
-//     const response = await fetch(`${digitalPersonAPI}/record`, {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({
-//         sessionid: sessionId.value,
-//         type: 'start_record'
-//       })
-//     })
-    
-//     if (!response.ok) {
-//       throw new Error('开始录像失败')
-//     }
-    
-//     console.log('开始录像')
-//   } catch (error) {
-//     console.error('开始录像失败:', error)
-//   }
-// }
-
-// 停止录像
-// const stopRecording = async () => {
-//   try {
-//     const response = await fetch(`${digitalPersonAPI}/record`, {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({
-//         sessionid: sessionId.value,
-//         type: 'end_record'
-//       })
-//     })
-    
-//     if (!response.ok) {
-//       throw new Error('停止录像失败')
-//     }
-    
-//     console.log('停止录像')
-//     // 获取录像URL并添加到历史记录
-//     await addVideoToHistory()
-//   } catch (error) {
-//     console.error('停止录像失败:', error)
-//   }
-// }
-
-// 添加视频到历史记录
-// const addVideoToHistory = async () => {
-//   try {
-//     const response = await fetch(`${digitalPersonAPI}/get_record`, {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({
-//         sessionid: sessionId.value
-//       })
-//     })
-    
-//     if (!response.ok) {
-//       throw new Error('获取录像失败')
-//     }
-    
-//     const data = await response.json()
-//     if (data.url) {
-//       videoHistory.value.push({
-//         url: data.url,
-//         timestamp: Date.now(),
-//         duration: data.duration || 0
-//       })
-//     }
-//   } catch (error) {
-//     console.error('添加视频到历史记录失败:', error)
-//   }
-// }
-
 // 处理视频播放
 const handleVideoPlay = (index: number) => {
   // 暂停其他视频
@@ -443,7 +367,228 @@ const handleVideoPause = (_index: number) => {
   // 可以在这里添加暂停后的处理逻辑
 }
 
-// 发送消息
+// 语音识别相关状态
+const isRecording = ref(false)
+const recognition = ref<SpeechRecognition | null>(null)
+const silenceTimer = ref<number | null>(null)
+const silenceThreshold = 1500 // 1.5秒静音判定
+const finalTranscript = ref('')
+const interimTranscript = ref('')
+
+// 初始化语音识别
+const initSpeechRecognition = async () => {
+  try {
+    // 检查浏览器是否支持getUserMedia
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      ElMessageBox.alert(
+        '您的浏览器不支持或禁用了麦克风访问。请按以下步骤操作：\n\n' +
+        '1. 确保使用最新版本的Chrome、Edge或Firefox浏览器\n' +
+        '2. 检查浏览器地址栏是否有麦克风权限图标\n' +
+        '3. 点击地址栏左侧的锁定图标，确保麦克风权限已允许\n' +
+        '4. 如果仍然无法使用，请尝试在浏览器设置中重置网站权限',
+        '麦克风访问失败',
+        {
+          confirmButtonText: '我知道了',
+          type: 'warning'
+        }
+      )
+      return
+    }
+
+    // 请求麦克风权限
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+    stream.getTracks().forEach(track => track.stop()) // 获取权限后立即停止流
+
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+      recognition.value = new SpeechRecognition()
+      recognition.value.continuous = true
+      recognition.value.interimResults = true
+      recognition.value.lang = 'zh-CN'
+
+      recognition.value.onstart = () => {
+        isRecording.value = true
+        finalTranscript.value = ''
+        interimTranscript.value = ''
+        ElMessage.success('语音识别已启动')
+      }
+
+      recognition.value.onresult = (event: SpeechRecognitionEvent) => {
+        let interim = ''
+        let final = ''
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript
+          if (event.results[i].isFinal) {
+            final += transcript
+          } else {
+            interim += transcript
+          }
+        }
+
+        finalTranscript.value = final
+        interimTranscript.value = interim
+        inputMessage.value = final + interim
+
+        // 重置静音计时器
+        if (silenceTimer.value) {
+          clearTimeout(silenceTimer.value)
+        }
+        silenceTimer.value = window.setTimeout(() => {
+          if (finalTranscript.value) {
+            sendMessage()
+          }
+        }, silenceThreshold)
+      }
+
+      recognition.value.onerror = (event: SpeechRecognitionErrorEvent) => {
+        console.error('语音识别错误:', event.error)
+        if (event.error === 'not-allowed') {
+          ElMessageBox.alert(
+            '请允许网页使用麦克风。\n\n' +
+            '1. 点击地址栏左侧的锁定图标\n' +
+            '2. 找到"麦克风"选项\n' +
+            '3. 选择"允许"',
+            '需要麦克风权限',
+            {
+              confirmButtonText: '我知道了',
+              type: 'warning'
+            }
+          )
+        } else {
+          ElMessage.error('语音识别失败，请重试')
+        }
+        isRecording.value = false
+      }
+
+      recognition.value.onend = () => {
+        isRecording.value = false
+        // 如果还有未发送的内容，发送它
+        if (finalTranscript.value) {
+          sendMessage()
+        }
+      }
+
+      // 自动开始录音
+      startRecording()
+    } else {
+      ElMessageBox.alert(
+        '您的浏览器不支持语音识别功能。\n\n' +
+        '请使用最新版本的Chrome、Edge或Firefox浏览器。',
+        '浏览器不支持',
+        {
+          confirmButtonText: '我知道了',
+          type: 'warning'
+        }
+      )
+    }
+  } catch (error) {
+    console.error('获取麦克风权限失败:', error)
+    ElMessageBox.alert(
+      '获取麦克风权限失败。\n\n' +
+      '请按以下步骤操作：\n' +
+      '1. 确保使用最新版本的Chrome、Edge或Firefox浏览器\n' +
+      '2. 检查浏览器地址栏是否有麦克风权限图标\n' +
+      '3. 点击地址栏左侧的锁定图标，确保麦克风权限已允许\n' +
+      '4. 如果仍然无法使用，请尝试在浏览器设置中重置网站权限',
+      '麦克风访问失败',
+      {
+        confirmButtonText: '我知道了',
+        type: 'warning'
+      }
+    )
+  }
+}
+
+// 开始录音
+const startRecording = () => {
+  if (recognition.value) {
+    try {
+      recognition.value.start()
+      isRecording.value = true
+    } catch (error) {
+      console.error('启动语音识别失败:', error)
+    }
+  }
+}
+
+// 停止录音
+const stopRecording = () => {
+  if (recognition.value) {
+    recognition.value.stop()
+    isRecording.value = false
+  }
+  if (silenceTimer.value) {
+    clearTimeout(silenceTimer.value)
+    silenceTimer.value = null
+  }
+}
+
+// 切换录音状态
+const toggleRecording = () => {
+  if (!recognition.value) {
+    initSpeechRecognition()
+  }
+
+  if (isRecording.value) {
+    recognition.value?.stop()
+  } else {
+    try {
+      recognition.value?.start()
+      isRecording.value = true
+      ElMessage.success('开始录音')
+    } catch (error) {
+      console.error('启动语音识别失败:', error)
+      ElMessage.error('启动语音识别失败')
+    }
+  }
+}
+
+// 组件挂载时初始化语音识别
+onMounted(async () => {
+  try {
+    await createWebRTCConnection()
+    await initSpeechRecognition()
+    if (messages.value.length === 0) {
+      chatHistory.showWelcomeMessage()
+    }
+  } catch (error) {
+    console.error('初始化失败:', error)
+    ElMessage.error('初始化失败，请刷新页面重试')
+  }
+})
+
+// 组件卸载时清理资源
+onBeforeUnmount(() => {
+  stopRecording()
+  if (silenceTimer.value) {
+    clearTimeout(silenceTimer.value)
+  }
+  cleanupWebRTC()
+})
+
+const cleanupWebRTC = () => {
+  if (digitalPersonSessionId.value) {
+    try {
+      // 清理本地状态
+      digitalPersonSessionId.value = null
+      if (peerConnection.value) {
+        peerConnection.value.close()
+        peerConnection.value = null
+      }
+      console.log("[Debug] 清理WebRTC连接完毕")
+    } catch (error) {
+      console.error('清理WebRTC连接失败:', error)
+    }
+  }
+}
+
+// 监听页面卸载事件
+window.addEventListener('beforeunload', () => {
+  cleanupWebRTC()
+})
+
+// 修改发送消息函数
 const sendMessage = async () => {
   if (!inputMessage.value.trim()) return
   
@@ -454,69 +599,79 @@ const sendMessage = async () => {
   }
   messages.value.push(userMessage)
   
-  // 清空输入框
+  // 清空输入框和语音识别结果
   inputMessage.value = ''
-  
-  // 开始录像
-  // await startRecording()
+  finalTranscript.value = ''
+  interimTranscript.value = ''
   
   try {
-    console.log("[Debug] 开始发送消息于会话:",activeSessionId.value)
-
+    console.log("[Debug] 开始发送消息于会话:", activeSessionId.value)
     const response = await interviewApi.chat(userMessage.content, activeSessionId.value)
-
-    console.log("[Debug] sendMessage Response:",response)
+    console.log("[Debug] sendMessage Response:", response)
     
-    // if (response["code"] != 200) {
-    //   throw new Error('发送消息失败')
-    // }
-    if (!activeSessionId.value){ // 第一个对话
-      chatHistory.createSession(response.data.session_id,"面试会话")
+    if (!activeSessionId.value) {
+      chatHistory.createSession(response.data.session_id, "面试会话")
     }
     
-    chatHistory.addMessage(response.data.session_id,userMessage)
+    chatHistory.addMessage(response.data.session_id, userMessage)
     chatHistory.switchToSession(response.data.session_id)
     activeSessionId.value = response.data.session_id
-
-    
-    // isSpeaking.value = true
-    
-    // 等待数字人回复完成
-    // await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // 停止录像
-    // await stopRecording()
-    
-    // isSpeaking.value = false
     
   } catch (error) {
     console.error('发送消息失败:', error)
-    isSpeaking.value = false
     ElMessage.error('发送消息失败，请重试')
   }
 }
 
-// 组件挂载时创建WebRTC连接
-onMounted(async () => {
-  try {
-    await createWebRTCConnection()
-    chatHistory.loadSession()
-    if (messages.value.length === 0) {
-      chatHistory.showWelcomeMessage()
-    }
-  } catch (error) {
-    console.error('初始化失败:', error)
-    ElMessage.error('初始化失败，请刷新页面重试')
-  }
-})
+// 添加Web Speech API的类型声明
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList
+  resultIndex: number
+  interpretation: any
+}
 
-// 组件卸载前关闭webRTC连接
-onBeforeUnmount(async () => {
-  if (peerConnection.value) {
-    peerConnection.value.close()
-    peerConnection.value = null
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string
+  message: string
+}
+
+interface SpeechRecognitionResultList {
+  length: number
+  item(index: number): SpeechRecognitionResult
+  [index: number]: SpeechRecognitionResult
+}
+
+interface SpeechRecognitionResult {
+  isFinal: boolean
+  length: number
+  item(index: number): SpeechRecognitionAlternative
+  [index: number]: SpeechRecognitionAlternative
+}
+
+interface SpeechRecognitionAlternative {
+  transcript: string
+  confidence: number
+}
+
+interface SpeechRecognition extends EventTarget {
+  continuous: boolean
+  interimResults: boolean
+  lang: string
+  onstart: () => void
+  onresult: (event: SpeechRecognitionEvent) => void
+  onerror: (event: SpeechRecognitionErrorEvent) => void
+  onend: () => void
+  start: () => void
+  stop: () => void
+  abort: () => void
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition: new () => SpeechRecognition
+    webkitSpeechRecognition: new () => SpeechRecognition
   }
-})
+}
 </script>
 
 <style scoped>
@@ -770,5 +925,15 @@ onBeforeUnmount(async () => {
   0% { opacity: 0.3; transform: scale(0.8); }
   50% { opacity: 1; transform: scale(1.2); }
   100% { opacity: 0.3; transform: scale(0.8); }
+}
+
+.recording {
+  background-color: #f56c6c;
+  border-color: #f56c6c;
+}
+
+.recording:hover {
+  background-color: #f78989;
+  border-color: #f78989;
 }
 </style> 

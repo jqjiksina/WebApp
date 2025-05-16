@@ -147,8 +147,8 @@ export const resumeApi = {
       'http://' + import.meta.env.VITE_BACK_END_URL + '/api/resume/upload',
       formData as unknown as Record<string, unknown>,
       {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+      headers: {
+        'Content-Type': 'multipart/form-data'
         }
       }
     )

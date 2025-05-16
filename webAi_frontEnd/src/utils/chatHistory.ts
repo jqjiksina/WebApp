@@ -3,6 +3,11 @@ import type { ChatHistory, ChatSession, ChatMessage, ChatSessionState } from '@/
 import { ElMessage } from 'element-plus'
 import { nextTick, ref, Ref} from 'vue'
 
+/**
+ * 聊天会话记录管理
+ * 1. 对session进行会话管理
+ * 2. 
+ */
 export class ChatHistoryManager {
   private history = ref<ChatHistory>({
     sessions: [],
@@ -158,6 +163,11 @@ export class ChatHistoryManager {
     return newSession
   }
 
+  /**
+   * 添加消息到指定会话
+   * @param session_id 
+   * @param message 
+   */
   public addMessage(session_id: string, message: ChatMessage) {
     const session = this.history.value.sessions.find(s => s.session_id === session_id)
     if (session) {
@@ -172,6 +182,9 @@ export class ChatHistoryManager {
     return this.history.value.sessions.find(s => s.session_id === this.history.value.current_session_id) || null
   }
 
+  /**
+   * 返回history中的指定session记录的引用 
+   */
   public getSession(session_id: string): ChatSession | null {
     return this.history.value.sessions.find(s => s.session_id === session_id) || null
   }
@@ -300,7 +313,7 @@ export class ChatHistoryManager {
   }
 
   /**
-   * 保存指定会话的消息
+   * 保存指定会话的消息到history、浏览器缓存
    * @param session_id 
    * @returns 
    */
@@ -328,7 +341,6 @@ export class ChatHistoryManager {
       session.messages = messagesToSave;
       session.updated_at = Date.now();
       
-      // 立即保存历史记录到浏览器缓存
       this.saveHistory();
     } catch (error) {
       console.error(`保存会话 ${session_id} 失败:`, error);
