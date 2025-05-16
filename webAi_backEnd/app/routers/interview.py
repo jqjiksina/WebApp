@@ -44,7 +44,7 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
     
     msg = "" # 流式响应收到的总消息
     lastpos = 0
-    session_id = ""
+    session_id = request.session_id  # 初始化为请求中的 session_id
         
     async for chunk in response:
         chunk_data = json.loads(chunk)
@@ -52,11 +52,15 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
             msg = chunk_data["content"]
             result = msg[lastpos:]
             interupt = lastpos == 0
+            if len(msg) - lastpos >= 40 : # 以40个字符为单位，发送给数字人说话
+                await digital_human.play(result, human_session_id, interupt)
+                lastpos = len(msg)
+            # 更新 session_id，确保使用最新的值
+            if "session_id" in chunk_data:
+                session_id = chunk_data["session_id"]
+        elif chunk_data["type"] == "end" and lastpos != len(msg):
             await digital_human.play(result, human_session_id, interupt)
-            lastpos = len(msg)
-            if (not request.session_id):
-                session_id = chunk_data.get("session_id")
-
+            
     
     return {"code":200,"message":"success", "data":{"session_id":session_id}}
 
