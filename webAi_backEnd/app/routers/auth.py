@@ -114,6 +114,6 @@ async def login(
 async def check(
     user: User = Depends(get_current_user)
 ):
-    """检查用户是否登录"""
+    """检查用户token状态"""
     print("[Debug] user check:",user.id)
-    return True
+    return {"valid":True}

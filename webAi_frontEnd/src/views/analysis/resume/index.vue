@@ -43,7 +43,7 @@
                 @click="switchToSession(session.session_id)"
               >
                 <div class="session-title">{{ session.title }}</div>
-                <div class="session-time">{{ formatTime(session.updated_at) }}</div>
+                <div class="session-time">{{ formatTime(session.updated_at as number) }}</div>
                 <div v-if="isSessionStreaming(session.session_id)" class="streaming-indicator">
                   <div class="dot"></div>
                   <div class="dot"></div>
@@ -448,7 +448,6 @@ const handleChat = async () => {
   const userMessage: ChatMessage = {
     role: 'user',
     content: userMessageContent,
-    timestamp: Date.now()
   }
   messages.value.push(userMessage)
 
@@ -459,7 +458,6 @@ const handleChat = async () => {
   const aiMessage: ChatMessage = {
     role: 'assistant',
     content: '',
-    timestamp: Date.now()
   }
   messages.value.push(aiMessage)
   chatHistory.scrollToBottom()
@@ -559,7 +557,6 @@ const handleUploadSuccess = async (_response: any) => {
     const welcomeMessage: ChatMessage = {
       role: 'assistant',
       content: '我已经收到您的简历，我可以帮您：\n1. 分析简历内容\n2. 提供修改建议\n3. 优化表达方式\n4. 调整格式结构\n\n请告诉我您想先从哪个方面开始？',
-      timestamp: Date.now()
     }
     messages.value.push(welcomeMessage)
     

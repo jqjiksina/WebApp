@@ -1,5 +1,4 @@
 import request from '@/utils/request'
-import type { Resume, ResumeFeedback,  } from '@/types/resume'
 import { useUsersStore } from '@/store'
 import type { AxiosProgressEvent } from 'axios'
 
@@ -174,10 +173,4 @@ export const resumeApi = {
       throw error
     }
   },
-
-  // 获取简历历史记录
-  getResumeHistory: () => request.get<Resume[]>('/api/resume/history'),
-
-  // 获取简历评分
-  getResumeScore: (resumeId: string) => request.get<ResumeFeedback>(`/api/resume/score/${resumeId}`)
 }

@@ -58,7 +58,7 @@ class RAGFlowClient:
             response = await client.post(
                 f"{self.base_url}/api/v1/chats",
                 headers=self.headers,
-                json=payload
+                params=payload
             )
             response.raise_for_status()
             return response.json()
@@ -72,7 +72,7 @@ class RAGFlowClient:
             response = await client.put(
                 f"{self.base_url}/api/v1/chats/{assitant_id}",
                 headers=self.headers,
-                json=payload
+                params=payload
             )
             response.raise_for_status()
             return response.json()
@@ -90,7 +90,7 @@ class RAGFlowClient:
             response = await client.delete(
                 f"{self.base_url}/api/v1/chats",
                 headers=self.headers,
-                json=payload
+                params=payload
             )
             response.raise_for_status()
             return response.json()
@@ -166,31 +166,7 @@ class RAGFlowClient:
                 )
                 response.raise_for_status()
                 print("[Debug] Chat Response:",response.json())
-                response = response.json()
-                def parse_sse_data(sse_str: str) -> dict:
-                    # 去除前缀和换行符
-                    json_str = sse_str.strip().replace("data:", "", 1)
-                    return json.loads(json_str)
-                if response['data'] and type(response['data']) == str: # 说明新创建了一个会话
-                    parsed_data = parse_sse_data(response["data"])
-                    parsed_response = Response_Chat(**{
-                        **response,
-                        "data": parsed_data["data"]  # 提取嵌套的 data 字段
-                    })
-                    print("[Debug] parsed_response:",parsed_response)
-                    if question == "":
-                        yield parsed_response
-                    # 如果question不为空，重新发送question到现在会话
-                    payload["session_id"] = parsed_response.data.session_id
-                    response = await client.post(
-                        url,
-                        headers=self.headers,
-                        json=payload
-                    )
-                    yield Response_Chat(**response.json())
-                if question == "": # can't send empty message to existing session
-                    yield HTTPException()
-                yield Response_Chat(**response.json())
+                yield response.json()
 
     # def upload_document(self, kb_id: str, file_path: str) -> str:
     #     """上传文档"""
@@ -212,18 +188,19 @@ class RAGFlowClient:
                        session_id : str = "",
                        session_name : str = "",
                        orderby : str = "create_time",
-                       desc : bool = False
-                       )-> Response_GetSessions:
+                       desc : bool = False,
+                       is_agent : bool = False
+                       ):
         '''获取指定assitant的会话列表（按页访问），并提供筛选条件（会话id/会话名、排序方式等信息）'''
         async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.get(
-                f"{self.base_url}/api/v1/chats/{assistant_id}/sessions?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={session_name}&id={session_id}&user_id={user_id}",
+                f"{self.base_url}/api/v1/{'agents' if is_agent else 'chats'}/{assistant_id}/sessions?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={session_name}&id={session_id}&user_id={user_id}",
                 headers=self.headers
             )
             response.raise_for_status()
             
-            print("[Debug] getChatSession done:",str(response.json())[:200])
-            return Response_GetSessions(**response.json())
+            print("[Debug] getChatSession done:",str(response.json()))
+            return response.json()
     
     async def deleteSession(self,assitant_id:str,
                       ids : list[str] = [],
@@ -236,7 +213,7 @@ class RAGFlowClient:
             url = f"{self.base_url}/api/v1/chats/{assitant_id}/sessions"
         payload = {"ids" : ids}
         async with httpx.AsyncClient(timeout=60.0) as client:
-            response = await client.delete(url, headers=self.headers, json=payload)
+            response = await client.request("DELETE",url, headers=self.headers,json=payload)
             response.raise_for_status()
             return response.json()
     

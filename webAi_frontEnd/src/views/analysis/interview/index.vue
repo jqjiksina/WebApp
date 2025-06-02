@@ -6,7 +6,7 @@
         <div class="card-header">
           <div class="header-left">
             <span>AI面试助手</span>
-            <el-button type="primary" @click="showSessionList = !showSessionList">
+            <el-button type="primary" @click="onShowSessionList">
               {{ showSessionList ? '隐藏会话列表' : '显示会话列表' }}
             </el-button>
           </div>
@@ -30,7 +30,7 @@
                 @click="switchToSession(session.session_id)"
               >
                 <div class="session-title">{{ session.title }}</div>
-                <div class="session-time">{{ formatTime(session.updated_at) }}</div>
+                <div class="session-time">{{ formatTime(session.updated_at as number) }}</div>
                 <el-button
                   type="text"
                   class="delete-session"
@@ -61,8 +61,28 @@
               <div v-else-if="isSpeaking" class="speaking-status">
                 <span class="status-dot"></span> 正在说话...
               </div>
+              <div v-else-if="!digitalPersonSessionId">
+                <span class="status-dot closed"></span> 连接关闭
+              </div>
               <div v-else class="idle-status">
                 <span class="status-dot idle"></span> 已连接
+              </div>
+            </div>
+            <div class="avatar-selection">
+              <div v-if="!digitalPersonSessionId">
+                <!--重置连接 -->
+                <el-button    
+                  type="primary"
+                  @click="beginInterview">
+                  连接Ai面试官
+                </el-button>
+              </div>
+              <div v-else>
+                <el-button
+                  type="primary"
+                  @click="endInterview">
+                  断开连接
+                </el-button>
               </div>
             </div>
           </div>
@@ -129,15 +149,15 @@
 </template>
 
 <script setup lang="ts" name="Interview">
-import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { ref, onBeforeUnmount, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete, Microphone, VideoPause } from '@element-plus/icons-vue'
 import { ChatHistoryManager } from '@/utils/chatHistory'
 import type { ChatMessage } from '@/types/resume'
 import { interviewApi } from '@/api/interview/interviewApi'
-import type { Response_Offer } from './Type'
 // import axios from 'axios'
-import { userApi } from '@/api'
+import axios from 'axios'
+import { useUsersStore } from '@/store'
 
 const messages = ref<ChatMessage[]>([])
 const inputMessage = ref('')
@@ -153,10 +173,9 @@ const isSpeaking = ref(false)
 const connecting = ref(false)
 const peerConnection = ref<RTCPeerConnection | null>(null)
 const avatarPoster = ref('/avatar-placeholder.png')
-const digitalPersonAPI = 'digitalperson'
 const digitalPersonSessionId = ref()
 
-// 视频历史记录
+// 视频历史记录：存储在用户本地
 const videoHistory = ref<Array<{
   url: string
   timestamp: number
@@ -167,6 +186,13 @@ const sessions = computed(() => chatHistory.getAllSessions().value)
 
 const userAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 const aiAvatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+
+const onShowSessionList = () =>{
+  showSessionList.value = !showSessionList.value
+  if (showSessionList.value){
+    chatHistory.updateSessionHistoryFromServer()
+  }
+}
 
 // 格式化时间
 const formatTime = (timestamp: number) => {
@@ -187,16 +213,14 @@ const switchToSession = async (sessionId: string) => {
     // 切换到新会话
     chatHistory.switchToSession(sessionId)
     activeSessionId.value = sessionId
-    
-    // 加载视频历史
-    await loadVideoHistory(sessionId)
+
   } catch (error) {
     console.error('切换会话失败:', error)
     ElMessage.error('切换会话失败')
   }
 }
 
-// 删除会话
+// 删除指定会话
 const deleteSession = async (session_id: string) => {
   try {
     await ElMessageBox.confirm('确定要删除这个面试记录吗？', '提示', {
@@ -204,8 +228,9 @@ const deleteSession = async (session_id: string) => {
       cancelButtonText: '取消',
       type: 'warning'
     })
-    
+    interviewApi.delete_session([session_id])
     chatHistory.deleteSession(session_id)
+    activeSessionId.value=""
     ElMessage.success('面试记录已删除')
   } catch {
     // 用户取消删除
@@ -223,7 +248,6 @@ const createNewSession = async () => {
     activeSessionId.value = ""
     messages.value = []
     videoHistory.value = []
-    chatHistory.showWelcomeMessage('您好！我是您的AI面试官。\n\n在面试过程中，我会：\n1. 提出专业问题\n2. 评估您的回答\n3. 提供改进建议\n\n准备好了吗？让我们开始吧！')
     showSessionList.value = false
     
     // 设置用户的专属数字人会话id
@@ -247,40 +271,20 @@ const createNewSession = async () => {
 // }
 
 
-// 加载视频历史
-const loadVideoHistory = async (sessionId: string) => {
-  try {
-    const response = await fetch(`${digitalPersonAPI}/get_session_videos`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sessionid: sessionId
-      })
-    })
-    
-    if (!response.ok) {
-      throw new Error('加载视频历史失败')
-    }
-    
-    const data = await response.json()
-    videoHistory.value = data.videos || []
-  } catch (error) {
-    console.error('加载视频历史失败:', error)
-  }
-}
-
-// 创建WebRTC连接
+/**
+ * 创建webRTC连接，连接过程中的身份验证应由数字人项目完成（数字人项目被后端分发token，数字人项目使用被分发的token，对用户身份进行验证）
+ */
 const createWebRTCConnection = async () => {
   try {
     connecting.value = true
     console.log('开始创建WebRTC连接...')
 
     // 创建连接前先向后端验证用户身份
-    const authed = await userApi.check_auth()
-    if (!authed.data){
-      console.error("用户未登录！")
-      return
-    }
+    // const authed = await userApi.check_auth()
+    // if (!authed.data){
+    //   console.error("用户未登录！")
+    //   return
+    // }
     
     peerConnection.value = new RTCPeerConnection({
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
@@ -307,20 +311,29 @@ const createWebRTCConnection = async () => {
     
     await peerConnection.value.setLocalDescription(offer)
 
-    const response = await fetch(`digitalperson/offer`, { // 直接访问数字人服务
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        sdp: peerConnection.value.localDescription?.sdp,
-        type: 'offer'
-      })
+    // const response = await fetch(`digitalperson/offer`, { // 直接访问数字人服务
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify({
+    //     sdp: peerConnection.value.localDescription?.sdp,
+    //     type: 'offer'
+    //   })
+    // })
+
+    const response = await axios.post("digitalperson/offer",{
+      sdp: peerConnection.value.localDescription?.sdp,
+      type: 'offer'
+    },{
+      headers: { 'Content-Type': 'application/json' ,
+        'Authorization': `Bearer ${useUsersStore().getToken}`
+      },
     })
     
-    if (!response.ok) {
-      throw new Error(`无法连接到数字人服务: ${response.statusText}`)
+    if (response.status != 200) {
+      throw new Error(`无法连接到数字人服务: ${response}`)
     }
     
-    const answerData : Response_Offer = await response.json()
+    const answerData = response.data;
     console.log('收到WebRTC应答:', answerData)
     
     if (!answerData.sdp || !answerData.type || !answerData.sessionid) {
@@ -339,8 +352,10 @@ const createWebRTCConnection = async () => {
 
     // 创建webrtc链接成功后，将所连接的数字人会话id传到后端。
     await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
+    // and then activate the open log
+    await interviewApi.chat("open log",activeSessionId.value)
+
     console.log("[Debug] 设置数字人会话id完毕:",digitalPersonSessionId.value)
-    
     console.log('WebRTC连接创建成功')
   } catch (error) {
     console.error('创建WebRTC连接失败:', error)
@@ -544,27 +559,22 @@ const toggleRecording = () => {
   }
 }
 
-// 组件挂载时初始化语音识别
-onMounted(async () => {
-  try {
-    await createWebRTCConnection()
-    await initSpeechRecognition()
-    if (messages.value.length === 0) {
-      chatHistory.showWelcomeMessage()
-    }
-  } catch (error) {
-    console.error('初始化失败:', error)
-    ElMessage.error('初始化失败，请刷新页面重试')
-  }
-})
+const beginInterview = async ()=>{
+  await createWebRTCConnection();
+  await initSpeechRecognition();
+}
 
-// 组件卸载时清理资源
-onBeforeUnmount(() => {
-  stopRecording()
+const endInterview = ()=>{
+  stopRecording();
   if (silenceTimer.value) {
     clearTimeout(silenceTimer.value)
   }
-  cleanupWebRTC()
+  cleanupWebRTC();
+}
+
+// 组件卸载时清理资源
+onBeforeUnmount(() => {
+  endInterview();
 })
 
 const cleanupWebRTC = () => {
@@ -591,13 +601,18 @@ window.addEventListener('beforeunload', () => {
 // 修改发送消息函数
 const sendMessage = async () => {
   if (!inputMessage.value.trim()) return
+
+  let thisSessionId = activeSessionId.value;
   
   const userMessage: ChatMessage = {
     role: 'user',
     content: inputMessage.value.trim(),
-    timestamp: Date.now()
   }
   messages.value.push(userMessage)
+  await chatHistory.scrollToBottom()
+
+  if (thisSessionId)
+    chatHistory.saveSession(thisSessionId)
   
   // 清空输入框和语音识别结果
   inputMessage.value = ''
@@ -605,17 +620,19 @@ const sendMessage = async () => {
   interimTranscript.value = ''
   
   try {
-    console.log("[Debug] 开始发送消息于会话:", activeSessionId.value)
-    const response = await interviewApi.chat(userMessage.content, activeSessionId.value)
+    console.log("[Debug] 开始发送消息于会话:", thisSessionId)
+    const response = await interviewApi.chat(userMessage.content, thisSessionId)
     console.log("[Debug] sendMessage Response:", response)
+
+    if (response.status != 200)
+      throw new Error(response.statusText);
     
-    if (!activeSessionId.value) {
+    if (thisSessionId != response.data.session_id) {
       chatHistory.createSession(response.data.session_id, "面试会话")
+      chatHistory.saveSession(response.data.session_id)
+      if (thisSessionId)
+        chatHistory.deleteSession(thisSessionId)
     }
-    
-    chatHistory.addMessage(response.data.session_id, userMessage)
-    chatHistory.switchToSession(response.data.session_id)
-    activeSessionId.value = response.data.session_id
     
   } catch (error) {
     console.error('发送消息失败:', error)
@@ -794,6 +811,12 @@ declare global {
   color: #606266;
 }
 
+.avatar-selection{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
 .connecting-status {
   display: flex;
   align-items: center;
@@ -819,6 +842,11 @@ declare global {
 
 .status-dot.idle {
   background-color: #67c23a;
+  animation: none;
+}
+
+.status-dot.closed{
+  background-color: #f56c6c;
   animation: none;
 }
 

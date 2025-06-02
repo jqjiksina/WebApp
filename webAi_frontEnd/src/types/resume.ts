@@ -25,7 +25,6 @@ export interface ResumeChatRequest {
 export interface ChatMessage {
   role: 'user' | 'assistant'
   content: string
-  timestamp: number
 }
 
 export interface ChatSessionState {
@@ -37,8 +36,8 @@ export interface ChatSessionState {
 export interface ChatSession {
   session_id: string
   messages: ChatMessage[]
-  created_at: number
-  updated_at: number
+  created_at: number | null
+  updated_at: number | null
   title: string
   state: ChatSessionState
 }

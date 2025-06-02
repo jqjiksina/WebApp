@@ -1,3 +1,4 @@
+import { interviewApi } from '@/api/interview/interviewApi'
 import { useUsersStore } from '@/store'
 import type { ChatHistory, ChatSession, ChatMessage, ChatSessionState } from '@/types/resume'
 import { ElMessage } from 'element-plus'
@@ -177,6 +178,27 @@ export class ChatHistoryManager {
     }
   }
 
+  /**
+   * 从后端更新整个会话历史记录
+   */
+  public async updateSessionHistoryFromServer() {
+    const response = await interviewApi.getSessionHistory("")
+    // console.log("updateSessionHistoryFromServer response:",response)
+    const sessions_updated = response.data
+    this.history.value.sessions = [] // clear the original history
+    sessions_updated.forEach(session => {
+      this.history.value.sessions.push({
+        session_id : session.id,
+        messages : session.messages,
+        title : session.title,
+        created_at : null,
+        updated_at : null,
+        state : this.createDefaultSessionState()
+      })
+    });
+    this.saveHistory()
+  }
+
   public getCurrentSession(): ChatSession | null {
     if (!this.history.value.current_session_id) return null
     return this.history.value.sessions.find(s => s.session_id === this.history.value.current_session_id) || null
@@ -193,7 +215,7 @@ export class ChatHistoryManager {
    * 将所有会话按照更新时间顺序返回
    */
   public getAllSessions(): Ref<ChatSession[]> {
-    return ref(this.history.value.sessions.sort((a, b) => b.updated_at - a.updated_at))
+    return ref(this.history.value.sessions.sort((a, b) => (b.updated_at as number) - (a.updated_at as number)))
   }
 
   /**
@@ -240,7 +262,6 @@ export class ChatHistoryManager {
     const welcomeMessage: ChatMessage = {
       role: 'assistant',
       content: add_content,
-      timestamp: Date.now()
     }
     this.messages.value.push(welcomeMessage)
   }
@@ -540,7 +561,6 @@ export class ChatHistoryManager {
       const finalMessage: ChatMessage = {
         role: "assistant", 
         content: finalContent, 
-        timestamp: Date.now()
       };
 
       // 当前活跃会话直接更新UI

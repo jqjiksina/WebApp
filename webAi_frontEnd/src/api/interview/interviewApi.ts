@@ -1,5 +1,4 @@
-import { useUsersStore } from '@/store'
-import request from '@/utils/request'
+import axios from 'axios'
 
 // // 创建面试会话
 // export function createSession() {
@@ -27,6 +26,16 @@ import request from '@/utils/request'
 //     session_id: sessionId
 //   })
 // }
+interface MessageItem{
+  role : ("assistant" | "user"),
+  content : string
+}
+
+interface SessionItem{
+  id : string,
+  title : string,
+  messages : MessageItem[]
+}
 
 export const interviewApi = {
     /**
@@ -34,14 +43,8 @@ export const interviewApi = {
    * @param sessionId 数字人会话id
    */
   setHumanSessionId : async (sessionId: number) => {
-    return request.post<{session_id : string}>('http://' + import.meta.env.VITE_BACK_END_URL +'/api/interview/set_human_session_id', {
+    return await axios.post<{session_id : string}>('/api/interview/set_human_session_id', {
       session_id: sessionId
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization': `Bearer ${useUsersStore().getToken}`
-      }
     })
   },
 
@@ -49,34 +52,31 @@ export const interviewApi = {
    * 在指定会话中， 进行一次对话
    */
   chat : async (content : string, sessionId : string) => {
-    return request.post<{session_id : string}>('http://' + import.meta.env.VITE_BACK_END_URL +'/api/interview/answer',
+    return await axios.post<{session_id : string}>('/api/interview/answer',
       {
         answer : content,
         session_id : sessionId
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': `Bearer ${useUsersStore().getToken}`
-        }
       }
     )
   },
 
+  /**
+   * 从服务端删除指定会话，若为空，则删除全部
+   * @param session_ids 
+   * @returns 
+   */
+  delete_session: async (session_ids : string[]) => {
+    return await axios.post("/api/interview/delete_session",
+      {session_ids : session_ids}
+    )
+  },
 
-
-  // /**
-  //  * 关闭对应数字人会话id的webrtc链接
-  //  * @param sessionId 
-  //  * @returns 
-  //  */
-  // closeSession : async (sessionId: string) => {
-  //     return request.post('/digitalperson/close-session', {
-  //       session_id: sessionId
-  //     })
-  // },
+  /**
+   * 获得指定会话历史，若会话id为空，则获得全部
+   */
+  getSessionHistory: async (sessionId : string)=>{
+    return await axios.post<SessionItem[]>("/api/interview/list_session",
+      {session_id : sessionId}
+    )
+  }
 }
-
-// 停止数字人录制
-
-// 获取数字人录制的视频
