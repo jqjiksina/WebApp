@@ -5,7 +5,7 @@ import uvicorn
 import time
 
 from database.core import init_db
-from routers import auth,chat,resume,video_history,digital_person,interview
+from routers import auth,chat,resume,digital_person,interview
 
 @asynccontextmanager
 async def on_startup(app: FastAPI):
@@ -33,7 +33,6 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(chat.router)
 app.include_router(resume.router)
-app.include_router(video_history.router)
 app.include_router(digital_person.router)
 app.include_router(interview.router)
 

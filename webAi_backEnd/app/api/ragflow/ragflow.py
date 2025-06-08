@@ -192,6 +192,7 @@ class RAGFlowClient:
                        is_agent : bool = False
                        ):
         '''获取指定assitant的会话列表（按页访问），并提供筛选条件（会话id/会话名、排序方式等信息）'''
+        print("[Debug] getSessionList begin")
         async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.get(
                 f"{self.base_url}/api/v1/{'agents' if is_agent else 'chats'}/{assistant_id}/sessions?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={session_name}&id={session_id}&user_id={user_id}",
@@ -199,7 +200,7 @@ class RAGFlowClient:
             )
             response.raise_for_status()
             
-            print("[Debug] getChatSession done:",str(response.json()))
+            print("[Debug] getSessionList done:",str(response.json()))
             return response.json()
     
     async def deleteSession(self,assitant_id:str,

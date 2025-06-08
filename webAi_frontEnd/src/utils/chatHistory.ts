@@ -1,8 +1,39 @@
-import { interviewApi } from '@/api/interview/interviewApi'
 import { useUsersStore } from '@/store'
-import type { ChatHistory, ChatSession, ChatMessage, ChatSessionState } from '@/types/resume'
 import { ElMessage } from 'element-plus'
 import { nextTick, ref, Ref} from 'vue'
+
+export interface ChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+}
+
+export interface ChatSessionState {
+  typingIndex: number
+  isStreaming: boolean
+  lastContent: string   //用于缓存最新的打字机结果
+}
+
+export interface ChatSession {
+  session_id: string
+  messages: ChatMessage[]
+  created_at: number | null
+  updated_at: number | null
+  title: string
+  state: ChatSessionState
+}
+
+export interface ChatSessionUpdated{
+  id : string
+  title: string
+  messages: ChatMessage[]
+  create_time: number | null
+  update_time: number | null
+}
+
+export interface ChatHistory {
+  sessions: ChatSession[]
+  current_session_id: string | null
+}
 
 /**
  * 聊天会话记录管理
@@ -179,20 +210,18 @@ export class ChatHistoryManager {
   }
 
   /**
-   * 从后端更新整个会话历史记录
+   * 从后端回复更新整个会话历史记录，
+   * 更新会话的 created_time、updated_time、
    */
-  public async updateSessionHistoryFromServer() {
-    const response = await interviewApi.getSessionHistory("")
-    // console.log("updateSessionHistoryFromServer response:",response)
-    const sessions_updated = response.data
+  public async updateSession(sessions_updated : ChatSessionUpdated[]) {
     this.history.value.sessions = [] // clear the original history
     sessions_updated.forEach(session => {
       this.history.value.sessions.push({
         session_id : session.id,
         messages : session.messages,
         title : session.title,
-        created_at : null,
-        updated_at : null,
+        created_at : session.create_time,
+        updated_at : session.update_time,
         state : this.createDefaultSessionState()
       })
     });

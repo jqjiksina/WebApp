@@ -7,24 +7,18 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
-// // 初始化自动登录
-// const initAuth = async () => {
-//   const token = userStore.getToken
-//   if (token) {
-//     try {
-//       // ✅ 验证 Token 有效性（需要后端配合接口）
-//       await axios.get(`${import.meta.env.VITE_BACK_END_URL}/auth/validate`, {
-//         headers: { Authorization: `Bearer ${token}` }
-//       })
-//     } catch (error) {
-//       authHelper.clearToken()
-//       router.replace('/login')
-//     }
-//   }
-// }
-
-
 const app = createApp(App);
+
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css' //样式
+
+//创建v-highlight全局指令
+app.directive('highlight',function (el) {
+  let blocks = el.querySelectorAll('pre code');
+  blocks.forEach((block: HTMLElement)=>{
+    hljs.highlightBlock(block)
+  })
+})
 
 //挂载方法
 app.config.globalProperties['$assert']=(exp:boolean)=>{
@@ -41,10 +35,21 @@ app.use(pinia)
 
 app.mount('#app')
 
-import { useUsersStore } from './store/modules/user'
-import { userApi } from './api/user/userApi';
-import type{Request_Login} from '@/types/formSubmit'
+import { useUsersStore } from './store/user'
+import { userApi } from './api/userApi';
+import type{Request_Login} from '@/api/userApi'
+import axios from 'axios';
 const userStore = useUsersStore()
+
+axios.interceptors.request.use(config => {
+  const token = userStore.getToken
+  console.log("axio interpret! token: ",token)
+  if (token) {
+  config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+  });
+
 // 每 10 分钟刷新一次 Token
 setInterval(async () => {
   const token = userStore.getToken

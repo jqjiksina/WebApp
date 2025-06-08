@@ -87,23 +87,6 @@
             </div>
           </div>
 
-          <!-- 历史视频记录 -->
-          <div v-if="activeSessionId" class="video-history">
-            <div v-for="(video, index) in videoHistory" :key="index" class="video-item">
-              <video
-                :ref="'historyVideo' + index"
-                :src="video.url"
-                controls
-                @play="handleVideoPlay(index)"
-                @pause="handleVideoPause(index)"
-              ></video>
-              <div class="video-info">
-                <span class="video-time">{{ formatTime(video.timestamp) }}</span>
-                <span class="video-duration">{{ formatDuration(video.duration) }}</span>
-              </div>
-            </div>
-          </div>
-
           <div class="chat-messages" ref="messagesContainer">
             <div v-for="(message, index) in messages" :key="index" :class="['message', message.role]">
               <div class="message-content">
@@ -152,9 +135,9 @@
 import { ref, onBeforeUnmount, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete, Microphone, VideoPause } from '@element-plus/icons-vue'
-import { ChatHistoryManager } from '@/utils/chatHistory'
-import type { ChatMessage } from '@/types/resume'
-import { interviewApi } from '@/api/interview/interviewApi'
+import { ChatHistoryManager, ChatSessionUpdated } from '@/utils/chatHistory'
+import type { ChatMessage } from '@/api/resumeApi'
+import { interviewApi } from '@/api/interviewApi'
 // import axios from 'axios'
 import axios from 'axios'
 import { useUsersStore } from '@/store'
@@ -175,22 +158,16 @@ const peerConnection = ref<RTCPeerConnection | null>(null)
 const avatarPoster = ref('/avatar-placeholder.png')
 const digitalPersonSessionId = ref()
 
-// 视频历史记录：存储在用户本地
-const videoHistory = ref<Array<{
-  url: string
-  timestamp: number
-  duration: number
-}>>([])
-
 const sessions = computed(() => chatHistory.getAllSessions().value)
 
 const userAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 const aiAvatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
 
-const onShowSessionList = () =>{
+const onShowSessionList = async () =>{
   showSessionList.value = !showSessionList.value
   if (showSessionList.value){
-    chatHistory.updateSessionHistoryFromServer()
+    const response = await interviewApi.listSession("");
+    chatHistory.updateSession(response.data as ChatSessionUpdated[])
   }
 }
 
@@ -198,13 +175,6 @@ const onShowSessionList = () =>{
 const formatTime = (timestamp: number) => {
   const date = new Date(timestamp)
   return date.toLocaleString()
-}
-
-// 格式化视频时长
-const formatDuration = (seconds: number) => {
-  const minutes = Math.floor(seconds / 60)
-  const remainingSeconds = Math.floor(seconds % 60)
-  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`
 }
 
 // 切换会话
@@ -228,7 +198,7 @@ const deleteSession = async (session_id: string) => {
       cancelButtonText: '取消',
       type: 'warning'
     })
-    interviewApi.delete_session([session_id])
+    interviewApi.deleteSession([session_id])
     chatHistory.deleteSession(session_id)
     activeSessionId.value=""
     ElMessage.success('面试记录已删除')
@@ -237,7 +207,9 @@ const deleteSession = async (session_id: string) => {
   }
 }
 
-// 创建新会话
+/**
+ * 创建临时新会话
+ *  */ 
 const createNewSession = async () => {
   try { 
     if (!digitalPersonSessionId.value){ // 保证webRTC正确连接，数字人推流正常
@@ -247,7 +219,6 @@ const createNewSession = async () => {
        // 创建新会话
     activeSessionId.value = ""
     messages.value = []
-    videoHistory.value = []
     showSessionList.value = false
     
     // 设置用户的专属数字人会话id
@@ -257,19 +228,6 @@ const createNewSession = async () => {
     ElMessage.error('创建新会话失败')
   }
 }
-
-// 关闭面试会话
-// const closeInterviewSession = async () => {
-//   if (digitalPersonSessionId.value) {
-//     try {
-//       await closeSession(digitalPersonSessionId.value)
-//       console.log('Digital person session closed:', digitalPersonSessionId.value)
-//     } catch (error) {
-//       console.error('Failed to close digital person session:', error)
-//     }
-//   }
-// }
-
 
 /**
  * 创建webRTC连接，连接过程中的身份验证应由数字人项目完成（数字人项目被后端分发token，数字人项目使用被分发的token，对用户身份进行验证）
@@ -362,24 +320,6 @@ const createWebRTCConnection = async () => {
     connecting.value = false
     ElMessage.error('连接数字人失败，请稍后再试')
   }
-}
-
-// 处理视频播放
-const handleVideoPlay = (index: number) => {
-  // 暂停其他视频
-  videoHistory.value.forEach((_, i) => {
-    if (i !== index) {
-      const video = document.querySelector(`#historyVideo${i}`) as HTMLVideoElement
-      if (video) {
-        video.pause()
-      }
-    }
-  })
-}
-
-// 处理视频暂停
-const handleVideoPause = (_index: number) => {
-  // 可以在这里添加暂停后的处理逻辑
 }
 
 // 语音识别相关状态
@@ -693,13 +633,16 @@ declare global {
 
 <style scoped>
 .interview-container {
-  padding: 20px;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
 
 .interview-card {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 100%;
 }
 
 .card-header {
@@ -890,6 +833,7 @@ declare global {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  /* min-height: 50vh; */
   gap: 20px;
 }
 

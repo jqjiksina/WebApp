@@ -48,7 +48,7 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
     response = rag_client.chat(Config.DDEFAULT_AGENT_ID, request.answer, request.session_id, user.external_id, True, True)
     
     msg = "" # 流式响应收到的总消息
-    lastpos = 0
+    # lastpos = 0
     session_id = request.session_id  # 初始化为请求中的 session_id
         
     # async for chunk in response:
@@ -82,7 +82,7 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
             except:
                 return {"status":404,"statusText":"数字人调用失败，请检查数字人是否连接！","data":{"session_id":session_id}}
     
-    return {"session_id":session_id,"message":}
+    return {"session_id":session_id,"message":msg[-1]}
 
 @router.post("/set_human_session_id")
 async def set_human_session_id(request: SetHumanSessionIdRequest, current_user: User = Depends(get_current_user), db : AsyncSession = Depends(get_async_db)):
@@ -109,11 +109,14 @@ async def list_session(request: ListSessionRequest, user: User = Depends(get_cur
     else:                       # get selected sessionId's history of the user
         response = await rag_client.getSessionList(Config.DDEFAULT_AGENT_ID,user_id=user.external_id,session_id=request.session_id,is_agent=True)
     if response.get("code") == "102":
-        return {"status":102,"statusText":response.get("message")}
+        raise HTTPException(status_code=102,detail=response["message"])
+    # print("[Debug] list_session response:",response["data"])
     return [{"id": session["id"],
-                "title" : "面试会话",
-                "messages":[message for message in session["messages"]]
-                } for session in response["data"]
-            ]
+            "title" : "面试会话",
+            "messages":[message for message in session["messages"]],
+            "update_time":session["update_time"],
+            "create_time":session["create_time"],
+            } for session in response["data"]]
+    
     
     

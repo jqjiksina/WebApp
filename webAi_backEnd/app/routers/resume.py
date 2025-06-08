@@ -12,13 +12,21 @@ from api.ragflow.ragflow import rag_client
 from dependencies.index import get_current_user
 from database.models import User
 from sqlalchemy.ext.asyncio import AsyncSession
+from pydantic import BaseModel
 import subprocess
 import json
 import time
 
+from config import Config
+
 router = APIRouter(
     tags=["resume"])
 
+class Request_ListSession(BaseModel):
+    session_id : str | None
+    
+class Request_DeleteSession(BaseModel):
+    session_ids : list[str]
 
 # 配置文件存储路径
 UPLOAD_DIR = Path("uploads")
@@ -117,7 +125,7 @@ async def chat_resume(request : Request_ChatLog,
         print(f"[Error] chat_resume error: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"处理请求时发生错误: {str(e)}"
+            detail=str(e)
         )
         
 @router.get("/api/resume/newSession")
@@ -126,9 +134,32 @@ async def new_session(user : User = Depends(get_current_user)):
     assistant_id = user.assistant_id
     session_response = await rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
     if session_response and session_response["data"]:
-        return {"code" : 200,
-                "message" : "new session succeed",
-                "data":{"session_id" : session_response["data"]["id"]}}
+        return {"session_id" : session_response["data"]["id"]}
+        
+@router.post("/api/resume/delete_session")
+async def delete_session(request : Request_DeleteSession,user: User = Depends(get_current_user)):
+    print("[Debug] delete_session begin:",request.session_ids)
+    response = await rag_client.deleteSession(Config.DDEFAULT_AGENT_ID,request.session_ids)
+    if (response.get("code")==0):
+        return
+    else:
+        raise HTTPException(status_code=404,detail=response["message"])
+    
+@router.post("/api/resume/list_session")
+async def list_session(request: Request_ListSession, user: User = Depends(get_current_user)):
+    if not request.session_id:  # get all the sessions of the user
+        response = await rag_client.getSessionList(Config.DEFAULT_ASSISTANT_ID,user_id=user.external_id)
+    else:                       # get selected sessionId's history of the user
+        response = await rag_client.getSessionList(Config.DEFAULT_ASSISTANT_ID,user_id=user.external_id,session_id=request.session_id)
+    if response.get("code") == "102":
+        raise HTTPException(status_code=102,detail=response["message"])
+    # print("[Debug] list_session response:",response["data"])
+    return [{"id": session["id"],
+            "title" : session["name"],
+            "messages":[message for message in session["messages"]],
+            "update_time":session["update_time"],
+            "create_time":session["create_time"],
+            } for session in response["data"]]
 
 # 添加文件大小限制中间件（可选）
 # @app.middleware("http")
