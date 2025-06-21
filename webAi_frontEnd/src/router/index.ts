@@ -45,7 +45,26 @@ const router = createRouter({
       path: '/helpDoc',
       name: 'HelpDocument',
       component: () => import('@/views/helpDoc/index.vue'),
-      meta: {requireAuth: false, title:"帮助文档"}
+      meta: {requireAuth: false, title:"帮助文档"},
+      children:[
+        {
+          path: 'developDoc',
+          name: 'DevelopDoc',
+          component: ()=>import('@/views/helpDoc/developDoc.vue'),
+          meta: {requiresAuth: false ,title:"开发文档"}
+        },{
+          path: 'userDoc',
+          name: 'UserDoc',
+          component: ()=>import('@/views/helpDoc/userDoc.vue'),
+          meta: {requiresAuth: false ,title:"用户文档"}
+        }
+      ]
+    },
+    {
+      path: '/testDoc',
+      name : 'TestDoc',
+      component: ()=>import('@/views/test/TestDoc.vue'),
+      meta: {requiresAuth: false ,title:"用户文档"}
     }
   ]
 })

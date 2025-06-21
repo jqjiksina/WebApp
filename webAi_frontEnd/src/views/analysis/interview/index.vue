@@ -140,7 +140,7 @@ import type { ChatMessage } from '@/api/resumeApi'
 import { interviewApi } from '@/api/interviewApi'
 // import axios from 'axios'
 import axios from 'axios'
-import { useUsersStore } from '@/store'
+// import { useUsersStore } from '@/store'
 
 const messages = ref<ChatMessage[]>([])
 const inputMessage = ref('')
@@ -269,22 +269,9 @@ const createWebRTCConnection = async () => {
     
     await peerConnection.value.setLocalDescription(offer)
 
-    // const response = await fetch(`digitalperson/offer`, { // 直接访问数字人服务
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     sdp: peerConnection.value.localDescription?.sdp,
-    //     type: 'offer'
-    //   })
-    // })
-
-    const response = await axios.post("digitalperson/offer",{
+    const response = await axios.post('http://' + import.meta.env.VITE_BACK_END_URL + "/digitalperson/offer",{
       sdp: peerConnection.value.localDescription?.sdp,
       type: 'offer'
-    },{
-      headers: { 'Content-Type': 'application/json' ,
-        'Authorization': `Bearer ${useUsersStore().getToken}`
-      },
     })
     
     if (response.status != 200) {

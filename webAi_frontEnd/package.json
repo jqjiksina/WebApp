@@ -24,6 +24,7 @@
     "gsap": "^3.12.7",
     "hast-util-to-html": "^9.0.5",
     "highlight.js": "^11.11.1",
+    "mammoth": "^1.9.1",
     "markdown-it": "^14.1.0",
     "marked": "^15.0.12",
     "pinia": "^3.0.1",

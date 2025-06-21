@@ -95,7 +95,7 @@ server {
 ## 前端架构设计
 前端服务项目结构：
 ``` shell
-.
+src/
 ├── api     # 与后端服务的api接口
 │   ├── index.ts        # 批量导出API，以供任何其他组件更方便的调用
 │   ├── interviewApi.ts # AI面试API
@@ -147,3 +147,38 @@ server {
 使用`pinia`插件完成进行全局状态管理
 
 ## 后端架构设计
+```shell
+.
+├── app
+│   ├── api                         # 与其他微服务相关的api
+│   │   ├── auth                    # 身份验证相关api(TODO: will delete)
+│   │   ├── digital_human           # 数字人服务相关api
+│   │   └── ragflow                 # ragflow的http接口
+│   ├── config.py                   # 用于引入和管理环境变量
+│   ├── database                    # 数据库 (TODO: move to /api)
+│   │   ├── core.py                 # 数据库接口代码 
+│   │   ├── models.py               # 数据库中的数据模式
+│   ├── dependencies                # 依赖注入函数
+│   │   └── index.py
+│   ├── main.py                     # 入口主函数
+│   ├── routers                     # 路由请求处理
+│   │   ├── auth.py                 # 身份验证请求处理
+│   │   ├── digital_person.py       # 数字人相关请求处理
+│   │   ├── interview.py            # 面试模块相关请求处理
+│   │   └── resume.py               # 简历模块相关请求处理
+│   └── schema                      # 类型验证
+│       ├── auth.py
+│       └── response.py
+├── docker-compose.yml              # 后端mysql数据库的docker配置文件，用于快速部署mysql
+└── .env                            # 环境变量，与代码隔离，包括一些密钥
+```
+
+## 如何替换数字人形象
+**需要准备**：
+- 一段嘴唇轮廓清晰、人物正脸、姿态稳定的一段mp4格式视频
+
+将自己准备好的视频放在项目LiveTalking/wav2lip文件夹下，然后终端运行：
+``` shell
+python genavatar.py --video_path xxx.mp4 --img_size 256 --avatar_id wav2lip256_avatar1
+```
+将xxx.mp4替换为自己准备好的视频路径即可。

@@ -31,6 +31,10 @@
       <el-icon><DataAnalysis /></el-icon>
       <span>帮助文档</span>
     </el-menu-item>
+    <el-menu-item index="/TestDoc">
+      <el-icon><DataAnalysis /></el-icon>
+      <span>测试页面</span>
+    </el-menu-item>
   </el-menu>
 </template>
 

@@ -12,11 +12,27 @@
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
+    <el-dropdown>
+      <span>切换主题<el-icon style="height: 100%"><ArrowDown /></el-icon></span>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item @click="instance.toggleTheme('light')">
+            白日
+          </el-dropdown-item>
+          <el-dropdown-item @click="instance.toggleTheme('dark')">
+            黑夜
+          </el-dropdown-item>
+          <el-dropdown-item @click="instance.toggleTheme('')">
+            跟随系统
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
     <div class="right">
       <el-dropdown>
         <span class="user-info">
           {{ username }}
-          <el-icon><ArrowDown /></el-icon>
+          <el-icon style="height: 100%;"><ArrowDown /></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -24,11 +40,6 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-    </div>
-    <div>
-      <el-button>
-
-      </el-button>
     </div>
   </div>
 </template>
@@ -38,6 +49,8 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useUsersStore } from '@/store/user'
 import { ArrowDown } from '@element-plus/icons-vue'
+import {instance} from '@/theme.ts'
+
 
 const route = useRoute()
 const router = useRouter()
@@ -60,12 +73,16 @@ const handleLogout = () => {
 <style scoped>
 :deep(.el-breadcrumb__item .el-breadcrumb__inner) { /*穿透内部组件样式*/
   /* 面包屑项通用样式 */
-  color: var(--color-text)
+  color: var(--vt-c-white-soft)
 }
 
 :deep(.el-breadcrumb__item:last-child .el-breadcrumb__inner){
   /* 面包屑最后一项样式 */
-  color: var(--color-text) !important
+  color: var(--vt-c-white-soft) !important
+}
+
+:deep(.el-dropdown){
+  color: var(--vt-c-white-soft)
 }
 
 .header-container {

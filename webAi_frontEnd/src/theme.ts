@@ -1,50 +1,128 @@
-import { ref, watchEffect } from 'vue'
+interface ThemeConfig{
+  [key : `--${string}`]: string
+}
 
-interface TypeTheme = 'yes' | 'no'
+export interface Theme{
+  name : string,
+  config : ThemeConfig | null
+}
 
-const theme = ref({ // cutomized theme
-    light: {
-      '--primary-color': '#42b983',
-      '--background-color': '#ffffff',
-      '--text-color': '#333333'
-    },
-    dark: {
-      '--primary-color': '#64d8a9',
-      '--background-color': '#1a1a1a',
-      '--text-color': '#f0f0f0'
+class ThemeManager{
+  theme_list : Theme[] = [{
+    name:'light',
+    config:{
+      '--color-background-soft': 'var(--vt-c-white-soft)',
+      '--color-text': 'var(--vt-c-text-light-1)'
+  }},{
+    name : 'dark',
+    config:{
+      '--color-background-soft': 'var(--vt-c-black-soft)',
+      '--color-text': 'var(--vt-c-text-dark-1)'
     }
-  })
+  },{
+    name : 'system',
+    config: null
+  }]
 
-  export function applyTheme(themeName: 'light' | 'dark' | 'system') {
-    if (themeName == 'system'){
+  currentTheme = localStorage.getItem('theme') || 'system'
+
+  constructor(){
+    this.currentTheme = localStorage.getItem('theme') || 'system'
+  }
+  
+  /**
+   * 应用指定的主题样式，如果主题名未给出，则切换至跟随系统
+   * @param themeName 
+   * @returns 
+   */
+  applyTheme = (themeName: string="") => {
+    let themeConfig = this.theme_list.find((item : Theme)=>{
+      if (item.name==themeName) return true
+      else return false
+    })?.config
+    if (!themeConfig){  // 默认主题为跟随系统喜好
       const themeSystem = window.matchMedia("(prefers-color-scheme: light)"); 
       if (themeSystem.matches)
-        themeName = 'light'
+        themeConfig = this.theme_list[0].config // light theme
       else
-        themeName = 'dark'
+        themeConfig = this.theme_list[1].config // dark theme
     }
-    const themeVars = theme.value[themeName]
+
     const root = document.documentElement
-    
-    Object.entries(themeVars).forEach(([key, value]) => {
+    Object.entries(themeConfig as ThemeConfig).forEach(([key, value]) => {  // set the theme item iterably
       root.style.setProperty(key, value)
     })
+    localStorage.setItem('theme',this.currentTheme)
+    return this
   }
 
-  function customizeTheme(){
-
+  /**
+   * 更新主题库中指定主题的指定css变量，如果对应主题名不存在，默认新建
+   * @param theme 
+   */
+  updateTheme = (theme : Theme)=>{
+    let changed = false
+    this.theme_list.forEach((item:Theme)=>{
+      if (item.name==theme.name) {
+        Object.entries(theme.config as ThemeConfig).forEach(([key,value])=>{
+          (item.config as ThemeConfig)[key as `--${string}`] = value
+        })
+      }
+      changed = true
+    })
+    if (changed) return this
+    this.theme_list.push(theme)
+    return this
   }
 
-
-  const currentTheme = ref<'light' | 'dark' | 'system'>(
-    localStorage.getItem('theme') as 'light' | 'dark' | 'system' || 'system'
-  )
-  
-  watchEffect(() => {
-    applyTheme(currentTheme.value)
-    localStorage.setItem('theme', currentTheme.value)
-  })
-
-  export const toggleTheme = (theme_name : 'light' | 'dark' | 'system') => {
-    currentTheme.value = theme_name
+  /**
+   * 覆盖主题库中指定主题的配置，如果对应主题名不存在，默认新建
+   * @param theme 
+   * @returns 
+   */
+  overrideTheme = (theme: Theme)=>{
+    let changed = false
+    this.theme_list.forEach((item:Theme)=>{
+      if (item.name==theme.name) {
+        item.config = theme.config
+        changed = true
+      }
+    })
+    if (changed) return
+    this.theme_list.push(theme)
   }
+
+  /**
+   * 获取对应主题的配置，
+   * 如果主题名未给出，则获取所有主题名字列表；
+   * 若指定的主题名不存在，则返回空配置
+   * @param themeName 
+   * @returns 
+   */
+  getTheme = (themeName : string = "")=>{
+    if (!themeName){
+      let list : string[] = []
+      this.theme_list.forEach((item:Theme)=>{
+        list.push(item.name)
+      })
+      return list
+    }
+    const config = this.theme_list.find(item=>{
+      if(item.name==themeName) return true
+      else return false 
+    })?.config
+    return config
+  }
+
+  /**
+   * 切换到指定主题，如果主题名未给出，则切换至跟随系统
+   * @param themeName 
+   */
+  toggleTheme = (themeName : string)=>{
+    if (!themeName) themeName='system'
+    this.currentTheme = themeName
+    this.applyTheme(themeName)
+  }
+}
+
+export const instance : ThemeManager = new ThemeManager()

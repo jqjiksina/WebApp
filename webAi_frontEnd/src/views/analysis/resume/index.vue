@@ -12,7 +12,7 @@
           </div>
           <el-upload
             class="upload-demo"
-            :http-request="resumeApi.upload"
+            :http-request="handleUpload"
             :on-success="handleUploadSuccess"
             :on-error="handleUploadError"
             :before-upload="beforeUpload"
@@ -107,6 +107,8 @@ import { Delete } from '@element-plus/icons-vue'
 import { resumeApi } from '@/api/resumeApi'
 import { ChatHistoryManager, ChatSessionUpdated } from '@/utils/chatHistory'
 import type { ChatMessage } from '@/api/resumeApi'
+import mammoth from 'mammoth'
+
 
 const messages = ref<ChatMessage[]>([])
 const inputMessage = ref('')
@@ -121,6 +123,28 @@ const sessions = computed(() => chatHistory.getAllSessions().value)
 
 const userAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 const aiAvatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+
+// 辅助函数
+const readFileAsArrayBuffer = (file: File): Promise<ArrayBuffer> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as ArrayBuffer);
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+};
+
+const handleUpload = async (params: { file: File }) => {
+  const file = params.file
+  // use mammoth 
+  const arrayBuffer = await readFileAsArrayBuffer(file)
+  const result = await mammoth.extractRawText({ arrayBuffer });
+
+  console.log("parsed document:",result.value)
+
+  resumeApi.upload(result.value)
+
+}
 
 const onShowSessionList = async ()=>{
   showSessionList.value = !showSessionList.value

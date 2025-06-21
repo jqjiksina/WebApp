@@ -181,20 +181,31 @@ export const resumeApi = {
     }
   },
 
-  // 上传简历文件
-  upload: async (params: { file: File }) => {
-    const formData = new FormData()
-    formData.append('file', params.file)
-    const response = axios.post<{ data: string }>(
-      'http://' + import.meta.env.VITE_BACK_END_URL + '/api/resume/upload',
-      formData as unknown as Record<string, unknown>,
-      {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-        }
-      }
-    )
-    return response
+  // // 上传简历文件
+  // upload: async (params: { file: File }) => {
+  //   const formData = new FormData()
+  //   formData.append('file', params.file)
+  //   const response = axios.post<{ data: string }>(
+  //     'http://' + import.meta.env.VITE_BACK_END_URL + '/api/resume/upload',
+  //     formData as unknown as Record<string, unknown>,
+  //     {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data'
+  //       }
+  //     }
+  //   )
+  //   return response
+  // },
+
+  /**
+   * 上传文本形式的简历文件
+   * @param text 
+   * @returns
+   */
+  upload: async(text:string)=>{
+    const url = 'http://' + import.meta.env.VITE_BACK_END_URL + '/api/resume/upload'
+    const payload = {resumeContent : text}
+    return await axios.post(url,payload)
   },
 
   createNewSession: async () => {

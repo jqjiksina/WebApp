@@ -1,14 +1,44 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div v-highlight class="helpDoc-container markdown-body"  v-html="htmlContent"/>
+  <div class="doc-container">
+    <template v-if="$route.path != '/helpDoc'">
+      <RouterView/>
+    </template>
+
+    <template v-else>
+      <div class="doc-module">
+        <el-button 
+        style="height: 100%; width: 100%; font-size: 3rem;"
+        @click="router.push({name:'DevelopDoc'})">
+          <el-icon><Cpu /></el-icon>
+          <span>开发文档</span>
+        </el-button>
+      </div>
+
+      <div class="doc-module">
+        <el-button 
+        style="height: 100%; width: 100%; font-size: 3rem;"
+        @click="router.push({name:'UserDoc'})">
+          <el-icon><User /></el-icon>
+          <span>用户文档</span>
+        </el-button>
+      </div>
+
+    </template>
+  </div>
 </template>
 
 <script setup lang="ts">
 import MarkdownIt from 'markdown-it';
 import { onMounted, ref } from 'vue';
+import {useRouter} from 'vue-router'
+import {RouterView} from 'vue-router'
+import {User,Cpu} from '@element-plus/icons-vue'
 import 'github-markdown-css';
 
-const md = new MarkdownIt();
+const router = useRouter()
+
+const md = new MarkdownIt()
 
 const htmlContent = ref("")
 
@@ -34,8 +64,21 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* .helpDoc-container{
-    background-color: rgb(223, 230, 233);
-    color: black;
-} */
+
+.doc-container {
+  width:100%;height: 100%;
+  /* padding: 20px; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.doc-module{
+  font-size: 3rem;
+  margin: 5px;
+  /* width: 300px;
+  height: 100px; */
+  height: 100px;
+  border: 2px solid rgb(149, 149, 153);
+}
 </style>

@@ -6,16 +6,23 @@
     </template>
 
     <template v-else>
-      <div class="analysis-module" @click="router.push({name:'Interview'})">
-        <el-icon><ChatDotRound /></el-icon>
-        <span>面试模块</span>
+      <div class="analysis-module">
+        <el-button 
+          style="height: 100%; width: 100%; font-size: 3rem;"
+          @click="router.push({name:'Interview'})">
+          <el-icon><ChatDotRound/></el-icon>
+          <span>面试模块</span>
+        </el-button>
       </div>
 
-      <div class="analysis-module" @click="router.push({name:'Resume'})">
-        <el-icon><Files /></el-icon>
-        <span>简历模块</span>
+      <div class="analysis-module">
+        <el-button 
+          style="height: 100%; width: 100%; font-size: 3rem;"
+          @click="router.push({name:'Resume'})">
+          <el-icon><Files /></el-icon>
+          <span>简历模块</span>
+        </el-button>
       </div>
-
     </template>
 
     <!-- <el-card class="analysis-card">
@@ -63,7 +70,6 @@
 </template>
 
 <script setup lang="ts" name="AcademicAnalysis">
-import { onMounted, ref } from 'vue'
 // import Resume from './resume/index.vue'
 // import Interview from './interview/index.vue'
 import {ChatDotRound,Files} from '@element-plus/icons-vue'
@@ -71,13 +77,6 @@ import { RouterView } from 'vue-router'
 import { useRouter } from 'vue-router';
 
 const router = useRouter()
-
-const value = ref(false);
-onMounted(()=>{
-  setInterval(()=>{ //每一秒切换一次状态，查看动态类刷新的时机
-    value.value = !value.value
-  },1000)
-})
 
 </script>
 
