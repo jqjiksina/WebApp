@@ -139,7 +139,7 @@ import { ChatHistoryManager, ChatSessionUpdated } from '@/utils/chatHistory'
 import type { ChatMessage } from '@/api/resumeApi'
 import { interviewApi } from '@/api/interviewApi'
 // import axios from 'axios'
-import axios from 'axios'
+import axios from "axios"
 // import { useUsersStore } from '@/store'
 
 const messages = ref<ChatMessage[]>([])
@@ -236,13 +236,6 @@ const createWebRTCConnection = async () => {
   try {
     connecting.value = true
     console.log('开始创建WebRTC连接...')
-
-    // 创建连接前先向后端验证用户身份
-    // const authed = await userApi.check_auth()
-    // if (!authed.data){
-    //   console.error("用户未登录！")
-    //   return
-    // }
     
     peerConnection.value = new RTCPeerConnection({
       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]

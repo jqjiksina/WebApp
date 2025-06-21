@@ -7,7 +7,7 @@ import time
 from dependencies.index import get_current_user
 from database.models import User
 from database.core import get_async_db, AsyncSession
-from api.digital_human.index import digital_human
+# from api.digital_human.index import digital_human
 from api.ragflow.ragflow import rag_client
 from config import Config
 
@@ -37,7 +37,7 @@ def get_digital_human_session(current_user: User = Depends(get_current_user)) ->
 
 @router.post("/answer")
 async def answer(request: AnswerRequest, user: User = Depends(get_current_user), human_session_id: int = Depends(get_digital_human_session)):
-    '''将用户的回复发送到用户连接到的数字人 TODO: 更新接口从ragflow到杯赛API'''
+    '''根据用户的提问从ragflow获取去掉think标签内容的回复，后续由前端与数字人服务交互完成问答'''
     # 先将用户的回复发送到ragflow接口，然后流式地将返回的回复发送到数字人播报
     if (not request.session_id):
         # 创建新会话
@@ -77,12 +77,12 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
         elif chunk_data["type"] == "end": # 开始处理think标签的内容，去掉思考过程后再发送
             msg = msg.split("</think>")
             print("[Debug] msg:",msg)
-            try:
-                await digital_human.play(msg[-1], human_session_id, True)
-            except:
-                return {"status":404,"statusText":"数字人调用失败，请检查数字人是否连接！","data":{"session_id":session_id}}
+            # try:
+            #     await digital_human.play(msg[-1], human_session_id, user,True)
+            # except:
+            #     return {"status":404,"statusText":"数字人调用失败，请检查数字人是否连接！","data":{"session_id":session_id}}
     
-    return {"session_id":session_id,"message":msg[-1]}
+    return {"session_id":session_id,"message":msg[-1],"human_session_id":human_session_id}
 
 @router.post("/set_human_session_id")
 async def set_human_session_id(request: SetHumanSessionIdRequest, current_user: User = Depends(get_current_user), db : AsyncSession = Depends(get_async_db)):

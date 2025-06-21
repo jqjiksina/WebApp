@@ -1,0 +1,33 @@
+site_name: AiWeb项目文档
+site_url: http://222.20.98.159/docs/
+
+extra_css:
+  - stylesheets/extra.css
+
+theme:
+  name: 'material'
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: default
+      primary: black
+      accent: cyan
+      toggle:
+        icon: material/weather-night
+        name: 切换至夜间模式
+    - media: "(prefers-color-scheme: light)"
+      scheme: slate
+      primary: black
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: 切换至日间模式
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+
+nav:
+  - 欢迎:     index.md
+  - 开发文档: DevelopManual/DevelopManual.md
+  - 用户文档: UserManual/UserManual.md
+  

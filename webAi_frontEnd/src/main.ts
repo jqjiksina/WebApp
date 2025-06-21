@@ -48,7 +48,7 @@ axios.interceptors.request.use(config => {
   config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
-  });
+});
 
 // 每 10 分钟刷新一次 Token
 setInterval(async () => {

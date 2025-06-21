@@ -24,6 +24,16 @@
         </el-button>
       </div>
 
+      <div class="doc-module">
+        <a :href="'/docSite'">
+          <el-button 
+          style="height: 100%; width: 100%; font-size: 3rem;">
+            <el-icon><User /></el-icon>
+            <span>文档汇总</span>
+          </el-button>
+        </a>
+      </div>
+
     </template>
   </div>
 </template>
