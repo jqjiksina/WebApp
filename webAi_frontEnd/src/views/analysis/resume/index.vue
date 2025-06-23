@@ -139,16 +139,12 @@ const handleUpload = async (params: { file: File }) => {
   // use mammoth 
   const arrayBuffer = await readFileAsArrayBuffer(file)
   const result = await mammoth.extractRawText({ arrayBuffer });
-
   console.log("parsed document:",result.value)
-
   resumeApi.upload(result.value)
-
 }
 
 const onShowSessionList = async ()=>{
   showSessionList.value = !showSessionList.value
-  
   if (showSessionList.value){
     const response = await resumeApi.listSession("")
     chatHistory.updateSession(response.data as ChatSessionUpdated[])
@@ -196,6 +192,11 @@ const deleteSession = async (session_id: string) => {
     })
     
     chatHistory.deleteSession(session_id)
+    try {
+      await resumeApi.deleteSession([session_id])
+    }catch{
+      ElMessage.error("会话删除失败！")
+    }
     
     ElMessage.success('会话已删除')
   } catch {
@@ -331,23 +332,7 @@ const sendMessage = async () => {
 
 // 处理文件上传
 const handleUploadSuccess = async (_response: any) => {
-  ElMessage.success('简历上传成功')
-  try {
-    const welcomeMessage: ChatMessage = {
-      role: 'assistant',
-      content: '我已经收到您的简历，我可以帮您：\n1. 分析简历内容\n2. 提供修改建议\n3. 优化表达方式\n4. 调整格式结构\n\n请告诉我您想先从哪个方面开始？',
-    }
-    messages.value.push(welcomeMessage)
-    
-    if (activeSessionId.value) {
-      chatHistory.addMessage(activeSessionId.value, welcomeMessage)
-    }
-  } catch (error) {
-    console.error("[Debug] handleUploadSuccess error:", error)
-    ElMessage.error('初始化对话失败')
-  } finally {
-    chatHistory.scrollToBottom()
-  }
+  
 }
 
 const handleUploadError = () => {

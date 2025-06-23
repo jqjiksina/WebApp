@@ -36,8 +36,7 @@ resume_map = {}
 
 @router.post("/api/resume/upload")
 async def upload_resume(request: Request_Upload,
-                        user:User = Depends(get_current_user),
-                        db:AsyncSession = Depends(get_async_db)):
+                        user:User = Depends(get_current_user)):
     '''
     接受前端上传的简历文本（不存储在磁盘），每次在相应用户对话时，若存在对应简历文件，则附上。
     '''
@@ -57,8 +56,6 @@ async def chat_resume(request : Request_ChatLog,
     如果第一次开始对话，那么创建会话
     否则直接在指定session_id上继续对话
     '''
-    
-    assistant_id = user.assistant_id
     print("[Debug] chat_resume on session_id:",request.session_id)
     
     content = request.content
@@ -70,16 +67,17 @@ async def chat_resume(request : Request_ChatLog,
         # 如果没有session_id，创建一个新的会话
         if not request.session_id:
             # 创建新会话
-            session_response = await rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
+            session_response = await rag_client.createSession(Config.RESUME_AGENT_ID, "简历分析会话", user.external_id,is_agent=True)
             if session_response and session_response.get("data"):
                 request.session_id = session_response["data"]["id"]
         
         # 设置流式传输
-        response = rag_client.chat(assistant_id,
+        response = rag_client.chat(Config.RESUME_AGENT_ID,
                                  content,
                                  request.session_id,
                                  user.external_id,
-                                 stream=True)
+                                 stream=True,
+                                 is_agent=True)
         stream = True
         # 对于流式响应，直接返回生成器
         if stream:
@@ -117,15 +115,14 @@ async def chat_resume(request : Request_ChatLog,
 @router.get("/api/resume/newSession")
 async def new_session(user : User = Depends(get_current_user)):
     '''创建新的会话'''
-    assistant_id = user.assistant_id
-    session_response = await rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
+    session_response = await rag_client.createSession(Config.RESUME_AGENT_ID, "简历分析会话", user.external_id,True)
     if session_response and session_response["data"]:
         return {"session_id" : session_response["data"]["id"]}
         
 @router.post("/api/resume/delete_session")
 async def delete_session(request : Request_DeleteSession,user: User = Depends(get_current_user)):
     print("[Debug] delete_session begin:",request.session_ids)
-    response = await rag_client.deleteSession(Config.DDEFAULT_AGENT_ID,request.session_ids)
+    response = await rag_client.deleteSession(Config.RESUME_AGENT_ID, request.session_ids, True)
     if (response.get("code")==0):
         return
     else:
@@ -134,16 +131,15 @@ async def delete_session(request : Request_DeleteSession,user: User = Depends(ge
 @router.post("/api/resume/list_session")
 async def list_session(request: Request_ListSession, user: User = Depends(get_current_user)):
     if not request.session_id:  # get all the sessions of the user
-        response = await rag_client.getSessionList(Config.DEFAULT_ASSISTANT_ID,user_id=user.external_id)
+        response = await rag_client.getSessionList(Config.RESUME_AGENT_ID,user_id=user.external_id, is_agent=True)
     else:                       # get selected sessionId's history of the user
-        response = await rag_client.getSessionList(Config.DEFAULT_ASSISTANT_ID,user_id=user.external_id,session_id=request.session_id)
+        response = await rag_client.getSessionList(Config.RESUME_AGENT_ID,user_id=user.external_id,session_id=request.session_id,is_agent=True)
     if response.get("code") == "102":
         raise HTTPException(status_code=102,detail=response["message"])
-    # print("[Debug] list_session response:",response["data"])
+    print("[Debug] list_session response:",response["data"])
     return [{"id": session["id"],
-            "title" : session["name"],
+            "title" : "简历会话",
             "messages":[message for message in session["messages"]],
             "update_time":session["update_time"],
             "create_time":session["create_time"],
             } for session in response["data"]]
-

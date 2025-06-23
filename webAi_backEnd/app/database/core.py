@@ -24,7 +24,9 @@ async def recreate_tables():
         # group = Group(name = "base_group", assistant_id = "3bfb2be8176f11f0b9b02231d20fc9ca")
         # session.add(group)
         # 添加基本管理员用户
-        admin = User(name = "admin", universal_number = "Admin", hashed_password = get_password_hash("admin"),
+        admin = User(name = Config.DEFAULT_USER_UNIVERSAL_NUMBER.lower(), 
+                     universal_number = Config.DEFAULT_USER_UNIVERSAL_NUMBER, 
+                     hashed_password = get_password_hash(Config.DEFAULT_USER_PASSWORD),
                      assistant_id=Config.DEFAULT_ASSISTANT_ID, dataset_id=Config.DEFAULT_DATASET_ID)
         session.add(admin)
         await session.commit()
@@ -37,6 +39,7 @@ async def create_tables():
 #初始化数据库表结构
 async def init_db() :
     await create_tables()
+    # await recreate_tables()
 
 # 获取异步会话的依赖
 async def get_async_db():

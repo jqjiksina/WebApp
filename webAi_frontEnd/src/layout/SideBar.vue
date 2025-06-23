@@ -24,7 +24,7 @@
 
     <el-menu-item index="/analysis">
       <el-icon><DataAnalysis /></el-icon>
-      <span>学业分析</span>
+      <span>职业发展</span>
     </el-menu-item>
 
     <el-menu-item index="/helpDoc">

@@ -243,7 +243,7 @@ export const resumeApi = {
    * 获得指定会话历史，若会话id为空，则获得全部
    */
   listSession: async (sessionId : string)=>{
-    return await axios.post<SessionItem[]>("/api/resume/list_session",
+    return await axios.post<SessionItem[]>('http://' + import.meta.env.VITE_BACK_END_URL + "/api/resume/list_session",
       {session_id : sessionId}
     )
   }

@@ -27,7 +27,7 @@
                 :key="session.session_id"
                 class="session-item"
                 :class="{ active: session.session_id === activeSessionId }"
-                @click="switchToSession(session.session_id)"
+                @click="chatHistory.switchToSession(session.session_id)"
               >
                 <div class="session-title">{{ session.title }}</div>
                 <div class="session-time">{{ formatTime(session.updated_at as number) }}</div>
@@ -177,19 +177,6 @@ const formatTime = (timestamp: number) => {
   return date.toLocaleString()
 }
 
-// 切换会话
-const switchToSession = async (sessionId: string) => {
-  try {
-    // 切换到新会话
-    chatHistory.switchToSession(sessionId)
-    activeSessionId.value = sessionId
-
-  } catch (error) {
-    console.error('切换会话失败:', error)
-    ElMessage.error('切换会话失败')
-  }
-}
-
 // 删除指定会话
 const deleteSession = async (session_id: string) => {
   try {
@@ -211,22 +198,9 @@ const deleteSession = async (session_id: string) => {
  * 创建临时新会话
  *  */ 
 const createNewSession = async () => {
-  try { 
-    if (!digitalPersonSessionId.value){ // 保证webRTC正确连接，数字人推流正常
-      await createWebRTCConnection()
-    }
-
-       // 创建新会话
-    activeSessionId.value = ""
-    messages.value = []
-    showSessionList.value = false
-    
-    // 设置用户的专属数字人会话id
-    await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
-  } catch (error) {
-    console.error('创建新会话失败:', error)
-    ElMessage.error('创建新会话失败')
-  }
+  activeSessionId.value = ""
+  messages.value = []
+  showSessionList.value = false
 }
 
 /**
@@ -288,10 +262,7 @@ const createWebRTCConnection = async () => {
     })
     await peerConnection.value.setRemoteDescription(remoteDesc)
 
-    // 创建webrtc链接成功后，将所连接的数字人会话id传到后端。
-    await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
-    // and then activate the open log
-    await interviewApi.chat("open log",activeSessionId.value)
+
 
     console.log("[Debug] 设置数字人会话id完毕:",digitalPersonSessionId.value)
     console.log('WebRTC连接创建成功')
@@ -481,7 +452,15 @@ const toggleRecording = () => {
 
 const beginInterview = async ()=>{
   await createWebRTCConnection();
+  // 创建webrtc链接成功后，将所连接的数字人会话id传到后端。
+  await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
+  // and then activate the open log
+  if (!activeSessionId.value){
+    const response = await interviewApi.chat("open log",activeSessionId.value)
+    chatHistory.switchToSession(response.data.session_id)
+  }
   await initSpeechRecognition();
+
 }
 
 const endInterview = ()=>{

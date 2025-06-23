@@ -11,15 +11,8 @@
       <el-tabs v-model="activeTab">
         <el-tab-pane label="课程管理" name="courses">
           <div class="content">
-            <h3>课程管理系统</h3>
-            <p>管理课程信息、教学计划和课程资源</p>
-          </div>
-        </el-tab-pane>
-
-        <el-tab-pane label="科研项目" name="research">
-          <div class="content">
-            <h3>科研项目管理</h3>
-            <p>管理科研项目、论文发表和科研成果</p>
+            <h3>知识图谱</h3>
+            <p>知识图谱，用户可以在此查看相关课程的知识点构建图谱。</p>
           </div>
         </el-tab-pane>
       </el-tabs>

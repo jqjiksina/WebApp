@@ -41,11 +41,11 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
     # 先将用户的回复发送到ragflow接口，然后流式地将返回的回复发送到数字人播报
     if (not request.session_id):
         # 创建新会话
-        session_response = await rag_client.createSession(Config.DDEFAULT_AGENT_ID, "Ai面试会话", user.external_id)
+        session_response = await rag_client.createSession(Config.INTERVIEW_AGENT_ID, "Ai面试会话", user.external_id)
         if session_response and session_response.get("data"):
             request.session_id = session_response["data"]["id"]
             
-    response = rag_client.chat(Config.DDEFAULT_AGENT_ID, request.answer, request.session_id, user.external_id, True, True)
+    response = rag_client.chat(Config.INTERVIEW_AGENT_ID, request.answer, request.session_id, user.external_id, True, True)
     
     msg = "" # 流式响应收到的总消息
     # lastpos = 0
@@ -96,7 +96,7 @@ async def set_human_session_id(request: SetHumanSessionIdRequest, current_user: 
 @router.post("/delete_session")
 async def delete_session(request : DeleteSessionRequest,user: User = Depends(get_current_user)):
     print("[Debug] delete_session begin:",request.session_ids)
-    response = await rag_client.deleteSession(Config.DDEFAULT_AGENT_ID,request.session_ids,True)
+    response = await rag_client.deleteSession(Config.INTERVIEW_AGENT_ID,request.session_ids,True)
     if (response.get("code")==0):
         return
     else:
@@ -105,9 +105,9 @@ async def delete_session(request : DeleteSessionRequest,user: User = Depends(get
 @router.post("/list_session")
 async def list_session(request: ListSessionRequest, user: User = Depends(get_current_user)):
     if not request.session_id:  # get all the sessions of the user
-        response = await rag_client.getSessionList(Config.DDEFAULT_AGENT_ID,user_id=user.external_id,is_agent=True)
+        response = await rag_client.getSessionList(Config.INTERVIEW_AGENT_ID,user_id=user.external_id,is_agent=True)
     else:                       # get selected sessionId's history of the user
-        response = await rag_client.getSessionList(Config.DDEFAULT_AGENT_ID,user_id=user.external_id,session_id=request.session_id,is_agent=True)
+        response = await rag_client.getSessionList(Config.INTERVIEW_AGENT_ID,user_id=user.external_id,session_id=request.session_id,is_agent=True)
     if response.get("code") == "102":
         raise HTTPException(status_code=102,detail=response["message"])
     # print("[Debug] list_session response:",response["data"])
