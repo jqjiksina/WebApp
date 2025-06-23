@@ -331,7 +331,7 @@ const sendMessage = async () => {
 }
 
 // 处理文件上传
-const handleUploadSuccess = async (_response: any) => {
+const handleUploadSuccess = async (_response: any) =>{
   
 }
 

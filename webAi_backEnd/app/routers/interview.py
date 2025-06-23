@@ -10,6 +10,7 @@ from database.core import get_async_db, AsyncSession
 # from api.digital_human.index import digital_human
 from api.ragflow.ragflow import rag_client
 from config import Config
+from loguru import logger
 
 router = APIRouter(
     prefix="/api/interview",
@@ -76,7 +77,7 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
                 session_id = chunk_data["session_id"]
         elif chunk_data["type"] == "end": # 开始处理think标签的内容，去掉思考过程后再发送
             msg = msg.split("</think>")
-            print("[Debug] msg:",msg)
+            logger.debug(f"msg:{msg}")
             # try:
             #     await digital_human.play(msg[-1], human_session_id, user,True)
             # except:
@@ -87,7 +88,7 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
 @router.post("/set_human_session_id")
 async def set_human_session_id(request: SetHumanSessionIdRequest, current_user: User = Depends(get_current_user), db : AsyncSession = Depends(get_async_db)):
     '''设置用户所连接的数字人会话id'''
-    print("[Debug] start set_human_session_id:",request.session_id)
+    logger.debug(f"start set_human_session_id:{request.session_id}")
     from sqlalchemy import update
     await db.execute(update(User).where(User.id == current_user.id).values(digital_human_session_id = request.session_id))
     await db.commit()
@@ -95,7 +96,7 @@ async def set_human_session_id(request: SetHumanSessionIdRequest, current_user: 
 
 @router.post("/delete_session")
 async def delete_session(request : DeleteSessionRequest,user: User = Depends(get_current_user)):
-    print("[Debug] delete_session begin:",request.session_ids)
+    logger.debug(f"delete_session begin:{request.session_id}")
     response = await rag_client.deleteSession(Config.INTERVIEW_AGENT_ID,request.session_ids,True)
     if (response.get("code")==0):
         return
@@ -110,7 +111,7 @@ async def list_session(request: ListSessionRequest, user: User = Depends(get_cur
         response = await rag_client.getSessionList(Config.INTERVIEW_AGENT_ID,user_id=user.external_id,session_id=request.session_id,is_agent=True)
     if response.get("code") == "102":
         raise HTTPException(status_code=102,detail=response["message"])
-    # print("[Debug] list_session response:",response["data"])
+    # logger.debug("list_session response:",response["data"])
     return [{"id": session["id"],
             "title" : "面试会话",
             "messages":[message for message in session["messages"]],

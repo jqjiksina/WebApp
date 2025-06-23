@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import uvicorn
 import time
+from loguru import logger
 
 from database.core import init_db
 from routers import auth,chat,resume,digital_person,interview

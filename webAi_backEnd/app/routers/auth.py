@@ -15,6 +15,8 @@ from database.models import User  # 假设您已定义User模型
 from database.core import get_async_db
 from api.ragflow.ragflow import rag_client
 from dependencies.index import  get_current_user
+from loguru import logger
+
 
 
 router = APIRouter(prefix="/api/auth", tags=["认证相关"])
@@ -26,7 +28,7 @@ async def register(
     db: AsyncSession = Depends(get_async_db)
 ):
     """用户注册"""
-    print('examing phone')
+    logger.debug('examing phone')
     # 检查手机号是否已存在
     existing_user = await db.execute(
         select(User).where(User.phone == user.phone)
@@ -36,7 +38,7 @@ async def register(
             status_code=400,
             detail="手机号已被注册"
         )
-    print('examing email')
+    logger.debug('examing email')
     existing_user = await db.execute(
         select(User).where(User.email == user.email)
     )
@@ -81,7 +83,7 @@ async def login(
 ):
     """用户登录"""
     # 根据universal_number查找用户
-    print("[Debug] user login:",form_data.username)
+    logger.debug("user login:",form_data.username)
     result = await db.execute(
         select(User).where(User.universal_number == form_data.username)  # OAuth2规范中username字段对应universal_number
     )
@@ -115,5 +117,5 @@ async def check(
     user: User = Depends(get_current_user)
 ):
     """检查用户token状态"""
-    print("[Debug] user check:",user.id)
+    logger.debug("user check:",user.id)
     return {"valid":True}

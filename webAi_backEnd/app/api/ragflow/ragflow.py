@@ -10,10 +10,12 @@ from pathlib import Path
 from re import L
 from typing import Optional
 import httpx
+from loguru import logger
 
 from .schem import ChatAssistantConfig, Response_Chat, Response_GetSessions
 
 from config import Config
+
 
 class RAGFlowClient:
     '''封装RAGFlow API， 将HTTP API接口参数进行封装'''
@@ -138,7 +140,7 @@ class RAGFlowClient:
                             line = line.strip()
                             if line.startswith('data:'):
                                 data = json.loads(line[5:].strip())
-                                print("[Debug] Chat Response:",data)
+                                logger.debug(f"Chat Response:{data}")
                                 if data.get('code') == 0:
                                     if isinstance(data.get('data'), bool):
                                         # 流式结束标记
@@ -147,7 +149,7 @@ class RAGFlowClient:
                                             'session_id' : session_id
                                             })
                                     elif is_agent and "running_status" in data.get("data"): # 说明agent还在运行
-                                        print("[Debug] Agent is running...")
+                                        logger.debug("Agent is running...")
                                     else:
                                         # 正常消息
                                         if ("session_id" in data["data"]):
@@ -165,7 +167,7 @@ class RAGFlowClient:
                     json=payload
                 )
                 response.raise_for_status()
-                print("[Debug] Chat Response:",response.json())
+                logger.debug(f"Chat Response:{response.json()}")
                 yield response.json()
 
     # def upload_document(self, kb_id: str, file_path: str) -> str:
@@ -192,7 +194,7 @@ class RAGFlowClient:
                        is_agent : bool = False
                        ):
         '''获取指定assitant的会话列表（按页访问），并提供筛选条件（会话id/会话名、排序方式等信息）'''
-        print("[Debug] getSessionList begin")
+        logger.debug("getSessionList begin")
         async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.get(
                 f"{self.base_url}/api/v1/{'agents' if is_agent else 'chats'}/{assistant_id}/sessions?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={session_name}&id={session_id}&user_id={user_id}",
@@ -200,7 +202,7 @@ class RAGFlowClient:
             )
             response.raise_for_status()
             
-            print("[Debug] getSessionList done:",str(response.json()))
+            logger.debug(f"getSessionList done:{str(response.json())}")
             return response.json()
     
     async def deleteSession(self,assitant_id:str,
@@ -227,7 +229,7 @@ class RAGFlowClient:
         :param api_key: RAGFlow API 密钥
         :return: 响应结果
         """
-        print("[Debug] uploadDocuments...")
+        logger.debug("uploadDocuments...")
         async with httpx.AsyncClient(timeout=60.0) as client:
             with open(file_path, "rb") as f:
                 files = [("file",(Path(file_path).name , f))]  # 保留原始文件名
@@ -236,7 +238,7 @@ class RAGFlowClient:
                     headers={"Authorization": self.headers["Authorization"]},
                     files=files
                 )
-                print("[Debug] upload done",response.json())
+                logger.debug(f"upload done: {response.json()}")
                 response.raise_for_status()
                 return response.json()
     
@@ -244,7 +246,7 @@ class RAGFlowClient:
         '''
         创建知识库
         '''
-        print("[Debug] createDataset...")
+        logger.debug("createDataset...")
         payload = {
             "name" : name,
             "description" : description
@@ -255,10 +257,10 @@ class RAGFlowClient:
                 headers=self.headers,
                 json = payload
             )
-            print("[Debug] createDataset Done:",response.json())
+            logger.debug(f"createDataset Done:{response.json()}")
             return response.json()
     async def parseDocuments(self,dataset_id,document_ids:list[str]):
-        print("[Debug] parseDocuments...")
+        logger.debug("parseDocuments...")
         payload = {
             "document_ids": document_ids
         }
@@ -269,7 +271,7 @@ class RAGFlowClient:
                 json = payload
             )
             response.raise_for_status
-            print("[Debug] parseDocuments done:",response)
+            logger.debug(f"parseDocuments done:{response.json()}")
             return response.json()
         
         
@@ -287,22 +289,22 @@ base_knowledge_base = "1658cfa410ac11f08f100242ac130006" # 基本知识库ids
 #     assitant : ChatAssistantConfig = ChatAssistantConfig(name = "test",dataset_ids=[kb_id])
 #     try:
 #         response = rag_client.getAssistantList()
-#         print("[DEBUG] RAGFlow 助理列表:", response)  # 新增此行
+#         logger.debug("RAGFlow 助理列表:", response)  # 新增此行
 #         assitant_id = ""
 #         for d in response["data"]:
 #             if "name" in d and d["name"]==assitant.name:
 #                 assitant_id = d["id"]
-#                 print("[DEBUG] RAGFLOW Already Exited Assitant:",d)
+#                 logger.debug("RAGFLOW Already Exited Assitant:",d)
 #         if not assitant_id:
 #             response = rag_client.createAssistant(assitant)
 #             assitant_id = response["data"]["id"]
-#             print("[DEBUG] RAGFLOW 创建助理:",response)
+#             logger.debug("RAGFLOW 创建助理:",response)
             
 #         response = rag_client.chat(assitant_id,question,session_id)
-#         print("[DEBUG] RAGFLOW 对话:",response)
+#         logger.debug("RAGFLOW 对话:",response)
 #         return response["data"]["answer"]
 #     except requests.exceptions.HTTPError as e:
-#         print("[ERROR] HTTP 请求失败:", e.response.text)  # 输出详细错误
+#         logger.debug("[ERROR] HTTP 请求失败:", e.response.text)  # 输出详细错误
 #         return f"请求失败：{e.response.text}"
     
     
