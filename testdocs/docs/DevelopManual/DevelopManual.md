@@ -182,3 +182,6 @@ src/
 python genavatar.py --video_path xxx.mp4 --img_size 256 --avatar_id wav2lip256_avatar1
 ```
 将xxx.mp4替换为自己准备好的视频路径即可。
+
+
+TODO: 由于ragflow过滤参数突然的未知故障，需额外在后端设计进行会话隔离。

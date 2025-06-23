@@ -42,11 +42,11 @@ async def upload_resume(request: Request_Upload,
     '''
     接受前端上传的简历文本（不存储在磁盘），每次在相应用户对话时，若存在对应简历文件，则附上。
     '''
-    logger.debug("upload resume...")
+    logger.debug("[Debug] upload resume...")
     
     resume_map.update({user.external_id:request.resumeContent})
     
-    logger.debug(f"upload finished:{request.resumeContent}")
+    logger.debug(f"[Debug] upload finished:{request.resumeContent}")
     
 
     
@@ -58,7 +58,7 @@ async def chat_resume(request : Request_ChatLog,
     如果第一次开始对话，那么创建会话
     否则直接在指定session_id上继续对话
     '''
-    logger.debug(f"chat_resume on session_id:{request.session_id}")
+    logger.debug(f"[Debug] chat_resume on session_id:{request.session_id}")
     
     content = request.content
     if resume_map.get(user.external_id):
@@ -77,7 +77,6 @@ async def chat_resume(request : Request_ChatLog,
         response = rag_client.chat(Config.RESUME_AGENT_ID,
                                  content,
                                  request.session_id,
-                                 user.external_id,
                                  stream=True,
                                  is_agent=True)
         stream = True
@@ -123,7 +122,7 @@ async def new_session(user : User = Depends(get_current_user)):
         
 @router.post("/delete_session")
 async def delete_session(request : Request_DeleteSession,user: User = Depends(get_current_user)):
-    logger.debug(f"delete_session begin:{request.session_ids}")
+    logger.debug(f"[Debug] delete_session begin:{request.session_ids}")
     response = await rag_client.deleteSession(Config.RESUME_AGENT_ID, request.session_ids, True)
     if (response.get("code")==0):
         return
@@ -139,7 +138,7 @@ async def list_session(request: Request_ListSession, user: User = Depends(get_cu
         response = await rag_client.getSessionList(Config.RESUME_AGENT_ID,user_id=user.external_id,session_id=request.session_id,is_agent=True)
     if response.get("code") == "102":
         raise HTTPException(status_code=102,detail=response["message"])
-    logger.debug(f"list_session response:{response['data']}")
+    logger.debug(f"[Debug] list_session response:{response['data']}")
     return [{"id": session["id"],
             "title" : "简历会话",
             "messages":[message for message in session["messages"]],

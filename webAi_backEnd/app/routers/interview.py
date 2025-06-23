@@ -42,11 +42,11 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
     # 先将用户的回复发送到ragflow接口，然后流式地将返回的回复发送到数字人播报
     if (not request.session_id):
         # 创建新会话
-        session_response = await rag_client.createSession(Config.INTERVIEW_AGENT_ID, "Ai面试会话", user.external_id)
+        session_response = await rag_client.createSession(Config.INTERVIEW_AGENT_ID, "Ai面试会话", user.external_id,True)
         if session_response and session_response.get("data"):
             request.session_id = session_response["data"]["id"]
             
-    response = rag_client.chat(Config.INTERVIEW_AGENT_ID, request.answer, request.session_id, user.external_id, True, True)
+    response = rag_client.chat(Config.INTERVIEW_AGENT_ID, request.answer, request.session_id,True, True)
     
     msg = "" # 流式响应收到的总消息
     # lastpos = 0

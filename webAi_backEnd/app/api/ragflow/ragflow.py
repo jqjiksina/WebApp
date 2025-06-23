@@ -97,6 +97,7 @@ class RAGFlowClient:
             response.raise_for_status()
             return response.json()
     async def createSession(self,assistant_id : str, name : str = "test", user_id : str | None = None, is_agent : bool = False)-> dict:
+        logger.debug(f"createSession user_id: {user_id}")
         "在指定助理基础上开启会话"
         if is_agent:
             url = f"{self.base_url}/api/v1/agents/{assistant_id}/sessions"
@@ -114,7 +115,7 @@ class RAGFlowClient:
             )
             response.raise_for_status()
             return response.json()
-    async def chat(self, assistant_id: str, question: str, session_id : Optional[str] = None, user_id : Optional[str] = None, stream: bool = False, is_agent: bool = False):
+    async def chat(self, assistant_id: str, question: str, session_id : Optional[str] = None, stream: bool = False, is_agent: bool = False):
         """对指定assistant，在指定会话中（若空则新建后再）进行一次对话"""
         if is_agent:
             url = f"{self.base_url}/api/v1/agents/{assistant_id}/completions"
@@ -123,8 +124,7 @@ class RAGFlowClient:
         payload = {
             "question": question,
             "stream": stream, 
-            "session_id" : session_id,
-            "user_id" : user_id
+            "session_id" : session_id
         }
         
         if stream:
@@ -188,16 +188,16 @@ class RAGFlowClient:
                        page_size : int = 30,
                        user_id : str = "",
                        session_id : str = "",
-                       session_name : str = "",
                        orderby : str = "create_time",
-                       desc : bool = False,
                        is_agent : bool = False
                        ):
         '''获取指定assitant的会话列表（按页访问），并提供筛选条件（会话id/会话名、排序方式等信息）'''
-        logger.debug("getSessionList begin")
+        user_id=""
+        url = f"{self.base_url}/api/v1/{'agents' if is_agent else 'chats'}/{assistant_id}/sessions?page={page}&page_size={page_size}&orderby={orderby}&id={session_id}&user_id={user_id}"
+        logger.debug(f"getSessionList begin at {url}")
         async with httpx.AsyncClient(timeout=60.0) as client:
             response = await client.get(
-                f"{self.base_url}/api/v1/{'agents' if is_agent else 'chats'}/{assistant_id}/sessions?page={page}&page_size={page_size}&orderby={orderby}&desc={desc}&name={session_name}&id={session_id}&user_id={user_id}",
+                url,
                 headers=self.headers
             )
             response.raise_for_status()
