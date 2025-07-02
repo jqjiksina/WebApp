@@ -69,7 +69,7 @@
               </div>
             </div>
             <div class="avatar-selection">
-              <div v-if="!digitalPersonSessionId">
+              <div v-if="peerConnection?.connectionState==='closed' || peerConnection?.connectionState==undefined">
                 <!--重置连接 -->
                 <el-button    
                   type="primary"
@@ -201,6 +201,10 @@ const createNewSession = async () => {
   activeSessionId.value = ""
   messages.value = []
   showSessionList.value = false
+  if (peerConnection.value?.connectionState==="connected"){
+    const response = await interviewApi.chat("open log","")
+    chatHistory.switchToSession(response.data.session_id)
+  }
 }
 
 /**
@@ -455,12 +459,9 @@ const beginInterview = async ()=>{
   // 创建webrtc链接成功后，将所连接的数字人会话id传到后端。
   await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
   // and then activate the open log
-  if (!activeSessionId.value){
-    const response = await interviewApi.chat("open log",activeSessionId.value)
-    chatHistory.switchToSession(response.data.session_id)
-  }
+  const response = await interviewApi.chat("open log","")
+  chatHistory.switchToSession(response.data.session_id)
   await initSpeechRecognition();
-
 }
 
 const endInterview = ()=>{

@@ -9,10 +9,19 @@
       </template>
 
       <el-tabs v-model="activeTab">
-        <el-tab-pane label="课程管理" name="courses">
+        <el-tab-pane label="知识图谱" name="courses">
           <div class="content">
-            <h3>知识图谱</h3>
             <p>知识图谱，用户可以在此查看相关课程的知识点构建图谱。</p>
+          </div>
+        </el-tab-pane>
+        <el-tab-pane label="生成试题" name="paper">
+          <div class="content">
+            <p>生成试题组件</p>
+            <iframe
+              src="http://222.20.98.159:8080/chat/share?shared_id=d7eaf0c84f2e11f08ab37e851658673f&from=agent&auth=gwNDg0ZmFhMTc3ZjExZjBiZjBiNGE1NG"
+              style="width: 100%; height: 100%; min-height: 600px"
+              frameborder="0"
+            ></iframe>
           </div>
         </el-tab-pane>
       </el-tabs>

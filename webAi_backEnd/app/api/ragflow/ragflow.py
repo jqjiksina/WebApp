@@ -164,24 +164,11 @@ class RAGFlowClient:
                 response = await client.post(
                     url,
                     headers=self.headers,
-                    json=payload
+                    json=payload 
                 )
                 response.raise_for_status()
                 logger.debug(f"Chat Response:{response.json()}")
                 yield response.json()
-
-    # def upload_document(self, kb_id: str, file_path: str) -> str:
-    #     """上传文档"""
-    #     files = {'file': open(file_path, 'rb')}
-    #     data = {'knowledge_base_id': kb_id}
-    #     response = requests.post(
-    #         f"{self.base_url}/api/v1/upload",
-    #         headers={"Authorization": self.headers["Authorization"]},
-    #         files=files,
-    #         data=data
-    #     )
-    #     response.raise_for_status()
-    #     return response.json()["task_id"]  # 返回异步任务ID
 
     async def getSessionList(self, assistant_id : str, 
                        page : int = 1,

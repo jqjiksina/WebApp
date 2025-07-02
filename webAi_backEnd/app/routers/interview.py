@@ -41,47 +41,18 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
     '''根据用户的提问从ragflow获取去掉think标签内容的回复，后续由前端与数字人服务交互完成问答'''
     # 先将用户的回复发送到ragflow接口，然后流式地将返回的回复发送到数字人播报
     if (not request.session_id):
-        # 创建新会话
+        # 仅创建新会话，触发开场白
         session_response = await rag_client.createSession(Config.INTERVIEW_AGENT_ID, "Ai面试会话", user.external_id,True)
+        logger.debug(f"create response:{session_response}")
         if session_response and session_response.get("data"):
             request.session_id = session_response["data"]["id"]
+            return {"session_id":session_response["data"]["id"],"message":session_response["data"]["message"][0]["content"],"human_session_id":human_session_id}
             
-    response = rag_client.chat(Config.INTERVIEW_AGENT_ID, request.answer, request.session_id,True, True)
-    
-    msg = "" # 流式响应收到的总消息
-    # lastpos = 0
-    session_id = request.session_id  # 初始化为请求中的 session_id
-        
-    # async for chunk in response:
-    #     chunk_data = json.loads(chunk)
-    #     if chunk_data["type"] == "text":
-    #         msg = chunk_data["content"]
-    #         result = msg[lastpos:]
-    #         interupt = lastpos == 0
-    #         if len(msg) - lastpos >= 40 : # 以40个字符为单位，发送给数字人说话
-    #             await digital_human.play(result, human_session_id, interupt)
-    #             lastpos = len(msg)
-    #         # 更新 session_id，确保使用最新的值
-    #         if "session_id" in chunk_data:
-    #             session_id = chunk_data["session_id"]
-    #     elif chunk_data["type"] == "end" and lastpos != len(msg):
-    #         await digital_human.play(result, human_session_id, interupt)
-    
-    # 不使用流式地传输，去掉think部分
+    response = rag_client.chat(Config.INTERVIEW_AGENT_ID, request.answer, request.session_id,False, True)
+
     async for chunk in response:
-        chunk_data = json.loads(chunk)
-        if chunk_data["type"] == "text":
-            msg = chunk_data["content"]
-            # 更新 session_id，确保使用最新的值
-            if "session_id" in chunk_data:
-                session_id = chunk_data["session_id"]
-        elif chunk_data["type"] == "end": # 开始处理think标签的内容，去掉思考过程后再发送
-            msg = msg.split("</think>")
-            logger.debug(f"msg:{msg}")
-            # try:
-            #     await digital_human.play(msg[-1], human_session_id, user,True)
-            # except:
-            #     return {"status":404,"statusText":"数字人调用失败，请检查数字人是否连接！","data":{"session_id":session_id}}
+        msg = chunk["data"]["answer"].split("</think>")
+        session_id = chunk["data"]["session_id"]
     
     return {"session_id":session_id,"message":msg[-1],"human_session_id":human_session_id}
 
@@ -96,7 +67,7 @@ async def set_human_session_id(request: SetHumanSessionIdRequest, current_user: 
 
 @router.post("/delete_session")
 async def delete_session(request : DeleteSessionRequest,user: User = Depends(get_current_user)):
-    logger.debug(f"delete_session begin:{request.session_id}")
+    logger.debug(f"delete_session begin:{request.session_ids}")
     response = await rag_client.deleteSession(Config.INTERVIEW_AGENT_ID,request.session_ids,True)
     if (response.get("code")==0):
         return

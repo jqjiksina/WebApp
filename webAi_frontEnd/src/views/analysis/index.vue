@@ -1,29 +1,35 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="analysis-container">
-    <template v-if="$route.path != '/analysis'">
-      <RouterView/>
-    </template>
+    <KeepAlive>
+      <template v-if="$route.path != '/analysis'">
+        <RouterView v-slot="{Component}">
+          <KeepAlive>
+            <component :is="Component"/>
+          </KeepAlive>
+        </RouterView>
+      </template>
 
-    <template v-else>
-      <div class="analysis-module">
-        <el-button 
-          style="height: 100%; width: 100%; font-size: 3rem;"
-          @click="router.push({name:'Interview'})">
-          <el-icon><ChatDotRound/></el-icon>
-          <span>面试模块</span>
-        </el-button>
-      </div>
+      <template v-else>
+        <div class="analysis-module">
+          <el-button 
+            style="height: 100%; width: 100%; font-size: 3rem;"
+            @click="router.push({name:'Interview'})">
+            <el-icon><ChatDotRound/></el-icon>
+            <span>面试模块</span>
+          </el-button>
+        </div>
 
-      <div class="analysis-module">
-        <el-button 
-          style="height: 100%; width: 100%; font-size: 3rem;"
-          @click="router.push({name:'Resume'})">
-          <el-icon><Files /></el-icon>
-          <span>简历模块</span>
-        </el-button>
-      </div>
-    </template>
+        <div class="analysis-module">
+          <el-button 
+            style="height: 100%; width: 100%; font-size: 3rem;"
+            @click="router.push({name:'Resume'})">
+            <el-icon><Files /></el-icon>
+            <span>简历模块</span>
+          </el-button>
+        </div>
+      </template>
+    </KeepAlive>
 
     <!-- <el-card class="analysis-card">
       <template #header>

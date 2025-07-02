@@ -358,7 +358,7 @@ const beforeUpload = (_file: File) => {
 }
 
 .resume-card {
-  height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -639,21 +639,6 @@ const beforeUpload = (_file: File) => {
   display: flex;
   align-items: center;
   color: #67c23a;
-}
-
-.iframe-container {
-  width: 100%;
-  height: 450px;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #f9f9f9;
-}
-
-.iframe-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
 }
 
 .avatar-note {
