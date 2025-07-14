@@ -69,7 +69,7 @@
               </div>
             </div>
             <div class="avatar-selection">
-              <div v-if="peerConnection?.connectionState==='closed' || peerConnection?.connectionState==undefined">
+              <div v-if="peerConnection?.connectionState==='closed' || peerConnection?.connectionState==undefined || peerConnection?.connectionState==null">
                 <!--重置连接 -->
                 <el-button    
                   type="primary"

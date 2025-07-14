@@ -6,6 +6,7 @@ import { createPinia } from "pinia";
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import VueKonva from 'vue-konva';
 
 const app = createApp(App);
 
@@ -32,6 +33,7 @@ pinia.use(piniaPluginPersistedstate)
 app.use(pinia)
   .use(router)
   .use(ElementPlus)
+  .use(VueKonva,{prefix:"konva"})
 
 app.mount('#app')
 

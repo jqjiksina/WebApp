@@ -25,7 +25,7 @@ async def add_process_time_header(request: Request, call_next):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = ['http://localhost:5180',
+    allow_origins = ['http://localhost:5173',
                      'http://222.20.98.159:5180'],
     allow_credentials=True,
     allow_methods=["*"],

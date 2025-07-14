@@ -22,19 +22,42 @@
       <span>学生事务</span>
     </el-menu-item>
 
-    <el-menu-item index="/analysis">
+    <!-- <el-menu-item index="/analysis">
       <el-icon><DataAnalysis /></el-icon>
       <span>职业发展</span>
-    </el-menu-item>
+    </el-menu-item> -->
+
+    <el-sub-menu index="1">
+      <template #title>
+        <el-icon><DataAnalysis /></el-icon>
+        <span>职业发展</span>
+      </template>
+      <el-menu-item index="/analysis/interview">Ai面试</el-menu-item>
+      <el-menu-item index="/analysis/resume">简历修改</el-menu-item>
+    </el-sub-menu>
 
     <el-menu-item index="/helpDoc">
       <el-icon><DataAnalysis /></el-icon>
       <span>帮助文档</span>
     </el-menu-item>
+
     <el-menu-item index="/TestDoc">
       <el-icon><DataAnalysis /></el-icon>
       <span>测试页面</span>
     </el-menu-item>
+
+    <el-sub-menu index="2">
+      <template #title>知识图谱</template>
+        <el-menu-item index="/maganism">
+          电磁场与电磁波
+        </el-menu-item>
+        <el-menu-item index="/integral">
+          微积分
+        </el-menu-item>
+        <el-menu-item index="/function">
+          数理方程与特殊函数
+        </el-menu-item>
+    </el-sub-menu>
   </el-menu>
 </template>
 
@@ -44,6 +67,7 @@ import { useRoute } from 'vue-router'
 import { Reading, User, DataAnalysis, HomeFilled } from '@element-plus/icons-vue'
 
 const route = useRoute()
+// const router = useRouter()
 const activeMenu = computed(() => route.path)
 </script>
 

@@ -65,6 +65,24 @@ const router = createRouter({
       name : 'TestDoc',
       component: ()=>import('@/views/test/TestDoc.vue'),
       meta: {requiresAuth: false ,title:"用户文档"}
+    },
+    {
+      path:'/maganism',
+      name: 'Maganism',
+      component: ()=>import('@/views/knowledgeGraph/Maganism/index.vue'),
+      meta: {requiresAuth: true ,title:"电磁场与电磁波"}
+    },
+    {
+      path:'/function',
+      name: 'Function',
+      component: ()=>import('@/views/knowledgeGraph/Function/index.vue'),
+      meta: {requiresAuth: true ,title:"数理方程与特殊函数"}
+    },
+    {
+      path:'/integral',
+      name: 'Integral',
+      component: ()=>import('@/views/knowledgeGraph/Integral/index.vue'),
+      meta: {requiresAuth: true ,title:"微积分"}
     }
   ]
 })
