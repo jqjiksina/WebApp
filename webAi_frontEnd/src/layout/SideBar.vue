@@ -57,6 +57,9 @@
         <el-menu-item index="/function">
           数理方程与特殊函数
         </el-menu-item>
+        <el-menu-item index="/summary">
+          全部
+        </el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>

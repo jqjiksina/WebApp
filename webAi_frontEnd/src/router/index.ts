@@ -83,6 +83,11 @@ const router = createRouter({
       name: 'Integral',
       component: ()=>import('@/views/knowledgeGraph/Integral/index.vue'),
       meta: {requiresAuth: true ,title:"微积分"}
+    },{
+      path : '/summary',
+      name : 'Summary',
+      component : ()=>import('@/views/knowledgeGraph/summary/index.vue'),
+      meta: {requiresAuth : true, title : '全课程'}
     }
   ]
 })

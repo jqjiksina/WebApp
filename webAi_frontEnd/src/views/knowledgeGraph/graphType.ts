@@ -6,6 +6,9 @@ interface GraphNode{                //知识图谱的结点
     y : number
     radius : number
     showDescription : boolean
+    name : string               // 结点显示的名称（如：极限、积分等知识点的名字）
+    vx ?: number
+    vy ?: number
 }
 
 interface GraphEdge{
