@@ -6,7 +6,7 @@ inside **School NetWork** !!!
 快速从0部署（先件：nginx、conda、npm、docker、tmux）：
 
 ``` shell
-git clone https://github.com/HUST-IC-LLM/Hust_System_With_AI normalLink \tdfe -10 \tdlt text \tdlf FromInput \tdsub normalLink \tdkey wng2wvhttps://github.com/HUST-IC-LLM/Hust_System_With_AI
+git clone https://github.com/HUST-IC-LLM/Hust_System_With_AI
 cd Hust_System_With_AI    # 进入项目文件夹
 git submodule init         # 从github下载子模块
 git submodule update
