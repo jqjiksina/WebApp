@@ -20,7 +20,7 @@ cd Livetalking
 tmux detach
 tmux new -s backend        # 从tmux启动后端服务
 cd webAi_backEnd
-conda activate webAi       ## conda后端python代码的运行环境，可                  自行创建
+conda activate webAi       ## conda后端python代码的运行环境，可自行创建
 conda create --name aiweb ## 创建虚拟环境名为aiweb
 conda activate aiweb
 pip install requirements.txt ## 安装依赖
