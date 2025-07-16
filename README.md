@@ -4,7 +4,7 @@ Access
 inside **School NetWork** !!!
 
 快速从0部署（先件：nginx、conda、npm、docker、tmux）：
-- 1. 进入https://github.com/HUST-IC-LLM/Hust_System_With_AIgithub仓库
+- 1. 进入https://github.com/HUST-IC-LLM/Hust_System_With_AI github仓库
 
 ``` shell
 git clone HYPERLINK https://github.com/HUST-IC-LLM/Hust_System_With_AI normalLink \tdfe -10 \tdlt text \tdlf FromInput \tdsub normalLink \tdkey wng2wvhttps://github.com/HUST-IC-LLM/Hust_System_With_AI
