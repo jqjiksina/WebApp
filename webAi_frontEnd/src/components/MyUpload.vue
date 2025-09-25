@@ -12,7 +12,7 @@
   </template>
   
 <script setup lang="ts">
-import { resumeApi } from '@/api';
+import { resumeApi } from '@/api/resumeApi';
 import { ElMessage } from 'element-plus';
 import mammoth from 'mammoth';
   
