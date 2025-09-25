@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "types": ["konva"],
+    "esModuleInterop": true,
+    // "moduleResolution": "node",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",

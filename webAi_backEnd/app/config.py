@@ -17,9 +17,16 @@ class Config:
     RAGFLOW_BASE_URL = os.getenv("RAGFLOW_BASE_URL")
     RAGFLOW_API_KEY = os.getenv("RAGFLOW_API_KEY")
     DEFAULT_DATASET_ID = os.getenv("DEFAULT_DATASET_ID")
-    DDEFAULT_AGENT_ID = os.getenv("DDEFAULT_AGENT_ID")
+    
+    # Agent ID
+    INTERVIEW_AGENT_ID = os.getenv("INTERVIEW_AGENT_ID")
+    RESUME_AGENT_ID = os.getenv("RESUME_AGENT_ID")
+    
     PAPER_TEST_API_KEY = os.getenv("PAPER_TEST_API_KEY")
     AGENT_HUST_ADDRESS = os.getenv("AGENT_HUST_ADDRESS")
+    
+    # 管理员用户配置
+    DEFAULT_USER_UNIVERSAL_NUMBER = os.getenv("DEFAULT_USER_UNIVERSAL_NUMBER")
+    DEFAULT_USER_PASSWORD = os.getenv("DEFAULT_USER_PASSWORD")
 
-    # 选填项（可设置默认值）
     DEBUG_MODE: bool = os.getenv("DEBUG_MODE", True)

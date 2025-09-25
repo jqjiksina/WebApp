@@ -52,7 +52,11 @@ const showSlide = ref(true)
           </el-header>
           <el-main>
             <div class="page-container">
-              <RouterView />
+              <RouterView v-slot="{Component}">
+                <KeepAlive>
+                  <component :is="Component"/>
+                </KeepAlive>
+              </RouterView>
             </div>
           </el-main>
         </el-container>

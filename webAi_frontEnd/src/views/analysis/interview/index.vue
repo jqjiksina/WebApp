@@ -29,6 +29,7 @@
                 class="session-item"
                 :class="{ active: session.session_id === activeSessionId }"
                 @click="chatHistory.switchToSession(session.session_id)"
+                @click="chatHistory.switchToSession(session.session_id)"
               >
                 <div class="session-title">{{ session.title }}</div>
                 <div class="session-time">{{ formatTime(session.updated_at as number) }}</div>
@@ -70,6 +71,7 @@
               </div>
             </div>
             <div class="avatar-selection">
+              <div v-if="peerConnection?.connectionState==='closed' || peerConnection?.connectionState==undefined || peerConnection?.connectionState==null">
               <div v-if="peerConnection?.connectionState==='closed' || peerConnection?.connectionState==undefined || peerConnection?.connectionState==null">
                 <!--重置连接 -->
                 <el-button    
@@ -139,7 +141,12 @@ import { Delete, Microphone, VideoPause } from '@element-plus/icons-vue'
 import { ChatHistoryManager, ChatSessionUpdated } from '@/utils/chatHistory'
 import type { ChatMessage } from '@/api/resumeApi'
 import { interviewApi } from '@/api/interviewApi'
+import { ChatHistoryManager, ChatSessionUpdated } from '@/utils/chatHistory'
+import type { ChatMessage } from '@/api/resumeApi'
+import { interviewApi } from '@/api/interviewApi'
 // import axios from 'axios'
+import axios from "axios"
+// import { useUsersStore } from '@/store'
 import axios from "axios"
 // import { useUsersStore } from '@/store'
 
@@ -174,6 +181,8 @@ const onShowSessionList = async () =>{
   if (showSessionList.value){
     const response = await interviewApi.listSession("");
     chatHistory.updateSession(response.data as ChatSessionUpdated[])
+    const response = await interviewApi.listSession("");
+    chatHistory.updateSession(response.data as ChatSessionUpdated[])
   }
 }
 
@@ -192,6 +201,7 @@ const deleteSession = async (session_id: string) => {
       type: 'warning'
     })
     interviewApi.deleteSession([session_id])
+    interviewApi.deleteSession([session_id])
     chatHistory.deleteSession(session_id)
     activeSessionId.value=""
     ElMessage.success('面试记录已删除')
@@ -203,7 +213,18 @@ const deleteSession = async (session_id: string) => {
 /**
  * 创建临时新会话
  *  */ 
+/**
+ * 创建临时新会话
+ *  */ 
 const createNewSession = async () => {
+  activeSessionId.value = ""
+  messages.value = []
+  showSessionList.value = false
+  if (peerConnection.value?.connectionState==="connected"){
+    const response = await interviewApi.chat("open log","")
+    chatHistory.switchToSession(response.data.session_id)
+  }
+}
   activeSessionId.value = ""
   messages.value = []
   showSessionList.value = false
@@ -247,6 +268,7 @@ const createWebRTCConnection = async () => {
     await peerConnection.value.setLocalDescription(offer)
 
     const response = await axios.post('http://' + import.meta.env.VITE_BACK_END_URL + "/digitalperson/offer",{
+    const response = await axios.post('http://' + import.meta.env.VITE_BACK_END_URL + "/digitalperson/offer",{
       sdp: peerConnection.value.localDescription?.sdp,
       type: 'offer'
     })
@@ -271,6 +293,7 @@ const createWebRTCConnection = async () => {
       type: answerData.type as RTCSdpType
     })
     await peerConnection.value.setRemoteDescription(remoteDesc)
+
 
 
 
@@ -467,6 +490,11 @@ const beginInterview = async ()=>{
   // and then activate the open log
   const response = await interviewApi.chat("open log","")
   chatHistory.switchToSession(response.data.session_id)
+  // 创建webrtc链接成功后，将所连接的数字人会话id传到后端。
+  await interviewApi.setHumanSessionId(digitalPersonSessionId.value)
+  // and then activate the open log
+  const response = await interviewApi.chat("open log","")
+  chatHistory.switchToSession(response.data.session_id)
   await initSpeechRecognition();
 }
 
@@ -603,11 +631,16 @@ declare global {
   height: 100%;
   width: 100%;
   overflow: auto;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
 
 .interview-card {
   display: flex;
   flex-direction: column;
+  min-height: 100%;
   min-height: 100%;
 }
 
@@ -799,6 +832,7 @@ declare global {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  /* min-height: 50vh; */
   /* min-height: 50vh; */
   gap: 20px;
 }

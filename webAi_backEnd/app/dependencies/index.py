@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from database.models import User
 from database.core import get_async_db
 # from schemas import LoginPost, RegistryPost  # 根据前端接口生成
+from loguru import logger
 from config import Config
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login") # tokenUrl指定获取token的url地址，以便于在受保护路由被访问时自动跳转到对应url获取token
@@ -28,7 +29,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db : AsyncSessio
     3. 从数据库查询对应用户
     4. 返回用户对象供路由使用
     """
-    print("[Debug] getting current user...")
+    logger.debug("getting current user...")
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="无法验证凭据",
@@ -53,7 +54,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db : AsyncSessio
     if user is None:
         raise credentials_exception
     
-    print("[Debug] get current user done")
+    logger.debug("get current user done")
     return user
 
 

@@ -15,9 +15,13 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@highlightjs/vue-plugin": "^2.1.0",
+    "@wooorm/starry-night": "^3.8.0",
     "axios": "^1.8.2",
     "dat.gui": "^0.7.9",
+    "echarts": "^5.6.0",
     "element-plus": "^2.9.7",
+    "github-markdown-css": "^5.8.1",
     "gsap": "^3.12.7",
     "hast-util-to-html": "^9.0.5",
     "highlight.js": "^11.11.1",
@@ -32,6 +36,8 @@
     "pinia-plugin-persistedstate": "^4.2.0",
     "uuid": "^11.1.0",
     "vue": "^3.5.13",
+    "vue-echarts": "^7.0.3",
+    "vue-konva": "^3.2.1",
     "vue-router": "^4.5.0",
     "vue-seamless-scroll": "^1.1.23",
     "vue3-eventbus": "^2.0.0",
@@ -39,6 +45,7 @@
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.13.4",
     "@types/three": "^0.174.0",
     "@vitejs/plugin-vue": "^5.2.1",

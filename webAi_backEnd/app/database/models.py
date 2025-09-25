@@ -39,8 +39,8 @@ class User(BaseModel):
     __tablename__ = 'user'  # 定义表名
     
     id : Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
-    external_id : Mapped[str] = mapped_column(String(63),unique=True, index=True, default=str(uuid.uuid4())  # "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-)
+    external_id : Mapped[str] = mapped_column(String(63),unique=True, index=True, default=str(uuid.uuid4()))  # "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+
     name : Mapped[str] = mapped_column(String(32))
     universal_number : Mapped[str] = mapped_column(String(11), unique=True, index=True, nullable=False)
     phone : Mapped[str] = mapped_column(String(11), unique=True, index=True, nullable=True)

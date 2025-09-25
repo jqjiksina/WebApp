@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import uvicorn
 import time
+from loguru import logger
 
 from database.core import init_db
 from routers import auth,chat,resume,interview
@@ -24,7 +25,7 @@ async def add_process_time_header(request: Request, call_next):
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins = ['http://localhost:5180',
+    allow_origins = ['http://localhost:5173',
                      'http://222.20.98.159:5180'],
     allow_credentials=True,
     allow_methods=["*"],

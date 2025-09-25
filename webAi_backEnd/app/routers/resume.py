@@ -12,86 +12,79 @@ from api.ragflow.ragflow import rag_client
 from dependencies.index import get_current_user
 from database.models import User
 from sqlalchemy.ext.asyncio import AsyncSession
+from pydantic import BaseModel
 import subprocess
 import json
 import time
+from loguru import logger
+
+from config import Config
 
 router = APIRouter(
+    prefix="/api/resume",
     tags=["resume"])
 
-
-# 配置文件存储路径
-UPLOAD_DIR = Path("uploads")
-UPLOAD_DIR.mkdir(exist_ok=True)  # 自动创建上传目录
-
-@router.post("/api/resume/upload")
-async def upload_resume(file: UploadFile = File(...),
-                        user:User = Depends(get_current_user),
-                        db:AsyncSession = Depends(get_async_db)):
-    '''
-    接受前端上传的简历文件，并发往ragflow进行进一步处理，
-    如果用户还没有关联自己的数据库，那么关联之。
-    '''
-    # 生成唯一文件名防止覆盖
-    print("[Debug] upload resume...")
-    file_ext = Path(file.filename).suffix
-    file_id = f"resume_{uuid.uuid4()}{file_ext}"
-    file_path = UPLOAD_DIR / file_id
-
-    # 保存文件到本地
-    with file_path.open("wb") as buffer:
-        shutil.copyfileobj(file.file, buffer)
-
-    # ========== 这里是RAGFlow处理区域 ==========
-    # 可以在此处调用RAGFlow的文档处理接口
-    # 示例伪代码：
-    if not user.dataset_id:
-        response = await rag_client.createDataset(f'{user.name}_{user.external_id}',f"{user.name}_{user.external_id}'s dataset")
-        user.dataset_id = response["data"]["id"]
-        await db.execute(update(User).where(User.id == user.id).values(dataset_id = user.dataset_id))
-        
-    response = await rag_client.uploadDocuments(user.dataset_id,file_path)
-    # 上传完毕后删除服务器中转临时文件
-    subprocess.call(["rm",file_path])
-    response = await rag_client.parseDocuments(user.dataset_id,[response["data"][0]["id"]])
+class Request_ListSession(BaseModel):
+    session_id : str | None
     
-    # ========================================
-
-    # 返回文件唯一标识符
-    return JSONResponse(
-        status_code=200,
-        content={"data": file_id}  # 与前端类型 { data: string } 匹配
-    )
+class Request_DeleteSession(BaseModel):
+    session_ids : list[str]
     
-@router.post("/api/resume/chat")
+class Request_Upload(BaseModel):
+    resumeContent: str
+
+# 创建用户和用户简历文本之间的映射
+resume_map = {}
+
+@router.post("/upload")
+async def upload_resume(request: Request_Upload,
+                        user:User = Depends(get_current_user)):
+    '''
+    接受前端上传的简历文本（不存储在磁盘），每次在相应用户对话时，若存在对应简历文件，则附上。
+    '''
+    logger.debug("[Debug] upload resume...")
+    
+    resume_map.update({user.external_id:request.resumeContent})
+    
+    logger.debug(f"[Debug] upload finished:{request.resumeContent}")
+    
+
+    
+@router.post("/chat")
 async def chat_resume(request : Request_ChatLog,
                       user : User = Depends(get_current_user)):
-    # 先根据当前模式（简历模式和特定用户）得到相应的助理id
-    # 如果第一次开始对话，那么创建会话
-    # 否则直接在指定session_id上继续对话
-    assistant_id = user.assistant_id
-    print("[Debug] chat_resume on session_id:",request.session_id)
+    '''
+    先根据当前模式（简历模式和特定用户）得到相应的助理id
+    如果第一次开始对话，那么创建会话
+    否则直接在指定session_id上继续对话
+    '''
+    logger.debug(f"[Debug] chat_resume on session_id:{request.session_id}")
+    
+    content = request.content
+    if resume_map.get(user.external_id):
+        content += f"\r\n\r\n **简历内容为**：{resume_map[user.external_id]}"
+        logger.debug("content:",content)
     
     try:
         # 如果没有session_id，创建一个新的会话
         if not request.session_id:
             # 创建新会话
-            session_response = await rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
+            session_response = await rag_client.createSession(Config.RESUME_AGENT_ID, "简历分析会话", user.external_id,is_agent=True)
             if session_response and session_response.get("data"):
                 request.session_id = session_response["data"]["id"]
         
         # 设置流式传输
-        response = rag_client.chat(assistant_id,
-                                 request.content,
+        response = rag_client.chat(Config.RESUME_AGENT_ID,
+                                 content,
                                  request.session_id,
-                                 user.external_id,
-                                 stream=True)
+                                 stream=True,
+                                 is_agent=True)
         stream = True
         # 对于流式响应，直接返回生成器
         if stream:
             async def generate():
                 async for chunk in response:
-                    # print("one stream:",chunk)
+                    # logger.debug("one stream:",chunk)
                     yield f"data: {chunk}\n\n"
             return StreamingResponse(
                 generate(),
@@ -114,33 +107,41 @@ async def chat_resume(request : Request_ChatLog,
             content=response.data.answer
         )
     except Exception as e:
-        print(f"[Error] chat_resume error: {str(e)}")
+        logger.debug(f"[Error] chat_resume error: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"处理请求时发生错误: {str(e)}"
+            detail=str(e)
         )
         
-@router.get("/api/resume/newSession")
+@router.get("/newSession")
 async def new_session(user : User = Depends(get_current_user)):
     '''创建新的会话'''
-    assistant_id = user.assistant_id
-    session_response = await rag_client.createSession(assistant_id, "简历分析会话", user.external_id)
+    session_response = await rag_client.createSession(Config.RESUME_AGENT_ID, "简历分析会话", user.external_id,True)
     if session_response and session_response["data"]:
-        return {"code" : 200,
-                "message" : "new session succeed",
-                "data":{"session_id" : session_response["data"]["id"]}}
-
-# 添加文件大小限制中间件（可选）
-# @app.middleware("http")
-# async def add_file_size_limit(request, call_next):
-#     # 限制上传文件大小为50MB
-#     MAX_UPLOAD_SIZE = 50 * 1024 * 1024  # 50MB
-#     content_length = int(request.headers.get('content-length', 0))
+        return {"session_id" : session_response["data"]["id"]}
+        
+@router.post("/delete_session")
+async def delete_session(request : Request_DeleteSession,user: User = Depends(get_current_user)):
+    logger.debug(f"[Debug] delete_session begin:{request.session_ids}")
+    response = await rag_client.deleteSession(Config.RESUME_AGENT_ID, request.session_ids, True)
+    if (response.get("code")==0):
+        return
+    else:
+        raise HTTPException(status_code=404,detail=response["message"])
     
-#     if content_length > MAX_UPLOAD_SIZE:
-#         return JSONResponse(
-#             status_code=413,
-#             content={"error": "文件大小超过50MB限制"}
-#         )
-    
-#     return await call_next(request)
+@router.post("/list_session")
+async def list_session(request: Request_ListSession, user: User = Depends(get_current_user)):
+    logger.debug(f"Config.Resume_agent_id:{Config.RESUME_AGENT_ID}")
+    if not request.session_id:  # get all the sessions of the user
+        response = await rag_client.getSessionList(Config.RESUME_AGENT_ID,user_id=user.external_id, is_agent=True)
+    else:                       # get selected sessionId's history of the user
+        response = await rag_client.getSessionList(Config.RESUME_AGENT_ID,user_id=user.external_id,session_id=request.session_id,is_agent=True)
+    if response.get("code") == "102":
+        raise HTTPException(status_code=102,detail=response["message"])
+    logger.debug(f"[Debug] list_session response:{response['data']}")
+    return [{"id": session["id"],
+            "title" : "简历会话",
+            "messages":[message for message in session["messages"]],
+            "update_time":session["update_time"],
+            "create_time":session["create_time"],
+            } for session in response["data"]]

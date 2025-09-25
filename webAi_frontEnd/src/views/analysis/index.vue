@@ -59,6 +59,7 @@
         </el-tab-pane>
       </el-tabs>
     </el-card> -->
+    </el-card> -->
   </div>
 </template>
 
@@ -83,6 +84,20 @@ onMounted(()=>{
 
 <style scoped>
 .analysis-container {
+  width:100%;height: 100%;
+  /* padding: 20px; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.analysis-module{
+  font-size: 3rem;
+  margin: 5px;
+  /* width: 300px;
+  height: 100px; */
+  height: 100px;
+  border: 2px solid blue;
   width:100%;height: 100%;
   /* padding: 20px; */
   display: flex;
