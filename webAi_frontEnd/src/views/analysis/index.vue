@@ -1,7 +1,24 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="analysis-container">
-    <el-card class="analysis-card">
+    <template v-if="$route.path != '/analysis'">
+      <RouterView/>
+    </template>
+
+    <template v-else>
+      <div class="analysis-module" @click="router.push({name:'Interview'})">
+        <el-icon><ChatDotRound /></el-icon>
+        <span>面试模块</span>
+      </div>
+
+      <div class="analysis-module" @click="router.push({name:'Resume'})">
+        <el-icon><Files /></el-icon>
+        <span>简历模块</span>
+      </div>
+
+    </template>
+
+    <!-- <el-card class="analysis-card">
       <template #header>
         <div class="card-header">
           <span>学业分析</span>
@@ -18,9 +35,6 @@
 
         <el-tab-pane label="职业发展" name="career" keep-alive="True">
           <div class="content">
-            <!-- <el-button type="primary" @click="showResume=!showResume">简历修改</el-button> -->
-            <!-- <div v-if="showResume">
-            </div> -->
             <Resume />
           </div>
         </el-tab-pane>
@@ -44,20 +58,19 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-    </el-card>
+    </el-card> -->
   </div>
 </template>
 
 <script setup lang="ts" name="AcademicAnalysis">
-import { computed, onMounted, ref } from 'vue'
-import Resume from './resume/index.vue'
-import Interview from './interview/index.vue'
+import { onMounted, ref } from 'vue'
+// import Resume from './resume/index.vue'
+// import Interview from './interview/index.vue'
+import {ChatDotRound,Files} from '@element-plus/icons-vue'
+import { RouterView } from 'vue-router'
+import { useRouter } from 'vue-router';
 
-const activeTab = ref('academic')
-
-const is_show_test_class = computed(()=>{
-  return value.value
-})
+const router = useRouter()
 
 const value = ref(false);
 onMounted(()=>{
@@ -70,7 +83,20 @@ onMounted(()=>{
 
 <style scoped>
 .analysis-container {
-  padding: 20px;
+  width:100%;height: 100%;
+  /* padding: 20px; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.analysis-module{
+  font-size: 3rem;
+  margin: 5px;
+  /* width: 300px;
+  height: 100px; */
+  height: 100px;
+  border: 2px solid blue;
 }
 
 .analysis-card {

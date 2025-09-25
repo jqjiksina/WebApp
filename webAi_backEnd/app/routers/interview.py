@@ -10,6 +10,9 @@ from database.core import get_async_db, AsyncSession
 from api.digital_human.index import digital_human
 from api.ragflow.ragflow import rag_client
 from config import Config
+from loguru import logger
+from .resume import Request_Upload
+from .resume import resume_map
 
 router = APIRouter(
     prefix="/api/interview",
@@ -44,29 +47,12 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
         session_response = await rag_client.createSession(Config.DDEFAULT_AGENT_ID, "Ai面试会话", user.external_id)
         if session_response and session_response.get("data"):
             request.session_id = session_response["data"]["id"]
+            return {"session_id":session_response["data"]["id"],"message":session_response["data"]["message"][0]["content"],"human_session_id":human_session_id}
             
-    response = rag_client.chat(Config.DDEFAULT_AGENT_ID, request.answer, request.session_id, user.external_id, True, True)
-    
-    msg = "" # 流式响应收到的总消息
-    lastpos = 0
-    session_id = request.session_id  # 初始化为请求中的 session_id
-        
-    # async for chunk in response:
-    #     chunk_data = json.loads(chunk)
-    #     if chunk_data["type"] == "text":
-    #         msg = chunk_data["content"]
-    #         result = msg[lastpos:]
-    #         interupt = lastpos == 0
-    #         if len(msg) - lastpos >= 40 : # 以40个字符为单位，发送给数字人说话
-    #             await digital_human.play(result, human_session_id, interupt)
-    #             lastpos = len(msg)
-    #         # 更新 session_id，确保使用最新的值
-    #         if "session_id" in chunk_data:
-    #             session_id = chunk_data["session_id"]
-    #     elif chunk_data["type"] == "end" and lastpos != len(msg):
-    #         await digital_human.play(result, human_session_id, interupt)
-    
-    # 不使用流式地传输，去掉think部分
+    if (resume_map.get(user.external_id)):
+        request.answer += f"\r\n\r\n (附简历：{resume_map[user.external_id]})"
+    response = rag_client.chat(Config.INTERVIEW_AGENT_ID, request.answer, request.session_id,False, True)
+
     async for chunk in response:
         chunk_data = json.loads(chunk)
         if chunk_data["type"] == "text":
@@ -82,7 +68,7 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
             except:
                 return {"status":404,"statusText":"数字人调用失败，请检查数字人是否连接！","data":{"session_id":session_id}}
     
-    return {"session_id":session_id,"message":}
+    return {"session_id":session_id,"message":msg[-1]}
 
 @router.post("/set_human_session_id")
 async def set_human_session_id(request: SetHumanSessionIdRequest, current_user: User = Depends(get_current_user), db : AsyncSession = Depends(get_async_db)):
@@ -111,9 +97,11 @@ async def list_session(request: ListSessionRequest, user: User = Depends(get_cur
     if response.get("code") == "102":
         return {"status":102,"statusText":response.get("message")}
     return [{"id": session["id"],
-                "title" : "面试会话",
-                "messages":[message for message in session["messages"]]
-                } for session in response["data"]
-            ]
+            "title" : "面试会话",
+            "messages":[message for message in session["messages"]],
+            "update_time":session["update_time"],
+            "create_time":session["create_time"],
+            } for session in response["data"]]
+    
     
     

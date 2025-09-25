@@ -6,16 +6,13 @@
         <div class="card-header">
           <div class="header-left">
             <span>简历修改助手</span>
-            <el-button type="primary" @click="showSessionList = !showSessionList">
+            <el-button type="primary" @click="onShowSessionList">
               {{ showSessionList ? '隐藏会话列表' : '显示会话列表' }}
             </el-button>
-            <!-- <el-button type="primary" @click="toggleAvatarMode">
-              {{ showAvatar ? '隐藏数字人' : '显示数字人' }}
-            </el-button> -->
           </div>
           <el-upload
             class="upload-demo"
-            :http-request="resumeApi.upload"
+            :http-request="handleUpload"
             :on-success="handleUploadSuccess"
             :on-error="handleUploadError"
             :before-upload="beforeUpload"
@@ -27,7 +24,6 @@
       </template>
 
       <div class="chat-layout">
-        <!-- 会话列表 -->
         <div v-if="showSessionList" class="session-list">
           <div class="session-list-header">
             <h3>历史会话</h3>
@@ -62,7 +58,6 @@
           </el-scrollbar>
         </div>
 
-        <!-- 聊天区域 -->
         <div class="chat-container">
           <div class="chat-messages" ref="messagesContainer">
             <div v-for="(message, index) in messages" :key="index" :class="['message', message.role]">
@@ -109,9 +104,11 @@
 import { ref, onMounted, computed, onBeforeUnmount, } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete } from '@element-plus/icons-vue'
-import { resumeApi } from '@/api/resume/resumeApi'
-import { ChatHistoryManager } from '@/utils/chatHistory'
-import type { ChatMessage } from '@/types/resume'
+import { resumeApi } from '@/api/resumeApi'
+import { ChatHistoryManager, ChatSessionUpdated } from '@/utils/chatHistory'
+import type { ChatMessage } from '@/api/resumeApi'
+import mammoth from 'mammoth'
+
 
 const messages = ref<ChatMessage[]>([])
 const inputMessage = ref('')
@@ -126,6 +123,33 @@ const sessions = computed(() => chatHistory.getAllSessions().value)
 
 const userAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 const aiAvatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+
+// 辅助函数
+const readFileAsArrayBuffer = (file: File): Promise<ArrayBuffer> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as ArrayBuffer);
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+};
+
+const handleUpload = async (params: { file: File }) => {
+  const file = params.file
+  // use mammoth 
+  const arrayBuffer = await readFileAsArrayBuffer(file)
+  const result = await mammoth.extractRawText({ arrayBuffer });
+  console.log("parsed document:",result.value)
+  resumeApi.upload(result.value)
+}
+
+const onShowSessionList = async ()=>{
+  showSessionList.value = !showSessionList.value
+  if (showSessionList.value){
+    const response = await resumeApi.listSession("")
+    chatHistory.updateSession(response.data as ChatSessionUpdated[])
+  }
+}
 
 const stopStreamming = () => {  //停止接受
   if (isStreaming.value) {
@@ -168,6 +192,11 @@ const deleteSession = async (session_id: string) => {
     })
     
     chatHistory.deleteSession(session_id)
+    try {
+      await resumeApi.deleteSession([session_id])
+    }catch{
+      ElMessage.error("会话删除失败！")
+    }
     
     ElMessage.success('会话已删除')
   } catch {
@@ -184,255 +213,6 @@ const createNewSession = () => {
   chatHistory.showWelcomeMessage()
   showSessionList.value = false
 }
-
-// // 创建WebRTC连接
-// const createWebRTCConnection = async () => {
-//   try {
-//     connecting.value = true
-//     console.log('开始创建WebRTC连接...')
-    
-//     // 创建PeerConnection
-//     peerConnection.value = new RTCPeerConnection({
-//       iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
-//     })
-    
-//     // 监听ICE候选
-//     peerConnection.value.onicecandidate = event => {
-//       if (event.candidate) {
-//         console.log('发现新的ICE候选:', event.candidate)
-//       }
-//     }
-    
-//     // 处理远程流
-//     peerConnection.value.ontrack = event => {
-//       if (avatarVideo.value && event.streams[0]) {
-//         console.log('收到远程视频流')
-//         avatarVideo.value.srcObject = event.streams[0]
-//         connecting.value = false
-//       }
-//     }
-    
-//     // 创建offer
-//     const offer = await peerConnection.value.createOffer({
-//       offerToReceiveVideo: true,
-//       offerToReceiveAudio: true
-//     })
-    
-//     await peerConnection.value.setLocalDescription(offer)
-    
-//     // 发送offer到服务器，获取answer
-//     if (!peerConnection.value.localDescription) {
-//       throw new Error('本地描述为空')
-//     }
-//     const response = await fetch(`${digitalPersonAPI}/offer`, {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({
-//         sdp: peerConnection.value.localDescription.sdp,
-//         type: 'offer'
-//       })
-//     })
-    
-//     if (!response.ok) {
-//       const errorData = await response.json()
-//       if (response.status === 429) {
-//         ElMessage.error('数字人服务已达到最大会话数限制，请稍后再试')
-//       } else {
-//         throw new Error(`无法连接到数字人服务: ${errorData.msg || response.statusText}`)
-//       }
-//       return
-//     }
-    
-//     const answerData = await response.json()
-//     console.log('收到WebRTC应答:', answerData)
-    
-//     if (!answerData.sdp || !answerData.type || !answerData.sessionid) {
-//       throw new Error('WebRTC应答格式不正确，缺少必要参数')
-//     }
-    
-//     // 保存会话ID
-//     sessionId.value = answerData.sessionid
-    
-//     // 创建远程描述
-//     const remoteDesc = new RTCSessionDescription({
-//       sdp: answerData.sdp,
-//       type: answerData.type
-//     })
-//     await peerConnection.value.setRemoteDescription(remoteDesc)
-    
-//     console.log('WebRTC连接创建成功')
-    
-//     // 连接成功后发送一条欢迎消息
-//     setTimeout(async () => {
-//       if (showAvatar.value) {
-//         await sendTextToDigitalPerson('你好，我是您的简历助手。点击"显示数字人"按钮可以切换我的显示状态。')
-//       }
-//     }, 1000)
-//   } catch (error) {
-//     console.error('创建WebRTC连接失败:', error)
-//     connecting.value = false
-//     ElMessage.error('连接数字人失败，请稍后再试')
-//   }
-// }
-
-// // 检查数字人是否在说话
-// const checkIsSpeaking = async () => {
-//   try {
-//     const response = await fetch(`${digitalPersonAPI}/is_speaking`, {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({ sessionid: sessionId.value })
-//     })
-    
-//     if (!response.ok) {
-//       throw new Error(`检查说话状态失败: ${response.status} ${response.statusText}`)
-//     }
-    
-//     const data = await response.json()
-//     console.log('数字人说话状态:', data)
-//     return data.is_speaking === true
-//   } catch (error) {
-//     console.error('检查数字人说话状态失败:', error)
-//     return false
-//   }
-// }
-
-// // 定期检查数字人说话状态
-// let speakingCheckInterval: number | null = null
-
-// // 发送文本给数字人
-// const sendTextToDigitalPerson = async (text: string) => {
-//   try {
-//     console.log(`向数字人发送文本: "${text}"`)
-    
-//     // 检查数字人连接是否已建立
-//     if (!peerConnection.value || peerConnection.value.connectionState !== 'connected') {
-//       console.warn('数字人WebRTC连接未建立或状态异常')
-//       // 尝试重新建立连接
-//       if (showAvatar.value) {
-//         await createWebRTCConnection()
-//       }
-//     }
-    
-//     const response = await fetch(`${digitalPersonAPI}/human`, {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify({
-//         sessionid: sessionId.value,
-//         type: 'chat',
-//         text: text,
-//         interrupt: false
-//       })
-//     })
-    
-//     if (!response.ok) {
-//       throw new Error(`发送文本到数字人失败: ${response.status} ${response.statusText}`)
-//     }
-    
-//     const result = await response.json()
-//     console.log('数字人API响应:', result)
-    
-//     // 设置为正在说话状态
-//     isSpeaking.value = true
-    
-//     // 开始检查说话状态
-//     if (speakingCheckInterval) {
-//       clearInterval(speakingCheckInterval)
-//     }
-    
-//     speakingCheckInterval = window.setInterval(async () => {
-//       try {
-//         const speaking = await checkIsSpeaking()
-//         isSpeaking.value = speaking
-        
-//         if (!speaking) {
-//           console.log('数字人已停止说话')
-//           clearInterval(speakingCheckInterval!)
-//           speakingCheckInterval = null
-//         }
-//       } catch (error) {
-//         console.error('检查数字人说话状态失败:', error)
-//         clearInterval(speakingCheckInterval!)
-//         speakingCheckInterval = null
-//         isSpeaking.value = false
-//       }
-//     }, 1000)
-    
-//   } catch (error) {
-//     console.error('向数字人发送文本失败:', error)
-//     isSpeaking.value = false
-//     ElMessage.warning('数字人服务暂时不可用')
-//   }
-// }
-
-// // 监视数字人显示状态
-// watch(showAvatar, async (newValue) => {
-//   if (newValue) {
-//     // 显示数字人时，创建WebRTC连接
-//     await createWebRTCConnection()
-//   } else {
-//     // 隐藏数字人时，关闭连接
-//     if (peerConnection.value) {
-//       peerConnection.value.close()
-//       peerConnection.value = null
-//     }
-    
-//     if (speakingCheckInterval) {
-//       clearInterval(speakingCheckInterval)
-//       speakingCheckInterval = null
-//     }
-    
-//     isSpeaking.value = false
-//     connecting.value = false
-//   }
-// })
-
-// // 监听消息内容变化，在数字人模式下让数字人播报助手回复
-// watch(() => messages.value[messages.value.length - 1]?.content, async (newContent, oldContent) => {
-//   if (showAvatar.value && 
-//       messages.value.length > 0 && 
-//       messages.value[messages.value.length - 1]?.role === 'assistant' && 
-//       newContent && 
-//       newContent !== oldContent && 
-//       !isStreaming.value) {
-//     // 当助手消息完整显示后，让数字人播报内容
-//     // 移除HTML标签，获取纯文本
-//     const plainText = newContent.replace(/<[^>]*>/g, '')
-    
-//     if (useDirectConnection.value) {
-//       // 方案1: 直接API调用
-//       await sendTextToDigitalPerson(plainText)
-//     } else {
-//       // 方案2: 通过iframe发送消息
-//       sendMessageToIframe(plainText)
-//     }
-//   }
-// })
-
-// // 通过iframe向数字人发送消息
-// const sendMessageToIframe = (text: string) => {
-//   const iframe = document.querySelector('.iframe-container iframe') as HTMLIFrameElement
-//   if (iframe && iframe.contentWindow) {
-//     console.log(`通过iframe向数字人发送消息: "${text}"`)
-    
-//     // 使用postMessage发送消息到iframe
-//     try {
-//       iframe.contentWindow.postMessage({
-//         type: 'chat',
-//         text: text,
-//         sessionid: 0
-//       }, '*') // 使用'*'允许任何来源，但在生产环境中应该指定确切的目标源
-      
-//       ElMessage.success('消息已发送给数字人')
-//     } catch (error) {
-//       console.error('向iframe发送消息失败:', error)
-//       ElMessage.warning('无法向数字人发送消息')
-//     }
-//   } else {
-//     console.warn('找不到数字人iframe')
-//     ElMessage.warning('数字人界面未就绪')
-//   }
-// }
 
 /**
  * 核心逻辑，处理对话发送和接收
@@ -551,24 +331,8 @@ const sendMessage = async () => {
 }
 
 // 处理文件上传
-const handleUploadSuccess = async (_response: any) => {
-  ElMessage.success('简历上传成功')
-  try {
-    const welcomeMessage: ChatMessage = {
-      role: 'assistant',
-      content: '我已经收到您的简历，我可以帮您：\n1. 分析简历内容\n2. 提供修改建议\n3. 优化表达方式\n4. 调整格式结构\n\n请告诉我您想先从哪个方面开始？',
-    }
-    messages.value.push(welcomeMessage)
-    
-    if (activeSessionId.value) {
-      chatHistory.addMessage(activeSessionId.value, welcomeMessage)
-    }
-  } catch (error) {
-    console.error("[Debug] handleUploadSuccess error:", error)
-    ElMessage.error('初始化对话失败')
-  } finally {
-    chatHistory.scrollToBottom()
-  }
+const handleUploadSuccess = async (_response: any) =>{
+  
 }
 
 const handleUploadError = () => {
@@ -588,11 +352,13 @@ const beforeUpload = (_file: File) => {
 
 <style scoped>
 .resume-container {
-  padding: 20px;
+  /* padding: 20px; */
+  height: 100%;
+  width: 100%;
 }
 
 .resume-card {
-  height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -707,7 +473,7 @@ const beforeUpload = (_file: File) => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
+  max-height: 75vh;
 }
 
 .chat-messages {
@@ -759,7 +525,7 @@ const beforeUpload = (_file: File) => {
 }
 
 .chat-input {
-  padding: 20px;
+  padding: 10px;
   border-top: 1px solid #ebeef5;
   display: flex;
   gap: 10px;
@@ -873,21 +639,6 @@ const beforeUpload = (_file: File) => {
   display: flex;
   align-items: center;
   color: #67c23a;
-}
-
-.iframe-container {
-  width: 100%;
-  height: 450px;
-  position: relative;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: #f9f9f9;
-}
-
-.iframe-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
 }
 
 .avatar-note {

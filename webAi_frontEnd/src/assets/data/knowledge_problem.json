@@ -1,0 +1,920 @@
+[
+  {
+    "id": "1-1-1-1",
+    "problem": "电磁学是研究静止和运动电荷效应的学科，涉及电场、磁场及其_____",
+    "type": true,
+    "answer": "相互作用"
+  },
+  {
+    "id": "1-1-1-2",
+    "problem": "电磁学是物理学家和电机工程师的基础学科，应用于原子裂变、雷达、卫星通信、______等领域",
+    "type": true,
+    "answer": "光纤通信"
+  },
+  {
+    "id": "1-1-1-3",
+    "problem": "电路理论无法解释天线辐射和导电壁屏蔽效果等现象，需依赖_____概念",
+    "type": true,
+    "answer": "电磁场"
+  },
+  {
+    "id": "1-1-2-1",
+    "problem": "电磁模型的基本量分为___和_____",
+    "type": true,
+    "answer": " 源量  场量"
+  },
+  {
+    "id": "1-1-2-2",
+    "problem": "建立电磁模型的三个步骤为：定义基本量、规定数学运算规则（如矢量微积分）、假设____",
+    "type": true,
+    "answer": "基本关系"
+  },
+  {
+    "id": "1-1-2-3",
+    "problem": "电荷守恒原理是物理学的基本假设，表示电荷既不能被创造也不能被消灭，其数学表达为____",
+    "type": true,
+    "answer": "连续性方程"
+  },
+  {
+    "id": "1-1-3-1",
+    "problem": "电磁学中的国际单位制（SI）基本单位为",
+    "type": true,
+    "answer": "米（m）、千克（kg）、秒（s）、安培（A）"
+  },
+  {
+    "id": "1-1-3-2",
+    "problem": "自由空间中的导磁率\\(\\mu_0\\)的定义为",
+    "type": true,
+    "answer": "4\\pi \times 10^{-7} H/m"
+  },
+  {
+    "id": "1-1-3-3",
+    "problem": "通用常数满足",
+    "type": true,
+    "answer": "c = \\frac{1}{\\sqrt{\\epsilon_0 \\mu_0}}"
+  },
+  {
+    "id": "1-2-2-1",
+    "problem": "两个力作用在一个物体上，力 \\( \\vec{F_1} = 3\\hat{i} + 4\\hat{j} \\) 和 \\( \\vec{F_2} = -2\\hat{i} + 5\\hat{j} \\)，求这两个力的合力 \\( \\vec{F} = \\vec{F_1} + \\vec{F_2} \\)。",
+    "type": false,
+    "answer": "\\( \\hat{i} + 9\\hat{j} \\)"
+  },
+  {
+    "id": "1-2-3-1",
+    "problem": "已知两个矢量 \\( \\vec{A} = 4\\hat{i} + 2\\hat{j} \\) 和 \\( \\vec{B} = \\hat{i} - 3\\hat{j} \\)，计算它们的点积 \\( \\vec{A} \\cdot \\vec{B} \\)。",
+    "type": false,
+    "answer": "\\( -2 \\)"
+  },
+  {
+    "id": "1-2-3-2",
+    "problem": "已知两个矢量 \\( \\vec{A} = 3\\hat{i} + 4\\hat{j} + 2\\hat{k} \\) 和 \\( \\vec{B} = \\hat{i} - \\hat{j} + 3\\hat{k} \\)，计算它们的叉积 \\( \\vec{A} \\times \\vec{B} \\)。",
+    "type": false,
+    "answer": "\\( 14\\hat{i} - 7\\hat{j} - 7\\hat{k} \\)"
+  },
+  {
+    "id": "1-2-3-3",
+    "problem": "已知三个矢量 \\( \\vec{A} = 2\\hat{i} + \\hat{j} \\)，\\( \\vec{B} = 3\\hat{i} + 2\\hat{j} + 4\\hat{k} \\)，和 \\( \\vec{C} = \\hat{i} + 4\\hat{j} + 2\\hat{k} \\)，求三重积 \\( \\vec{A} \\cdot (\\vec{B} \\times \\vec{C}) \\)。",
+    "type": false,
+    "answer": "\\( -26 \\)"
+  },
+  {
+    "id": "1-2-4-1",
+    "problem": "已知点 \\( P(5, -3, 7) \\)，求该点到原点的距离。",
+    "type": false,
+    "answer": "\\( \\sqrt{83} \\)"
+  },
+  {
+    "id": "1-2-4-2",
+    "problem": "给定柱面坐标 \\( r = 6, \\phi = 30^\\circ, z = 4 \\)，将其转换为笛卡尔坐标。",
+    "type": false,
+    "answer": "\\( (5.196, 3, 4) \\)"
+  },
+  {
+    "id": "1-2-4-3",
+    "problem": "在柱面坐标系中，已知矢量 \\( \\vec{A} = 4\\hat{a_r} - 5\\hat{a_\\phi} + 3\\hat{a_z} \\)，求其在笛卡尔坐标中的 \\( A_x \\)。",
+    "type": false,
+    "answer": "\\( 0.964 \\)"
+  },
+  {
+    "id": "1-2-4-4",
+    "problem": "已知点 \\( P(r = 3, \\phi = 60^\\circ, z = 2) \\)，计算柱面坐标系中微分长度 \\( dl \\) 的值，给定 \\( \\Delta r = 0.2, \\Delta \\phi = 0.3, \\Delta z = 0.4 \\)。",
+    "type": false,
+    "answer": "\\( 1.005 \\)"
+  },
+  {
+    "id": "1-2-4-5",
+    "problem": "给定球面坐标 \\( R = 8, \\theta = 45^\\circ, \\phi = 30^\\circ \\)，求该点的笛卡尔坐标。",
+    "type": false,
+    "answer": "\\( (4.828, 2.828, 5.656) \\)"
+  },
+  {
+    "id": "1-2-4-6",
+    "problem": "在球面坐标系中，已知矢量 \\( \\vec{A} = 6\\hat{a_R} + 3\\hat{a_\\theta} + 2\\hat{a_\\phi} \\)，求其在笛卡尔坐标中的 \\( A_x \\)。",
+    "type": false,
+    "answer": "\\( 4.665 \\)"
+  },
+  {
+    "id": "1-2-4-7",
+    "problem": "已知点 \\( P(R = 5, \\theta = 60^\\circ, \\phi = 45^\\circ) \\)，计算球面坐标系中的微分长度 \\( dl \\)，给定 \\( \\Delta R = 0.3, \\Delta \\theta = 0.25, \\Delta \\phi = 0.4 \\)。",
+    "type": false,
+    "answer": "\\( 1.59 \\)"
+  },
+  {
+    "id": "1-2-5-1",
+    "problem": "已知标量场 \\( V(x, y, z) = 2x^2 + 3y^2 + z^2 \\)，求在点 \\( (1, 2, 3) \\) 处沿单位矢量 \\( \\hat{a_n} = \\hat{i} \\) 方向的方向导数。",
+    "type": false,
+    "answer": "\\( 4 \\)"
+  },
+  {
+    "id": "1-2-5-2",
+    "problem": "在广义正交曲线坐标系中，标量场 \\( V(u_1, u_2, u_3) = u_1^2 + u_2^2 + u_3^2 \\)，求其梯度。",
+    "type": false,
+    "answer": "\\( 2u_1 a_{u1} + 2u_2 a_{u2} + 2u_3 a_{u3} \\)"
+  },
+  {
+    "id": "1-2-6-1",
+    "problem": "已知矢量场 \\( \\vec{A} = x\\hat{i} + y\\hat{j} + z\\hat{k} \\)，计算其散度。",
+    "type": false,
+    "answer": "\\( 3 \\)"
+  },
+  {
+    "id": "1-2-6-2",
+    "problem": "在笛卡尔坐标系中，矢量场 \\( \\vec{A} = x^2\\hat{i} + y^2\\hat{j} + z^2\\hat{k} \\)，求其散度。",
+    "type": false,
+    "answer": "\\( 2x + 2y + 2z \\)"
+  },
+  {
+    "id": "1-2-7-1",
+    "problem": "使用散度定理，已知矢量场 \\( \\vec{A} = \\hat{i} + \\hat{j} + \\hat{k} \\)，计算通过封闭面的通量。",
+    "type": false,
+    "answer": "\\( 3 \\)"
+  },
+  {
+    "id": "1-2-8-1",
+    "problem": "已知矢量场 \\( \\vec{A} = x\\hat{i} + y\\hat{j} + z\\hat{k} \\)，计算其旋度。",
+    "type": false,
+    "answer": "\\( 0 \\)"
+  },
+  {
+    "id": "1-2-9-1",
+    "problem": "使用斯托克斯定理，已知矢量场 \\( \\vec{A} = y\\hat{i} + x\\hat{j} \\)，求其在单位圆周围的线积分。",
+    "type": false,
+    "answer": "\\( 2\\pi \\)"
+  },
+  {
+    "id": "1-2-10-1",
+    "problem": "计算梯度的旋度 \\( \\nabla \\times (\\nabla V) \\)，其中 \\( V \\) 为任意标量场。",
+    "type": false,
+    "answer": "\\( 0 \\)"
+  },
+  {
+    "id": "1-2-10-2",
+    "problem": "计算矢量场旋度的散度 \\( \\nabla \\cdot (\\nabla \\times \\vec{A}) \\)，其中 \\( \\vec{A} \\) 为任意矢量场。",
+    "type": false,
+    "answer": "\\( 0 \\)"
+  },
+  {
+    "id": "1-2-11-1",
+    "problem": "已知某矢量场的散度和旋度均已给定，求该矢量场是否可唯一确定（可以相差常数或常矢量）。",
+    "type": false,
+    "answer": "是"
+  },
+  {
+    "id": "1-3-1-1",
+    "problem": "两带电体之间作用力大小与电荷乘积成正比，且距离平方成反比。已知电荷 \\( q_1 = 1 \\, \\text{C} \\)，\\( q_2 = 2 \\, \\text{C} \\)，它们之间的距离为 10 m，求它们之间的相互作用力。",
+    "type": false,
+    "answer": "\\( 1.8 \\times 10^9 \\, \\text{N} \\)"
+  },
+  {
+    "id": "1-3-2-1",
+    "problem": "求试验电荷 \\( q = 1 \\, \\text{nC} \\) 受电场作用的电场力，已知电场强度 \\( E = 5 \\, \\text{N/C} \\)。",
+    "type": false,
+    "answer": "\\( 5 \\, \\text{nN} \\)"
+  },
+  {
+    "id": "1-3-2-2",
+    "problem": "已知电荷 \\( q = 3 \\, \\text{C} \\) 产生的电场强度 \\( E = 10 \\, \\text{N/C} \\)，计算该电场的散度。",
+    "type": false,
+    "answer": "\\( 3 \\, \\text{C/m}^3 \\)"
+  },
+  {
+    "id": "1-3-2-3",
+    "problem": "静电场的旋度为多少？",
+    "type": false,
+    "answer": "\\( 0 \\)"
+  },
+  {
+    "id": "1-3-3-1",
+    "problem": "已知点电荷 \\( q = 4 \\, \\text{C} \\)，计算场强 \\( E \\) 在距离电荷 5 m 的地方的大小。",
+    "type": false,
+    "answer": "\\( 1.44 \\times 10^9 \\, \\text{N/C} \\)"
+  },
+  {
+    "id": "1-3-4-1",
+    "problem": "电场穿过某封闭表面的通量为 200 C，求该表面内包含的总电荷。",
+    "type": false,
+    "answer": "\\( 200 \\, \\text{C} \\)"
+  },
+  {
+    "id": "1-3-5-1",
+    "problem": "已知标量电位 \\( V = x^2 + y^2 + z^2 \\)，求电场强度 \\( E \\) 在点 \\( (2, 2, 2) \\) 处的值。",
+    "type": false,
+    "answer": "\\( 6.93 \\, \\text{N/C} \\)"
+  },
+  {
+    "id": "1-3-6-1",
+    "problem": "导体内部的电场强度是多少？",
+    "type": false,
+    "answer": "\\( 0 \\)"
+  },
+  {
+    "id": "1-3-7-1",
+    "problem": "电介质内部外电场引起的极化现象会导致什么？",
+    "type": true,
+    "answer": "形成电偶极子"
+  },
+  {
+    "id": "1-3-7-2",
+    "problem": "已知体积为 \\( 2 \\, \\text{m^3} \\)的电介质的极化强度 \\( \\mathbf{P} = 4 \\, \\text{C/m}^2 \\)，求电偶极矩。",
+    "type": false,
+    "answer": "\\( 8 \\, \\text{C} \\)"
+  },
+  {
+    "id": "1-3-7-3",
+    "problem": "求极化电介质的等效电荷分布。",
+    "type": true,
+    "answer": "\\( -\\nabla \\cdot \\mathbf{P} \\)"
+  },
+  {
+    "id": "1-3-8-1",
+    "problem": "已知电通密度 \\( \\mathbf{D} = 6\\hat{i} + 4\\hat{j} \\)，求电通量密度的散度。",
+    "type": false,
+    "answer": "\\( 0 \\)"
+  },
+  {
+    "id": "1-3-8-2",
+    "problem": "已知电介质的电通密度 \\( \\mathbf{D} = 3\\hat{i} + 2\\hat{j} \\)，计算电场强度。",
+    "type": false,
+    "answer": "\\( 3.39 \\times 10^{11} \\hat{i} + 2.26 \\times 10^{11} \\hat{j} \\, \\text{N/C} \\)"
+  },
+  {
+    "id": "1-3-8-3",
+    "problem": "电场强度超过材料的电介质强度时会发生什么？",
+    "type": false,
+    "answer": "击穿"
+  },
+  {
+    "id": "1-3-9-1",
+    "problem": "在两种不同介质的分界面，电场强度的切向分量是否连续？",
+    "type": false,
+    "answer": "连续"
+  },
+  {
+    "id": "1-3-9-2",
+    "problem": "在两种介质的分界面，电通密度的法向分量是否连续？",
+    "type": false,
+    "answer": "不连续"
+  },
+  {
+    "id": "1-3-9-3",
+    "problem": "若分界面不带自由电荷，电通密度的法向分量是否连续？",
+    "type": false,
+    "answer": "连续"
+  },
+  {
+    "id": "1-3-10-1",
+    "problem": "孤立导体的电容 \\( C = \\frac{Q}{V} \\)，已知电荷 \\( Q = 5 \\, \\text{C} \\)，电位差 \\( V = 2 \\, \\text{V} \\)，求电容。",
+    "type": false,
+    "answer": "\\( 2.5 \\, \\text{F} \\)"
+  },
+  {
+    "id": "1-3-10-2",
+    "problem": "已知电容器的电荷 \\( Q = 3 \\, \\text{C} \\)，电位差为 \\( V = 4 \\, \\text{V} \\)，计算电容。",
+    "type": false,
+    "answer": "\\( 0.75 \\, \\text{F} \\)"
+  },
+  {
+    "id": "1-3-10-3",
+    "problem": "两电容器串联，电容分别为 3 F 和 6 F，求等效电容。",
+    "type": false,
+    "answer": "\\( 2 \\, \\text{F} \\)"
+  },
+  {
+    "id": "1-4-1-1",
+    "problem": "静电问题中，未知电荷分布时，可否利用电场和电位的公式计算？",
+    "type": false,
+    "answer": "否"
+  },
+  {
+    "id": "1-4-2-1",
+    "problem": "已知电荷密度 \\( \\rho = 3 \\, \\text{C/m}^3 \\) 且电场的电位 \\( V = 0 \\) 在无限远处，计算距离电荷分布 2 米处的电位。",
+    "type": false,
+    "answer": "\\( 1.67 \\times 10^9 \\, \\text{V} \\)"
+  },
+  {
+    "id": "1-4-2-2",
+    "problem": "已知电场强度 \\( \\mathbf{E} = 5\\hat{i} + 3\\hat{j} \\) 和电位 \\( V = 0 \\) 在原点，计算从原点到点 \\( (2, 1, 3) \\) 的电位差。",
+    "type": false,
+    "answer": "\\( -13 \\, \\text{V} \\)"
+  },
+  {
+    "id": "1-4-4-1",
+    "problem": "镜像法的电位公式是什么？",
+    "type": true,
+    "answer": "\\( \\frac{Q}{4\\pi \\epsilon_0} \\left( \\frac{1}{R_+} - \\frac{1}{R_-} \\right) \\)"
+  },
+  {
+    "id": "1-4-4-2",
+    "problem": "镜像法是否适用于无限大导体平面？",
+    "type": false,
+    "answer": "是"
+  },
+  {
+    "id": "1-4-4-3",
+    "problem": "在导体平面上，给定一个点电荷 \\( Q = 10 \\, \\mu\\text{C} \\) 距离导体平面 3 m，利用镜像法计算电荷上方 1 m处产生的电位。",
+    "type": false,
+    "answer": "\\( 7.71 \\times 10^3 \\, \\text{V} \\)"
+  },
+  {
+    "id": "1-4-4-4",
+    "problem": "已知线电荷密度 \\( \\lambda = 4 \\, \\mu\\text{C/m} \\) 和半径 \\( a = 2 \\, \\text{m} \\) 的导体圆柱，使用镜像法计算距离导体圆柱 3 m位置的电场。",
+    "type": false,
+    "answer": "\\( 3 \\times 10^3 \\, \\text{N/C} \\)"
+  },
+  {
+    "id": "1-4-4-5",
+    "problem": "两根平行圆形导线的轴间距为 \\( D = 0.5 \\, \\text{m} \\)，导线半径为 \\( a = 0.01 \\, \\text{m} \\)，求它们的单位长度电容量。",
+    "type": false,
+    "answer": "\\( 2.5 \\times 10^{-12} \\, \\text{F} \\)"
+  },
+  {
+    "id": "1-4-4-6",
+    "problem": "已知点电荷 \\( Q = 10 \\, \\mu C \\) 距离导体球球心 \\( d = 5 \\, \\text{m} \\)，导体球半径 \\( a = 3 \\, \\text{m} \\)，求半射线上距离球心 \\( d = 6 \\, \\text{m} \\)处电位。",
+    "type": false,
+    "answer": "\\( V = -3 \\times 10^3 \\, \\text{V} \\)"
+  },
+  {
+    "id": "1-4-4-7",
+    "problem": "已知球体的半径 \\( a = 0.5 \\, \\text{m} \\)，外部电荷为 \\( Q = 2 \\, \\mu C \\)，距离球心 \\( d = 2 \\, \\text{m} \\)，计算球体表面的总感应电荷。",
+    "type": false,
+    "answer": "\\( Q_{\\text{total}} = -5 \\times 10^{-7} \\, \\text{C} \\)"
+  },
+  {
+    "id": "1-5-1-1",
+    "problem": "电流分为传导电流、电解电流和对流电流，传导电流主要发生在？和？中，且服从欧姆定律。",
+    "type": true,
+    "answer": "导体，半导体"
+  },
+  {
+    "id": "1-5-2-1",
+    "problem": "已知电流密度 \\( \\mathbf{J} = 2 \\hat{i} + 3 \\hat{j} \\, \\text{A/m}^2 \\)，截面面积 \\( A = 0.1 \\, \\text{m}^2 \\)，计算流过截面 \\( A \\) 的总电流。",
+    "type": false,
+    "answer": "\\( 5 \\, \\text{A} \\)"
+  },
+  {
+    "id": "1-5-2-2",
+    "problem": "已知电导率 \\( \\sigma = 5 \\, \\text{S/m} \\)，电场强度 \\( \\mathbf{E} = 2 \\hat{i} + 3 \\hat{j} \\)，求电流密度 \\( \\mathbf{J} \\)。",
+    "type": false,
+    "answer": "\\( 10 \\hat{i} + 15 \\hat{j} \\, \\text{A/m}^2 \\)"
+  },
+  {
+    "id": "1-5-2-3",
+    "problem": "已知导电媒质的电阻公式 \\( R = \\frac{l}{\\sigma S} \\)，长度 \\( l = 0.5 \\, \\text{m} \\)，截面积 \\( S = 0.1 \\, \\text{m}^2 \\)，电导率 \\( \\sigma = 5 \\, \\text{S/m} \\)，求电阻。",
+    "type": false,
+    "answer": "\\( 1 \\, \\Omega \\)"
+  },
+  {
+    "id": "1-5-3-1",
+    "problem": "电动势 \\( V \\) 是非保守场源强度的度量，表示电池内部化学作用产生的等效电场强度线积分。电动势是由电池内部的非保守力场产生的。",
+    "type": false,
+    "answer": "对"
+  },
+  {
+    "id": "1-5-3-2",
+    "problem": "基尔霍夫电压定律，闭合电路中电动势代数和等于电阻上电压降代数和。基尔霍夫电压定律仅适用于稳态电流电路。",
+    "type": false,
+    "answer": "对"
+  },
+  {
+    "id": "1-5-4-2",
+    "problem": "基尔霍夫电流定律说明了电流在电路中的什么？。",
+    "type": true,
+    "answer": "守恒"
+  },
+  {
+    "id": "1-5-5-1",
+    "problem": "稳定电流下功率密度 \\( \\mathbf{E} \\cdot \\mathbf{J} \\)，已知电场强度 \\( \\mathbf{E} = 4 \\hat{i} + 5 \\hat{j} \\, \\text{N/C} \\)，电流密度 \\( \\mathbf{J} = 6 \\hat{i} + 2 \\hat{j} \\, \\text{A/m}^2 \\)，求功率密度。",
+    "type": false,
+    "answer": "\\( 34 \\, \\text{W/m}^2 \\)"
+  },
+  {
+    "id": "1-5-6-1",
+    "problem": "电流密度的边界条件，已知电流密度 \\( \\mathbf{J_1} = 10 \\, \\text{A/m}^2 \\) 在介质 1 中，电导率 \\( \\sigma_1 = 4 \\, \\text{S/m} \\)，电流密度 \\( \\mathbf{J_2} \\) 在介质 2 中，电导率 \\( \\sigma_2 = 6 \\, \\text{S/m} \\)，求 \\( \\mathbf{J_2} \\)。",
+    "type": false,
+    "answer": "\\( 15 \\, \\text{A/m}^2 \\)"
+  },
+  {
+    "id": "1-5-7-1",
+    "problem": "已知电导率 \\( \\sigma = 10 \\, \\text{S/m} \\) 和电容 \\( C = 2 \\, \\text{F} \\)，求 \\( R \\)。",
+    "type": false,
+    "answer": "\\( 1.77 \\times 10^{-12} \\, \\text{F·s} \\)"
+  },
+  {
+    "id": "1-6-1-1",
+    "problem": "已知静电场中电场强度 \\( \\mathbf{E} = 5 \\hat{i} + 2 \\hat{j} \\, \\text{N/C} \\)，电通密度 \\( \\mathbf{D} = 3 \\hat{i} + 6 \\hat{j} \\, \\text{C/m}^2 \\)，求 \\( \\epsilon \\)。",
+    "type": false,
+    "answer": "\\( \\epsilon = 0.6 \\hat{i} + 3 \\hat{j} \\, \\text{F/m}\\)"
+  },
+  {
+    "id": "1-6-1-2",
+    "problem": "已知均匀电介质中 \\( \\mathbf{D} = 4 \\hat{i} + 5 \\hat{j} \\, \\text{C/m}^2 \\) 和 \\( \\mathbf{E} = 10 \\hat{i} + 8 \\hat{j} \\, \\text{N/C} \\)，求电介质的介电常数 \\( \\epsilon \\)。",
+    "type": false,
+    "answer": "\\( 0.4 \\hat{i} + 0.625 \\hat{j} \\, \\text{C/(N·m)} \\)"
+  },
+  {
+    "id": "1-6-1-3",
+    "problem": "已知电荷 \\( q = 2 \\, \\mu C \\)，电场强度 \\( \\mathbf{E} = 6 \\hat{i} + 3 \\hat{j} \\, \\text{N/C} \\)，磁通密度 \\( \\mathbf{B} = 4 \\hat{k} \\, \\text{T} \\)，电荷的速度 \\( \\mathbf{u} = 5 \\hat{i} + 7 \\hat{j} \\, \\text{m/s} \\)，求电荷在电磁场中的洛仑兹力。",
+    "type": false,
+    "answer": "\\( 6.8 \\hat{i} - 3.4 \\hat{j} \\, \\text{N} \\)"
+  },
+  {
+    "id": "1-6-2-1",
+    "problem": "已知静磁场中的磁通密度 \\( \\mathbf{B} = 2 \\hat{i} + 3 \\hat{j} + 5 \\hat{k} \\, \\text{T} \\)，流经闭合路径 \\( C \\) 的电流 \\( I = 10 \\, \\text{A} \\)，计算安培环路定律中的磁场环量。",
+    "type": false,
+    "answer": "\\( 1.2566 \\times 10^{-5} \\, \\text{Wb} \\)"
+  },
+  {
+    "id": "1-6-2-2",
+    "problem": "已知一条无限长导线上的电流 \\( I = 8 \\, \\text{A} \\)，求通过该导线周围 \\( 10 \\, \\text{cm} \\) 处的磁通密度 \\( \\mathbf{B} \\)。",
+    "type": false,
+    "answer": "\\( 2.4 \\times 10^{-6} \\, \\text{T} \\)"
+  },
+  {
+    "id": "1-6-3-1",
+    "problem": "已知磁通密度 \\( \\mathbf{B} = 3 \\hat{i} + 2 \\hat{j} \\, \\text{T} \\)，电流密度 \\( \\mathbf{J} = 5 \\hat{i} - 4 \\hat{j} \\, \\text{A/m}^2 \\)，求矢量磁位 \\( \\mathbf{A} \\)。",
+    "type": false,
+    "answer": "\\( 5 \\hat{i} - 4 \\hat{j} \\, \\text{A·m}^2 \\)"
+  },
+  {
+    "id": "1-6-3-2",
+    "problem": "已知通过环路 \\( C \\) 的磁通 \\( \\Phi = 6 \\, \\text{Wb} \\)，磁通密度 \\( \\mathbf{B} = 2 \\hat{i} + 4 \\hat{j} \\, \\text{T} \\)，求矢量磁位 \\( \\mathbf{A} \\) 。",
+    "type": false,
+    "answer": "\\( 2 \\hat{i} + 4 \\hat{j} \\, \\text{T} \\)"
+  },
+  {
+    "id": "1-6-4-1",
+    "problem": "已知电流 \\( I = 2 \\, \\text{A} \\) 流过闭合路径 \\( C' \\)，求其产生的磁通密度 \\( \\mathbf{B} \\) 通过路径 \\( C' \\) 的贡献。",
+    "type": false,
+    "answer": "\\( 5 \\times 10^{-6} \\, \\text{T} \\)"
+  },
+  {
+    "id": "1-6-4-2",
+    "problem": "已知两条电流环分别通过导线 \\( C_1 \\) 和 \\( C_2 \\)，流过的电流分别为 \\( I_1 = 4 \\, \\text{A} \\) 和 \\( I_2 = 6 \\, \\text{A} \\)，假设两电流环的半径为 \\( r = 0.1 \\, \\text{m} \\)，中心距离为 \\( d = 0.2 \\, \\text{m} \\)，计算它们之间的磁通密度。",
+    "type": false,
+    "answer": "\\( 2 \\times 10^{-5} \\, \\text{T} \\)"
+  },
+  {
+    "id": "1-6-5-1",
+    "problem": "已知磁偶极矩 \\( \\mathbf{m} = 2 \\hat{i} + 3 \\hat{j} \\, \\text{A·m}^2 \\)，计算该磁偶极子在远处的磁通密度 \\( \\mathbf{B} \\)，距离为 \\( R = 1 \\, \\text{m} \\)。",
+    "type": false,
+    "answer": "\\( 3 \\times 10^{-7} \\, \\text{T} \\hat{k} \\)"
+  },
+  {
+    "id": "1-6-5-2",
+    "problem": "已知标量磁位 \\( V_m = 4x \\hat{i} + 2y \\hat{j} \\, \\text{A·m} \\)，磁场强度 \\( \\mathbf{H} = -\\mu_0 \\nabla V_m \\)，计算 \\( \\mathbf{H} \\)。",
+    "type": false,
+    "answer": "\\( -5.0264 \\times 10^{-6} \\hat{i} - 2.5132 \\times 10^{-6} \\hat{j} \\, \\text{A/m} \\)"
+  },
+  {
+    "id": "1-6-7-1",
+    "problem": "已知磁通密度 \\( \\mathbf{B} = 3 \\hat{i} + 4 \\hat{j} + 5 \\hat{k} \\, \\text{T} \\)，并且磁化强度 \\( \\mathbf{M} =  \\hat{i} + \\hat{j} + 3 \\hat{k} \\, \\text{MA/m} \\)，求磁场强度 \\( \\mathbf{H} \\)。",
+    "type": false,
+    "answer": "\\( 1.387 \\times 10^6 \\hat{i} + 2.182 \\times 10^6 \\hat{j} + 0.978 \\times 10^6 \\hat{k} \\, \\text{A/m} \\)"
+  },
+  {
+    "id": "1-6-7-2",
+    "problem": "已知媒质的相对导磁率 \\( \\mu_r = 2 \\)，求该媒质的绝对导磁率 \\( \\mu \\)，假设真空的导磁率 \\( \\mu_0 = 4\\pi \\times 10^{-7} \\, \\text{H/m} \\)。",
+    "type": false,
+    "answer": "\\( 2.513 \\times 10^{-6} \\, \\text{H/m} \\)"
+  },
+  {
+    "id": "1-6-8-1",
+    "problem": "已知磁路中，磁动势 \\( \\mathcal{F} = 12 \\, \\text{A·turns} \\)，磁阻 \\( \\mathcal{R} = 5 \\, \\text{A·turns/Wb} \\)，求通过磁路的磁通 \\( \\Phi \\)。",
+    "type": false,
+    "answer": "\\( 2.4 \\, \\text{Wb} \\)"
+  },
+  {
+    "id": "1-6-9-1",
+    "problem": "铁磁性材料的磁畴在外加磁场作用下发生排列，已知外加磁场强度 \\( H = 100 \\, \\text{A/m} \\)，材料的磁化率 \\( \\chi_m = 100 \\)，求材料的磁化强度 \\( M \\)。",
+    "type": false,
+    "answer": "\\( 10000 \\, \\text{A/m} \\)"
+  },
+  {
+    "id": "1-6-10-1",
+    "problem": "在两个不同媒质的分界面，磁感应强度的法向分量连续，则是否有分界面处 \\( B_1 =  B_2 \\)？",
+    "type": false,
+    "answer": "是"
+  },
+  {
+    "id": "1-6-11-1",
+    "problem": "已知磁感应强度 \\( B = 10 \\, \\text{T} \\)，通过某一闭合路径的磁通量 \\( \\Lambda = 10 \\, \\text{Wb·turns} \\)，求磁感应强度的总磁通量 \\( \\Lambda \\)。",
+    "type": false,
+    "answer": "\\( 10 \\, \\text{Wb·turns} \\)"
+  },
+  {
+    "id": "1-6-12-1",
+    "problem": "已知一个电动势为 \\( \\mathcal{E} = 12 \\, \\text{V} \\) 的电源在时间间隔 \\( \\Delta t = 2 \\, \\text{s} \\) 内所做的功 \\( W_1 \\)。",
+    "type": false,
+    "answer": "\\( 24 \\, \\text{J} \\)"
+  },
+  {
+    "id": "1-6-12-2",
+    "problem": "已知一个电流源产生的电动势为 \\( \\mathcal{E}_2 = 25 \\, \\text{V} \\)，电流 \\( I_2 = 5 \\, \\text{A} \\)，计算在时间 \\( \\Delta t_2 = 5 \\, \\text{s} \\) 内做的功 \\( W_2 \\)。",
+    "type": false,
+    "answer": "\\( 62.5 \\, \\text{J} \\)"
+  },
+  {
+    "id": "1-6-12-3",
+    "problem": "电容器在电场中储存能量，已知电容器的电场能量为 \\( W_m = 11.5 \\, \\text{J} \\)，求该电容器的能量。",
+    "type": false,
+    "answer": "\\( 11.5 \\, \\text{J} \\)"
+  },
+  {
+    "id": "1-6-13-1",
+    "problem": "电流 \\( I = 5 \\, \\text{A} \\) 通过导线 \\( L \\) 产生的磁场对周围物体的影响，求磁力 \\( \\mathbf{F}_m \\)。",
+    "type": false,
+    "answer": "\\( 5 \\, \\text{N} \\)"
+  },
+  {
+    "id": "1-7-2-1",
+    "problem": "已知时变磁场中，电场强度 \\( \\mathbf{E} = 3 \\hat{i} + 2 \\hat{j} \\, \\text{N/C} \\)，磁通密度变化率 \\( \\frac{\\partial \\mathbf{B}}{\\partial t} = 1 \\hat{k} \\, \\text{T/s} \\)，计算旋度 \\( \\nabla \\times \\mathbf{E} \\)。",
+    "type": false,
+    "answer": "\\( -1 \\hat{k} \\, \\text{N·s/C·m} \\)"
+  },
+  {
+    "id": "1-7-2-2",
+    "problem": "已知闭合回路中的磁通 \\( \\Phi = 2 \\, \\text{Wb} \\)，磁通变化率 \\( \\frac{d\\Phi}{dt} = 0.5 \\, \\text{Wb/s} \\)，求感应电动势。",
+    "type": false,
+    "answer": "\\( - 0.5 \\, \\text{V} \\)"
+  },
+  {
+    "id": "1-7-2-3",
+    "problem": "已知导体在静磁场中切割磁感线，导体速度 \\( \\mathbf{u} = 4 \\hat{i} \\, \\text{m/s} \\)，磁通密度 \\( \\mathbf{B} = 2 \\hat{k} \\, \\text{T} \\)，导体长度 \\( L = 0.5 \\, \\text{m} \\)，求产生的电动势。",
+    "type": false,
+    "answer": "\\( 4 \\, \\text{V} \\)"
+  },
+  {
+    "id": "1-7-3-1",
+    "problem": "已知电流密度 \\( \\mathbf{J}(t) = (2 \\hat{i} + 3 \\hat{j}) \\sin(\\omega t) \\, \\text{A/m}^2 \\) 和位移电场 \\( \\mathbf{D}(t) = (4 \\hat{i} + 5 \\hat{j} + 6 \\hat{k}) \\cos(\\omega t) \\, \\text{C/m}^2 \\)，其中 \\( \\omega = 2 \\pi f \\)，求 \\( \\nabla \\times \\mathbf{H} \\)。",
+    "type": false,
+    "answer": "\\( \\nabla \\times \\mathbf{H} = \\left( (2 - 4 \\omega) \\hat{i} + (3 - 5 \\omega) \\hat{j} - 6 \\omega \\hat{k} \\right) \\sin(\\omega t) \\, \\text{A/m}^2 \\)"
+  },
+  {
+    "id": "1-7-3-2",
+    "problem": "位移电流密度与电流密度的量纲相同，其作用是什么？",
+    "type": true,
+    "answer": "修正安培定律以符合电荷守恒"
+  },
+  {
+    "id": "1-7-5-1",
+    "problem": "分界面上电场的切向分量连续，磁场的切向分量也连续吗？",
+    "type": false,
+    "answer": "否"
+  },
+  {
+    "id": "1-7-6-1",
+    "problem": "已知标量电位 \\( V(Rt) = \\frac{1}{4\\pi \\epsilon} \\int_{V'} \\frac{\\rho(t - R/u)}{R} dv' \\)，给定 \\( \\rho = 5 \\, \\text{C/m}^3 \\)，传播速度 \\( u = 3 \\times 10^8 \\, \\text{m/s} \\)，计算 \\( V \\)。",
+    "type": false,
+    "answer": "\\( frac{5}{4\\pi \\epsilon} \\int_{V'} \\frac{1}{R} \\, dv' \\)"
+  },
+  {
+    "id": "1-7-6-2",
+    "problem": "已知矢量磁位的表达式 \\( \\mathbf{A}(Rt) = \\frac{\\mu}{4\\pi} \\int_{V'} \\frac{\\mathbf{J}(t - R/u)}{R} dv' \\)，给定电流密度 \\( \\mathbf{J} = 2 \\hat{i} + 3 \\hat{j} \\, \\text{A/m}^2 \\)，计算 \\( \\mathbf{A} \\)。",
+    "type": false,
+    "answer": "\\( \\frac{\\mu}{4\\pi} \\int_{V'} \\frac{\\mathbf{J}(t - R/u)}{R} \\, dv' \\)"
+  },
+  {
+    "id": "1-7-7-1",
+    "problem": "已知时谐场电场强度 \\( \\mathbf{E}(x, y, z, t) = 5 \\hat{i} \\, \\text{V/m} \\) 和频率 \\( f = 50 \\, \\text{Hz} \\)，求其相量表示。",
+    "type": false,
+    "answer": "\\( \\mathbf{E}(x, y, z) e^{j \\omega t} = 5 \\hat{i} e^{j 2 \\pi 50 t} \\)"
+  },
+  {
+    "id": "1-7-7-2",
+    "problem": "已知时谐麦克斯韦方程组的相量形式为 \\( \\nabla \\times \\mathbf{E} = -j \\omega \\mu \\mathbf{H} \\)，和 \\( \\nabla \\times \\mathbf{H} = \\mathbf{J} + j \\omega \\epsilon \\mathbf{E} \\)，求 \\( \\mathbf{E} \\) 和 \\( \\mathbf{H} \\) 在相量表示下的关系。",
+    "type": true,
+    "answer": "\\( \\nabla \\times \\mathbf{E} = -j \\omega \\mu \\mathbf{H}, \\quad \\nabla \\times \\mathbf{H} = \\mathbf{J} + j \\omega \\epsilon \\mathbf{E} \\)"
+  },
+  {
+    "id": "1-7-7-3",
+    "problem": "已知复波数 \\( k = \\omega \\sqrt{\\mu \\epsilon} = \\frac{2\\pi}{\\lambda} \\)，求传播波长 \\( \\lambda \\)，已知频率 \\( f = 1 \\, \\text{GHz} \\) 和 \\( \\mu = \\mu_0 \\) （真空）。",
+    "type": false,
+    "answer": "\\( 0.3 \\, \\text{m} \\)"
+  },
+  {
+    "id": "1-7-7-4",
+    "problem": "对偶原理适用于所有波动方程的解吗？",
+    "type": false,
+    "answer": "错"
+  },
+  {
+    "id": "1-8-1-1",
+    "problem": "在自由空间中，已知电场强度为 \\( \\mathbf{E} = 4 \\hat{i} + 3 \\hat{j} \\, \\text{V/m} \\)，求其无源波动方程的解。",
+    "type": false,
+    "answer": "\\( \\nabla^2 \\mathbf{E} - \\frac{1}{c^2} \\frac{\\partial^2 \\mathbf{E}}{\\partial t^2} = 0 \\)"
+  },
+  {
+    "id": "1-8-2-1",
+    "problem": "已知均匀平面波电场 \\( E_x(z) = E_0^+ e^{-j k_0 z} \\)，求磁场。",
+    "type": false,
+    "answer": "\\( H_y(z) = \\frac{E_0^+}{\\eta_0} e^{-j k_0 z} \\)"
+  },
+  {
+    "id": "1-8-2-2",
+    "problem": "自由空间中波的相位速度 \\( v_p \\)一定小于光速吗？",
+    "type": false,
+    "answer": "否"
+  },
+  {
+    "id": "1-8-2-3",
+    "problem": "已知波数 \\( k_0 = 1.5 \\times 10^7 \\, \\text{m}^{-1} \\)，求波长 \\( \\lambda_0 \\)。",
+    "type": false,
+    "answer": "\\( 1.4 \\times 10^{-7} \\, \\text{m} \\)"
+  },
+  {
+    "id": "1-8-3-1",
+    "problem": "已知低损耗电介质的衰减常数 \\( \\alpha = 0.1 \\, \\text{Np/m} \\)，相位常数 \\( \\beta = 1.2 \\, \\text{rad/m} \\)，求介质的电导率 \\( \\sigma \\) 。",
+    "type": false,
+    "answer": "\\( 9.38 \\times 10^{-5} \\, \\text{S/m} \\)"
+  },
+  {
+    "id": "1-8-3-2",
+    "problem": "在良导体中，已知电导率 \\( f = 5 \\times 10^7 \\, \\text{S/m} \\)，频率 \\( f = 100 \\, \\text{MHz} \\)，求相位常数 \\( \\beta \\)。",
+    "type": false,
+    "answer": "\\( 300 \\, \\text{rad/m} \\)"
+  },
+  {
+    "id": "1-8-3-3",
+    "problem": "已知良导体中的衰减常数 \\( \\alpha = 0.3 \\, \\text{Np/m} \\)，求趋肤深度 \\( \\delta \\)。",
+    "type": false,
+    "answer": "\\( 3.33 \\, \\text{m} \\)"
+  },
+  {
+    "id": "1-8-4-1",
+    "problem": "已知电场强度 \\( \\mathbf{E} = 5 \\hat{i} + 3 \\hat{j} \\, \\text{V/m} \\)，磁场强度 \\( \\mathbf{H} = 2 \\hat{k} \\, \\text{A/m} \\)，求坡印亭矢量。",
+    "type": false,
+    "answer": "\\( 6 \\hat{i} - 10 \\hat{j} \\, \\text{W/m}^2 \\)"
+  },
+  {
+    "id": "1-8-4-2",
+    "problem": "已知电场强度 \\( \\mathbf{E}(z,t) = 3 \\hat{i} + 4 \\hat{j} \\, \\text{V/m} \\)，磁场强度 \\( \\mathbf{H}(z,t) = 2 \\hat{k} \\, \\text{A/m} \\)，求瞬时坡印亭矢量 。",
+    "type": false,
+    "answer": "\\( 6 \\hat{i} - 8 \\hat{j} \\, \\text{W/m}^2 \\)"
+  },
+  {
+    "id": "1-8-5-1",
+    "problem": "已知入射波电场 \\( E_i = 5 \\, \\text{V/m} \\)，波数 \\( \\beta_1 = 2 \\pi / \\lambda \\)，波长 \\( \\lambda = 0.5 \\, \\text{m} \\)，求反射波电场。",
+    "type": false,
+    "answer": "\\( -5 e^{+j 12.57 z} \\, \\text{V/m} \\)"
+  },
+  {
+    "id": "1-8-6-1",
+    "problem": "已知入射波电场 \\( E_i = 6 \\, \\text{V/m} \\)，入射角 \\( \\theta_i = 30^\\circ \\)，介质1的特性阻抗 \\( \\eta_1 = 377 \\, \\Omega \\)，求表面感应电流。",
+    "type": false,
+    "answer": "\\( 6 \\times 10^{-2} \\, \\text{A/m} \\)"
+  },
+  {
+    "id": "1-8-7-1",
+    "problem": "已知介质1的特性阻抗 \\( \\eta_1 = 377 \\, \\Omega \\)，介质2的特性阻抗 \\( \\eta_2 = 250 \\, \\Omega \\)，求透射系数 和反射系数。",
+    "type": false,
+    "answer": "透射系数 \\( \\tau = 0.46 \\), 反射系数 \\( \\Gamma = 0.28 \\)"
+  },
+  {
+    "id": "1-8-8-1",
+    "problem": "已知介质1的本征阻抗 \\( \\eta_1 = 377 \\, \\Omega \\)，介质2的本征阻抗 \\( \\eta_2 = 200 \\, \\Omega \\)，介质3的本征阻抗 \\( \\eta_3 = 150 \\, \\Omega \\)，介质2的厚度 \\( d = 2 \\, \\text{m} \\)，求反射系数 。",
+    "type": false,
+    "answer": "\\(  0.28 \\)"
+  },
+  {
+    "id": "1-8-9-1",
+    "problem": "已知入射角 \\( \\theta_i = 30^\\circ \\)，介质1的折射率 \\( n_1 = 1.5 \\)，介质2的折射率 \\( n_2 = 2.0 \\)，求折射角 \\( \\theta_t \\)。",
+    "type": false,
+    "answer": "折射角 \\( \\theta_t = 22.6^\\circ \\)"
+  },
+  {
+    "id": "1-8-9-2",
+    "problem": "已知介质1的相对介电常数 \\( \\epsilon_1 = 4.0 \\)，介质2的相对介电常数 \\( \\epsilon_2 = 2.0 \\)，求全反射临界角 \\( \\theta_c \\)。",
+    "type": false,
+    "answer": "临界角 \\( \\theta_c = 45^\\circ \\)"
+  },
+  {
+    "id": "1-8-9-3",
+    "problem": "已知介质1的相对介电常数 \\( \\epsilon_1 = 3.0 \\)，介质2的相对介电常数 \\( \\epsilon_2 = 2.5 \\)，入射角 \\( \\theta_i = 60^\\circ \\)，求表面波的衰减常数 \\( \\alpha_2 \\) 和横向波数 \\( \\beta_{2x} \\)。",
+    "type": false,
+    "answer": "衰减常数 \\( \\alpha_2 = 1.23 \\, \\text{Np/m} \\), 横向波数 \\( \\beta_{2x} = 0.707 \\, \\text{rad/m} \\)"
+  },
+  {
+    "id": "1-8-9-4",
+    "problem": "已知入射角 \\( \\theta_i = 45^\\circ \\)，介质1的特性阻抗 \\( \\eta_1 = 377 \\, \\Omega \\)，介质2的特性阻抗 \\( \\eta_2 = 250 \\, \\Omega \\)，求垂直极化波的反射系数 \\( \\Gamma_\\perp \\) 和透射系数 \\( \\tau_\\perp \\)。",
+    "type": false,
+    "answer": "反射系数 \\( \\Gamma_\\perp = -0.168 \\), 透射系数 \\( \\tau_\\perp = 0.532 \\)"
+  },
+  {
+    "id": "1-8-9-5",
+    "problem": "已知介质1的磁导率 \\( \\mu_1 = 1.26 \\times 10^{-6} \\, \\text{H/m} \\)，介质2的磁导率 \\( \\mu_2 = 1.26 \\times 10^{-6} \\, \\text{H/m} \\)，介质1的相对介电常数 \\( \\epsilon_1 = 2.0 \\)，介质2的相对介电常数 \\( \\epsilon_2 = 3.0 \\)，求无反射布儒斯特角 \\( \\theta_{B\\perp} \\)。",
+    "type": false,
+    "answer": "\\( 45^\\circ \\)"
+  },
+  {
+    "id": "1-8-9-6",
+    "problem": "已知介质1的特性阻抗 \\( \\eta_1 = 377 \\, \\Omega \\)，介质2的特性阻抗 \\( \\eta_2 = 250 \\, \\Omega \\)，入射角 \\( \\theta_i = 30^\\circ \\)，求平行极化波的反射系数 \\( \\Gamma_{\\parallel} \\) 和透射系数 \\( \\tau_{\\parallel} \\)。",
+    "type": false,
+    "answer": "反射系数 \\( \\Gamma_{\\parallel} = -0.257 \\), 透射系数 \\( \\tau_{\\parallel} = 0.743 \\)"
+  },
+  {
+    "id": "1-8-9-7",
+    "problem": "已知介质1的磁导率 \\( \\mu_1 = 1.26 \\times 10^{-6} \\, \\text{H/m} \\)，介质2的磁导率 \\( \\mu_2 = 1.26 \\times 10^{-6} \\, \\text{H/m} \\)，介质1的相对介电常数 \\( \\epsilon_1 = 2.0 \\)，介质2的相对介电常数 \\( \\epsilon_2 = 3.0 \\)，求平行极化波的布儒斯特角 \\( \\theta_{B\\parallel} \\)。",
+    "type": false,
+    "answer": "\\( 53.1^\\circ \\)"
+  },
+  {
+    "id": "1-9-1-1",
+    "problem": "TEM波中电场强度与磁场强度的位置关系是什么？",
+    "type": false,
+    "answer": "垂直"
+  },
+  {
+    "id": "1-9-1-2",
+    "problem": "已知TEM波 \\( \\mu = 4 \\pi \\times 10^{-7} \\, \\text{H/m} \\)， \\( \\epsilon = 8.85 \\times 10^{-12} \\, \\text{F/m} \\)，频率 \\( f = 1 \\, \\text{GHz} \\)，计算其传播常数。",
+    "type": false,
+    "answer": "\\( 2.11 \\times 10^7 \\, \\text{rad/m} \\)"
+  },
+  {
+    "id": "1-9-1-3",
+    "problem": "同轴传输线的电场与磁场是否可以超出介质区域？",
+    "type": false,
+    "answer": "否"
+  },
+  {
+    "id": "1-9-2-1",
+    "problem": "TEM波沿均匀平行板传输线传播时，电场为 \\( E = a_y E_0 e^{-\\gamma z}\\)，磁场为 \\( E = a_x \\frac{E_0}{\\eta} e^{-\\gamma z}\\)？",
+    "type": false,
+    "answer": "否"
+  },
+  {
+    "id": "1-9-2-2",
+    "problem": "已知传输线的单位长度电感 \\( L = 2 \\times 10^{-6} \\, \\text{H/m} \\) 和单位长度电容 \\( C = 3 \\times 10^{-12} \\, \\text{F/m} \\)，信号频率 \\( f = 1 \\, \\text{GHz} \\)。请求解电压沿传输线的变化规律。",
+    "type": false,
+    "answer": "\\( \\frac{dV(z)}{dz} = -j 1.257 \\times 10^4 \\, I(z) \\)"
+  },
+  {
+    "id": "1-9-2-3",
+    "problem": "已知传输线的单位长度电感和电容，求特性阻抗。假设 \\( L = 10^{-6} \\, \\text{H/m} \\)，\\( C = 10^{-12} \\, \\text{F/m} \\)。",
+    "type": false,
+    "answer": "\\( 316 \\, \\Omega \\)"
+  },
+  {
+    "id": "1-9-2-4",
+    "problem": "已知介质的电导率 \\( \\sigma = 6 \\, \\text{S/m} \\)，导体的电导率 \\( \\sigma_c = 3.5 \\times 10^7 \\, \\text{S/m} \\)，并且单位长度电感 \\( L = 3 \\times 10^{-6} \\, \\text{H/m} \\)，单位长度电容 \\( C = 4.4 \\times 10^{-12} \\, \\text{F/m} \\)。请计算传输线的总损耗。",
+    "type": false,
+    "answer": "\\( 7.95 \\times 10^{18} \\, \\text{S/m} \\)"
+  },
+  {
+    "id": "1-9-3-1",
+    "problem": "已知单位长度电感 \\( L = 2 \\times 10^{-6} \\, \\text{H/m} \\)，单位长度电容 \\( C = 3 \\times 10^{-12} \\, \\text{F/m} \\)，单位长度电导 \\( G = 1 \\times 10^{-3} \\, \\text{S/m} \\)，单位长度电阻 \\( R = 1 \\, \\Omega/\\text{m} \\)。信号频率为 \\( f = 1 \\, \\text{GHz} \\)。求电压和电流沿传输线的变化规律。",
+    "type": false,
+    "answer": "\\(\\frac{dV(z)}{dz} = -j 1.257 \\times 10^4 I(z)\\), \\(\\frac{dI(z)}{dz} = -j 1.884 \\times 10^{-2} V(z)\\)"
+  },
+  {
+    "id": "1-9-3-2",
+    "problem": "已知传输线的电阻 \\( R = 10 \\, \\Omega/\\text{m} \\)，电感 \\( L = 2 \\times 10^{-6} \\, \\text{H/m} \\)，电容 \\( C = 3 \\times 10^{-12} \\, \\text{F/m} \\)，电导 \\( G = 0 \\, \\text{S/m} \\)，信号频率为 \\( f = 500 \\, \\text{MHz} \\)。请计算传播常数。",
+    "type": false,
+    "answer": "\\(j 7.89 \\times 10^2 \\, \\text{rad/m} \\)"
+  },
+  {
+    "id": "1-9-3-3",
+    "problem": "已知传输线的电阻 \\( R = 5 \\, \\Omega/\\text{m} \\)，电感 \\( L = 2 \\times 10^{-6} \\, \\text{H/m} \\)，电容 \\( C = 3 \\times 10^{-12} \\, \\text{F/m} \\)，电导 \\( G = 0.2 \\, \\text{S/m} \\)。信号频率 \\( f = 1 \\, \\text{GHz} \\)。请验证此传输线是否满足无失真线的条件？",
+    "type": false,
+    "answer": "否"
+  },
+  {
+    "id": "1-9-4-1",
+    "problem": "已知负载阻抗 \\( Z_L = 50 \\, \\Omega \\)，传输线特性阻抗 \\( Z_0 = 75 \\, \\Omega \\)。求驻波比 \\( S \\) 和电压反射系数 \\( \\Gamma \\)。",
+    "type": false,
+    "answer": "\\( \\Gamma = -0.2, \\, S = 1.5 \\)"
+  },
+  {
+    "id": "1-9-4-2",
+    "problem": "已知负载阻抗 \\( Z_L = 100 \\, \\Omega \\)，特性阻抗 \\( Z_0 = 75 \\, \\Omega \\)，传输线长度 \\( l = 0.5 \\, \\text{m} \\)，传播常数 \\( \\gamma = j 10 \\, \\text{rad/m} \\)。求输入阻抗 \\( Z_i \\)。",
+    "type": false,
+    "answer": "\\( Z_i = 132 \\, \\Omega \\)"
+  },
+  {
+    "id": "1-9-4-3",
+    "problem": "已知负载阻抗 \\( Z_L = 50 \\, \\Omega \\)，特性阻抗 \\( Z_0 = 50 \\, \\Omega \\)，求功率传输条件下输入阻抗。",
+    "type": false,
+    "answer": "\\( Z_i = 50 \\, \\Omega \\)"
+  },
+  {
+    "id": "1-9-5-1",
+    "problem": "已知电压反射系数 \\( \\Gamma = 0.3 \\)，求归一化阻抗 \\( z_L \\)。",
+    "type": false,
+    "answer": "\\( z_L \\approx 1.857 \\)"
+  },
+  {
+    "id": "1-9-5-2",
+    "problem": "史密斯圆图由等 \\( r \\) 圆和等 \\( x \\) 圆组成， \\( r \\) 圆方程为 \\( (\\Gamma_r - \\frac{r}{1+r})^2 + \\Gamma_i^2 = (\\frac{1}{1+r})^2 \\)，所有 \\( r \\) 圆圆心在 \\( \\Gamma_r \\) 轴上且通过哪一个点？",
+    "type": false,
+    "answer": "\\( (1, 0) \\)"
+  },
+  {
+    "id": "1-9-6-1",
+    "problem": "当负载阻抗 \\( R_L = 200 \\, \\Omega \\)，特性阻抗 \\( Z_0 = 50 \\, \\Omega \\)，请计算四分之一波长阻抗变换器的特征阻抗。",
+    "type": false,
+    "answer": "\\( Z_0' = 100 \\, \\Omega \\)"
+  },
+  {
+    "id": "1-9-6-2",
+    "problem": "已知负载归一化导纳 \\( y_B = 1 + jb_B \\)，短截线归一化输入导纳 \\( y_s = -jb_B \\)，判断匹配条件是否满足？",
+    "type": false,
+    "answer": "满足"
+  },
+  {
+    "id": "1-9-6-3",
+    "problem": "已知两短截线A、B间距 \\( d_0 = 0.5 \\, \\text{m} \\)，通过调节长度 \\( l_A = 0.25 \\, \\text{m} \\) 和 \\( l_B = 0.25 \\, \\text{m} \\)，实现 \\( y_B = 1 + jb_B \\) 且 \\( y_{sB} = -jb_B \\)。请验证匹配原理。",
+    "type": false,
+    "answer": "满足"
+  },
+  {
+    "id": "1-10-2-1",
+    "problem": "已知波导中的介质的磁导率为 \\( \\mu = 4\\pi \\times 10^{-7} \\, \\text{H/m} \\)，介电常数为 \\( \\epsilon = 8.854 \\times 10^{-12} \\, \\text{F/m} \\)，信号频率为 \\( f = 1 \\, \\text{GHz} \\)，计算TEM波的波阻抗 \\( Z_{TEM} \\)。",
+    "type": false,
+    "answer": "\\( 377 \\, \\Omega \\)"
+  },
+  {
+    "id": "1-10-2-2",
+    "problem": "TM波横向场分量 \\( H_x^0 \\) 可以利用 \\( E_z^0 \\) 表示，公式为\\( H_x^0 = \\frac{j\\omega\\epsilon}{h^2}\\frac{\\partial E_z^0}{\\partial y} \\)",
+    "type": false,
+    "answer": "正确"
+  },
+  {
+    "id": "1-10-2-3",
+    "problem": "TE波横向场分量 \\( E_x^0 \\) 可以利用 \\( H_z^0 \\) 表示，公式为\\( E_x^0 = \\frac{j\\omega\\mu}{h^2}\\frac{\\partial H_z^0}{\\partial y} \\)",
+    "type": false,
+    "answer": "错误"
+  },
+  {
+    "id": "1-10-2-4",
+    "problem": "已知波导模式的尺寸 \\( h = 0.3 \\, \\text{m} \\)，磁导率 \\( \\mu = 4\\pi \\times 10^{-7} \\, \\text{H/m} \\)，介电常数 \\( \\epsilon = 8.854 \\times 10^{-12} \\, \\text{F/m} \\)，当频率 \\( f = 2 \\, \\text{GHz} \\)，判断是否为传输模。",
+    "type": false,
+    "answer": "是"
+  },
+  {
+    "id": "1-10-2-5",
+    "problem": "已知波导中的介质相对介电常数 \\( \\epsilon = 4.0 \\)，磁导率 \\( \\mu = 4\\pi \\times 10^{-7} \\, \\text{H/m} \\)，传播速度为 \\( v_p = 2 \\times 10^8 \\, \\text{m/s} \\)，请计算群速 \\( v_g \\)。",
+    "type": false,
+    "answer": "\\( 1.125 \\times 10^8 \\, \\text{m/s} \\)"
+  },
+  {
+    "id": "1-10-2-6",
+    "problem": "已知波导中的特性阻抗 \\( \\eta = 377 \\, \\Omega \\)，截止频率为 \\( f_c = 2 \\, \\text{GHz} \\)，信号频率为 \\( f = 2.5 \\, \\text{GHz} \\)，计算 TM波和 TE波的阻抗。",
+    "type": false,
+    "answer": "\\( Z_{TM} \\approx 226\\, \\Omega, \\, Z_{TE} \\approx 628 \\, \\Omega \\)"
+  },
+  {
+    "id": "1-10-3-1",
+    "problem": "已知波导尺寸 \\( b = 0.1 \\, \\text{m} \\)，\\( n = 1 \\)，求 TM 模的波动方程解 \\( E_z^0(y) \\)。",
+    "type": false,
+    "answer": "\\( E_z^0(y) = A_1 \\sin\\left( \\frac{\\pi y}{0.1} \\right) \\)"
+  },
+  {
+    "id": "1-10-3-2",
+    "problem": "已知平行板波导的尺寸 \\( b = 0.1 \\, \\text{m} \\)，磁导率 \\( \\mu = 4\\pi \\times 10^{-7} \\, \\text{H/m} \\)，介电常数 \\( \\epsilon = 8.854 \\times 10^{-12} \\, \\text{F/m} \\)，\\( n = 1 \\)，求 TM 模的截止频率。",
+    "type": false,
+    "answer": "\\( 1.5\\, \\text{GHz} \\)"
+  },
+  {
+    "id": "1-10-3-3",
+    "problem": "已知平行板波导的尺寸 \\( b = 0.1 \\, \\text{m} \\)，\\( n = 1 \\)，求 TE 模的波动方程解 \\( H_z^0(y) \\)。",
+    "type": false,
+    "answer": "\\( H_z^0(y) = B_1 \\cos\\left( \\frac{\\pi y}{0.1} \\right) \\)"
+  },
+  {
+    "id": "1-10-4-1",
+    "problem": "矩形波导中TM模的波动方程可分离变量求解，解为\\( E_z^0(x, y) = E_0 \\sin\\left( \\frac{\\pi x}{a} \\right) \\sin\\left( \\frac{\\pi y}{b} \\right) \\)",
+    "type": false,
+    "answer": "正确"
+  },
+  {
+    "id": "1-10-4-2",
+    "problem": "已知矩形波导的尺寸 \\( a = 0.2 \\, \\text{m} \\)，\\( b = 0.1 \\, \\text{m} \\)，磁导率 \\( \\mu = 4\\pi \\times 10^{-7} \\, \\text{H/m} \\)，介电常数 \\( \\epsilon = 8.854 \\times 10^{-12} \\, \\text{F/m} \\)，求 TE 模的截止频率。",
+    "type": false,
+    "answer": "\\( 1.67 \\, \\text{GHz} \\)"
+  },
+  {
+    "id": "1-10-4-3",
+    "problem": "已知矩形波导的尺寸 \\( a = 0.2 \\, \\text{m} \\)，电导率 \\( \\sigma = 5.8 \\times 10^7 \\, \\text{S/m} \\)，频率\\( f = 10 \\, \\text{GHz} \\)，截止频率\\( f = 1.5 \\, \\text{GHz} \\)，计算 TE_{10} 模的衰减常数。",
+    "type": false,
+    "answer": "\\( 0.0122\\, \\text{Np/m} \\)"
+  }
+]

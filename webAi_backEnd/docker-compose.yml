@@ -11,7 +11,7 @@ services:
       MYSQL_DATABASE: mydb
       MYSQL_HOST: localhost
     ports:
-      - "3306:3306"  # 暴露到宿主机
+      - "3308:3306"  # 暴露到宿主机
     volumes:
       - mysql_data:/var/lib/mysql  # 数据持久化
     healthcheck:

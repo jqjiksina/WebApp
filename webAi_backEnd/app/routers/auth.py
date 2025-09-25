@@ -77,7 +77,7 @@ async def register(
 @router.post("/login")
 async def login(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()], # 强迫前端表单信息中的规范使用OAuth2
-    db: AsyncSession = Depends(get_async_db)
+    db: AsyncSession = Depends(get_async_db)    
 ):
     """用户登录"""
     # 根据universal_number查找用户

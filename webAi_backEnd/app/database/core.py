@@ -1,3 +1,4 @@
+import uuid
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 
 from api.auth.auth import get_password_hash
@@ -27,6 +28,13 @@ async def recreate_tables():
         admin = User(name = "admin", universal_number = "Admin", hashed_password = get_password_hash("admin"),
                      assistant_id=Config.DEFAULT_ASSISTANT_ID, dataset_id=Config.DEFAULT_DATASET_ID)
         session.add(admin)
+        
+        jjj = User(name = "jjj", external_id = uuid.uuid4(),
+                universal_number = "temp1", 
+                hashed_password = get_password_hash("12345678"),
+                assistant_id=Config.DEFAULT_ASSISTANT_ID, dataset_id="none")
+        session.add(jjj)
+        
         await session.commit()
         
 async def create_tables():

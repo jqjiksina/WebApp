@@ -1,35 +1,24 @@
-/**
- * 一条输入/输出
- */
-interface Log{
-  isSpeakerUser:  boolean,
-  content:  string
-}
-
-/**
- * 一则对话历史记录
- */
-interface LogsRecord{
-  session_id : number,
-  title : string
-}
-
-export type{Log, LogsRecord}
-
-export interface ChatMessage {
+export interface MessageItem {
   role: 'user' | 'assistant'
   content: string
-  isStreaming?: boolean
+  timestamp?: number
+}
+
+export interface ChatSession {
+  id: string
+  title: string
+  messages: MessageItem[]
+  update_time: number
+  create_time: number
 }
 
 export interface ChatRequest {
+  content: string
+  session_id?: string
+}
+
+export interface ChatResponse {
   session_id: string
   content: string
 }
 
-export interface ChatResponse {
-  data:{
-    session_id: string
-    answer: string
-  }
-}

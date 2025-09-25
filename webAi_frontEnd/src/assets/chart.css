@@ -1,0 +1,14 @@
+:root{
+    --chart-background-dark : #494949;
+    --chart-background-light : #cfc9c9;
+}
+
+:root{
+    --chart-background : var(--chart-background-dark)
+}
+
+@media (prefers-color-scheme: dark){
+    :root{
+        --chart-background : var(--chart-background-dark);
+    }
+}

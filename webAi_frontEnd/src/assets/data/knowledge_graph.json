@@ -1,0 +1,2299 @@
+[
+    {
+        "id": "1-1-1-1",
+        "name": "电磁学定义",
+        "type": "elec",
+        "definition": "电磁学是研究静止和运动电荷效应的学科，涉及电场、磁场及其相互作用。",
+        "parents": [],
+        "children": [
+            "1-1-1-2",
+            "1-1-1-3",
+            "1-1-2-1"
+        ]
+    },
+    {
+        "id": "1-1-1-2",
+        "name": "电磁学的重要性",
+        "type": "elec",
+        "definition": "电磁学是物理学家和电机工程师的基础学科，应用于原子裂变、雷达、卫星通信、光纤通信等领域。",
+        "parents": [
+            "1-1-1-1"
+        ],
+        "children": [
+            "1-1-1-3"
+        ]
+    },
+    {
+        "id": "1-1-1-3",
+        "name": "电路理论的局限性",
+        "type": "elec",
+        "definition": "电路理论无法解释天线辐射和导电壁屏蔽效果等现象，需依赖电磁场概念。",
+        "parents": [
+            "1-1-1-1",
+            "1-1-1-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-1-2-1",
+        "name": "电磁模型的基本量",
+        "type": "elec",
+        "definition": "电磁模型的基本量分为源量（如电荷密度\\rho）和场量（如电场强度\\mathbf{E}、磁通密度\\mathbf{B}）。",
+        "parents": [
+            "1-1-1-1"
+        ],
+        "children": [
+            "1-1-2-2",
+            "1-1-2-3",
+            "1-1-3-1",
+            "1-1-3-2",
+            "1-3-7-2",
+            "1-5-1-1",
+            "1-6-1-1",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-1-2-2",
+        "name": "电磁模型的建立步骤",
+        "type": "elec",
+        "definition": "建立电磁模型的三个步骤为：定义基本量、规定数学运算规则（如矢量微积分）、假设基本关系（如库仑定律、安培定律）。",
+        "parents": [
+            "1-1-2-1"
+        ],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-1-2-3",
+        "name": "电荷守恒原理",
+        "type": "elec",
+        "definition": "电荷守恒原理是物理学的基本假设，表示电荷既不能被创造也不能被消灭，其数学表达为连续性方程。",
+        "parents": [
+            "1-1-2-1"
+        ],
+        "children": [
+            "1-5-4-2",
+            "3-3-1-2"
+        ]
+    },
+    {
+        "id": "1-1-3-1",
+        "name": "国际单位制（SI）的基本单位",
+        "type": "elec",
+        "definition": "电磁学中的基本单位为米（m）、千克（kg）、秒（s）、安培（A），其他单位可由这些基本单位导出。",
+        "parents": [
+            "1-1-2-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-1-3-2",
+        "name": "通用常数的定义",
+        "type": "elec",
+        "definition": "自由空间中的光速c \\approx 3 \\times 10^8 m/s，导磁率\\mu_0 = 4\\pi \\times 10^{-7} H/m，电容率\\epsilon_0 \\approx 8.854 \\times 10^{-12} F/m。",
+        "parents": [
+            "1-1-2-1"
+        ],
+        "children": [
+            "1-1-3-3"
+        ]
+    },
+    {
+        "id": "1-1-3-3",
+        "name": "通用常数的关系",
+        "type": "elec",
+        "definition": "通用常数满足c = \\frac{1}{\\sqrt{\\epsilon_0 \\mu_0}}，体现电场与磁场的耦合关系。",
+        "parents": [
+            "1-1-3-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-2-5-1",
+        "name": "方向导数与梯度关系",
+        "type": "elec",
+        "definition": "标量场V沿单位矢量$a_n$方向的方向导数为$\\frac{dV}{da_n}=\\nabla V \\cdot a_n$，其中$\\nabla V$为梯度矢量。",
+        "parents": [],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-2-5-2",
+        "name": "梯度的广义正交曲线坐标表达式",
+        "type": "elec",
+        "definition": "在广义正交曲线坐标$(u_1,u_2,u_3)$中，梯度$\\nabla V$可表示为$\\nabla V = \\frac{1}{h_1}\\frac{\\partial V}{\\partial u_1}a_{u1} + \\frac{1}{h_2}\\frac{\\partial V}{\\partial u_2}a_{u2} + \\frac{1}{h_3}\\frac{\\partial V}{\\partial u_3}a_{u3}$，其中$h_i$为度量系数。",
+        "parents": [],
+        "children": [
+            "3-3-1-2"
+        ]
+    },
+    {
+        "id": "1-2-6-1",
+        "name": "散度的定义与物理意义",
+        "type": "elec",
+        "definition": "矢量场A的散度定义为$\\nabla \\cdot A = \\lim_{\\Delta v \\to 0} \\frac{\\oint_S A \\cdot ds}{\\Delta v}$，表示单位体积的净流散通量，用于衡量场源强度。",
+        "parents": [],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-2-6-2",
+        "name": "笛卡尔坐标系中的散度公式",
+        "type": "elec",
+        "definition": "在笛卡尔坐标系中，散度$\\nabla \\cdot A$的表达式为$\\frac{\\partial A_x}{\\partial x} + \\frac{\\partial A_y}{\\partial y} + \\frac{\\partial A_z}{\\partial z}$，可简记为$\\nabla \\cdot A$。 ",
+        "parents": [],
+        "children": [
+            "3-3-1-2"
+        ]
+    },
+    {
+        "id": "1-2-7-1",
+        "name": "散度定理（高斯定理）",
+        "type": "elec",
+        "definition": "散度定理表明矢量场散度的体积分等于该矢量穿过封闭面的通量，即$\\int_V (\\nabla \\cdot A) dv = \\oint_S A \\cdot ds$，其中$dv$为体积元，$ds$为面元外法向矢量。 ",
+        "parents": [],
+        "children": [
+            "3-5-3-2"
+        ]
+    },
+    {
+        "id": "1-2-8-1",
+        "name": "旋度的定义与物理意义",
+        "type": "elec",
+        "definition": "矢量场A的旋度$\\nabla \\times A$是一个矢量，其大小为$\\lim_{\\Delta S \\to 0} \\frac{1}{\\Delta S} \\oint_C A \\cdot dl$，方向由右手定则确定，用于衡量场的旋转特性。",
+        "parents": [],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-3-7-1",
+        "name": "电介质的极化现象",
+        "type": "elec",
+        "definition": "电介质在外加电场作用下，内部正负电荷产生微小位移，形成电偶极子，导致电介质极化。即使没有外部极化场，一些电介质的分子也具有永久偶极矩。",
+        "parents": [
+            "1-3-1-1"
+        ],
+        "children": [
+            "1-3-7-2",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-3-7-2",
+        "name": "极化强度矢量定义",
+        "type": "elec",
+        "definition": "极化强度矢量\\mathbf{P} = \\lim_{\\Delta v \\to 0} \\frac{\\sum_{k=1}^{n\\Delta v} \\mathbf{p}_k}{\\Delta v}（C/m²），表示电偶极矩的体密度。",
+        "parents": [
+            "1-3-7-1",
+            "1-1-2-1"
+        ],
+        "children": [
+            "1-3-7-3",
+            "1-3-8-1",
+            "3-5-1-1"
+        ]
+    },
+    {
+        "id": "1-3-7-3",
+        "name": "极化电介质的等效电荷分布",
+        "type": "elec",
+        "definition": "极化电介质可等效为面电荷密度\\rho_{ps} = \\mathbf{P} \\cdot \\mathbf{a}_n和体电荷密度\\rho_p = -\\nabla \\cdot \\mathbf{P}。在进行场的计算时，极化电介质可用等效极化面电荷密度和等效极化体电荷密度一起替代。",
+        "parents": [
+            "1-3-7-2"
+        ],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-3-8-1",
+        "name": "电通密度\\mathbf{D}的定义",
+        "type": "elec",
+        "definition": "电通密度\\mathbf{D} = \\epsilon_0 \\mathbf{E} + \\mathbf{P}，其散度满足\\nabla \\cdot \\mathbf{D} = \\rho。",
+        "parents": [
+            "1-3-7-2"
+        ],
+        "children": [
+            "1-3-8-2",
+            "1-3-8-3",
+            "1-3-9-1",
+            "1-3-9-2",
+            "1-4-2-1",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-3-8-2",
+        "name": "线性均匀各向同性电介质的\\mathbf{D}与\\mathbf{E}关系",
+        "type": "elec",
+        "definition": "对于线性均匀各向同性电介质，\\mathbf{D} = \\epsilon_0 \\epsilon_r \\mathbf{E} = \\epsilon \\mathbf{E}，其中\\epsilon_r = 1 + \\chi_e。",
+        "parents": [
+            "1-3-8-1"
+        ],
+        "children": [
+            "1-3-8-3"
+        ]
+    },
+    {
+        "id": "1-3-8-3",
+        "name": "电介质强度的定义",
+        "type": "elec",
+        "definition": "电介质强度是材料能承受的最大电场强度，超过该值会导致电介质击穿（如空气的电介质强度约为3 \\times 10^6 V/m）。",
+        "parents": [
+            "1-3-8-1",
+            "1-3-8-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-3-9-1",
+        "name": "静电场的切向分量连续性",
+        "type": "elec",
+        "definition": "在两种媒质分界面处，电场\\mathbf{E}的切向分量连续，即E_{1t} = E_{2t}。",
+        "parents": [
+            "1-3-3-1",
+            "1-3-8-1"
+        ],
+        "children": [
+            "1-3-9-2",
+            "1-4-2-1",
+            "1-4-4-1",
+            "1-5-6-1",
+            "3-3-1-2"
+        ]
+    },
+    {
+        "id": "1-3-9-2",
+        "name": "电通密度\\mathbf{D}的法向分量不连续性",
+        "type": "elec",
+        "definition": "在分界面处，电通密度\\mathbf{D}的法向分量差等于面电荷密度，即D_{1n} - D_{2n} = \\rho_s。单位法线参考方向为媒质2向外。",
+        "parents": [
+            "1-3-8-1",
+            "1-3-9-1"
+        ],
+        "children": [
+            "1-3-9-3",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-3-9-3",
+        "name": "无自由电荷时的边界条件简化",
+        "type": "elec",
+        "definition": "若分界面不带自由电荷（\\rho_s = 0），则D_{1n} = D_{2n}，且\\epsilon_1 E_{1n} = \\epsilon_2 E_{2n}。",
+        "parents": [
+            "1-3-9-2"
+        ],
+        "children": [
+            "1-3-10-2",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-3-10-1",
+        "name": "孤立导体电容的定义",
+        "type": "elec",
+        "definition": "孤立导体的电容C = \\frac{Q}{V}，表示使电位增加1单位所需的电荷量，单位为法拉（F）。",
+        "parents": [
+            "1-3-5-1"
+        ],
+        "children": [
+            "1-3-10-2",
+            "3-4-2-1"
+        ]
+    },
+    {
+        "id": "1-3-10-2",
+        "name": "电容器电容的计算方法",
+        "type": "elec",
+        "definition": "电容器电容C = \\frac{Q}{V_{12}}，通过假设电荷Q并计算电位差V_{12}或反之求解。",
+        "parents": [
+            "1-3-10-1",
+            "1-3-9-3"
+        ],
+        "children": [
+            "1-3-10-3",
+            "1-4-4-5",
+            "1-5-7-1",
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "1-3-10-3",
+        "name": "电容器串联与并联的等效电容",
+        "type": "elec",
+        "definition": "串联电容器：\\frac{1}{C_{sr}} = \\frac{1}{C_1} + \\frac{1}{C_2} + \\cdots + \\frac{1}{C_n}；并联电容器：C_{并} = C_1 + C_2 + \\cdots + C_n。",
+        "parents": [
+            "1-3-10-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-4-1-1",
+        "name": "静电问题分类与求解目标",
+        "type": "elec",
+        "definition": "静电问题讨论静止电荷的效应，求解目标为计算电位、电场强度和电荷分布。已知电荷分布时可直接应用公式，未知电荷分布时需通过边界条件或镜像法求解。",
+        "parents": [
+            "1-3-1-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-4-2-1",
+        "name": "静电学基本微分方程",
+        "type": "elec",
+        "definition": "静电学的基本方程为\\nabla \\cdot \\mathbf{D} = \\rho_s和\\nabla \\times \\mathbf{E} = 0，其中\\mathbf{D}为电位移矢量，\\rho_s为电荷密度，\\mathbf{E}为电场强度。",
+        "parents": [
+            "1-3-8-1",
+            "1-3-9-1"
+        ],
+        "children": [
+            "1-4-2-2",
+            "1-4-4-1",
+            "3-3-3-2",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-4-2-2",
+        "name": "标量电位定义",
+        "type": "elec",
+        "definition": "由\\mathbf{E}的无旋性质，可定义电位V，满足\\mathbf{E} = -\\nabla V。在线性各向同性媒质中，\\mathbf{D} = \\epsilon \\mathbf{E}，代入得\\nabla \\cdot (\\epsilon \\nabla V) = -\\rho。",
+        "parents": [
+            "1-4-2-1",
+            "1-3-5-1"
+        ],
+        "children": [
+            "1-4-4-3",
+            "1-7-6-1",
+            "2-1-3",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-4-4-1",
+        "name": "镜像法原理",
+        "type": "elec",
+        "definition": "导体平面上方的点电荷Q可通过在对称位置引入镜像电荷-Q等效替代，使导体表面电位为零。电位公式为：V(x,y,z) = \\frac{Q}{4\\pi \\epsilon_0} \\left( \\frac{1}{R_+} - \\frac{1}{R_-} \\right)，其中R_+ = \\sqrt{x^2 + (y - d)^2 + z^2}，R_- = \\sqrt{x^2 + (y + d)^2 + z^2}。",
+        "parents": [
+            "1-4-2-1",
+            "1-3-9-1"
+        ],
+        "children": [
+            "1-4-4-2",
+            "1-4-4-3",
+            "1-4-4-4",
+            "1-4-4-6",
+            "2-4-5",
+            "3-4-2-2",
+            "3-2-2-3"
+        ]
+    },
+    {
+        "id": "1-4-4-2",
+        "name": "镜像法适用条件",
+        "type": "elec",
+        "definition": "镜像法适用于电荷存在于具有简单几何边界的导体附近的情况，例如点电荷位于导体球或无限大导体平面附近，线电荷位于平行导体圆柱或平行导体平面附近。通过利用合适的镜像电荷满足边界条件，进而进行求解。",
+        "parents": [
+            "1-4-4-1"
+        ],
+        "children": [
+            "1-4-4-4",
+            "1-4-4-6"
+        ]
+    },
+    {
+        "id": "1-4-4-3",
+        "name": "电场强度计算",
+        "type": "elec",
+        "definition": "通过电位梯度可得电场强度\\mathbf{E} = -\\nabla V，结果与原电荷和镜像电荷+Q和-Q产生的电场一致，但仅适用于y > 0区域（原电荷所在区域）。",
+        "parents": [
+            "1-4-4-1",
+            "1-4-2-2"
+        ],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-4-4-4",
+        "name": "线电荷与圆柱导体的镜像法",
+        "type": "elec",
+        "definition": "线电荷\\rho_l（与轴线距离为d）与平行导体圆柱（半径a）的镜像问题中，镜像线电荷为-\\rho_l，位于轴线距离d_i = a^2 / d处。通过电位叠加可使圆柱表面等电位。",
+        "parents": [
+            "1-4-4-1",
+            "1-4-4-2"
+        ],
+        "children": [
+            "1-4-4-5",
+            "3-4-2-3",
+            "3-5-1-1"
+        ]
+    },
+    {
+        "id": "1-4-4-5",
+        "name": "单位长度电容量计算",
+        "type": "elec",
+        "definition": "两根平行圆形导线的单位长度电容量公式为：C = \\frac{\\pi \\epsilon_0}{\\cosh^{-1}(D / 2a)}，其中D为导线轴间距，a为导线半径。",
+        "parents": [
+            "1-4-4-4",
+            "1-3-10-2"
+        ],
+        "children": [
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "1-4-4-6",
+        "name": "球面镜像电荷分布",
+        "type": "elec",
+        "definition": "点电荷Q（距离球心为d）与接地导体球（半径a<d）的镜像电荷为Q_i = -aQ / d，位于球内距离球心d_i = a^2 / d处（二者位于同一条半射线上）。球外电位由Q和Q_i共同决定。",
+        "parents": [
+            "1-4-4-1",
+            "1-4-4-2"
+        ],
+        "children": [
+            "1-4-4-7",
+            "2-4-5",
+            "2-6-2",
+            "3-4-2-2",
+            "3-5-1-1"
+        ]
+    },
+    {
+        "id": "1-4-4-7",
+        "name": "总感应电荷计算",
+        "type": "elec",
+        "definition": "球体表面的总感应电荷为Q_{总} = -aQ / d，分布于球面。",
+        "parents": [
+            "1-4-4-6"
+        ],
+        "children": [
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "1-5-1-1",
+        "name": "电流类型及传导电流",
+        "type": "elec",
+        "definition": "电流分为传导电流（导体和半导体中的电子或空穴移动）、电解电流（正负离子迁移）和对流电流（带电粒子在真空中运动），本章集中讨论服从欧姆定律的传导电流。",
+        "parents": [
+            "1-1-2-1"
+        ],
+        "children": [
+            "1-5-2-1"
+        ]
+    },
+    {
+        "id": "1-5-2-1",
+        "name": "电流密度定义",
+        "type": "elec",
+        "definition": "电流密度\\mathbf{J} = Nqu（单位：A/m²），表示单位面积上的电流，其中N为单位体积载流子数，q为载流子电荷，u为速度。",
+        "parents": [
+            "1-5-1-1"
+        ],
+        "children": [
+            "1-5-2-2",
+            "1-5-4-2",
+            "1-5-6-1",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-5-2-2",
+        "name": "欧姆定律的点函数形式",
+        "type": "elec",
+        "definition": "导电媒质中\\mathbf{J} = \\sigma \\mathbf{E}，其中\\sigma为电导率，\\mathbf{E}为电场强度，满足该关系式的各向同性材料称为欧姆介质。",
+        "parents": [
+            "1-5-2-1"
+        ],
+        "children": [
+            "1-5-2-3",
+            "1-5-3-1",
+            "1-5-5-1",
+            "3-3-1-2"
+        ]
+    },
+    {
+        "id": "1-5-2-3",
+        "name": "电阻公式推导",
+        "type": "elec",
+        "definition": "长度为l、截面积为S的均匀材料电阻为R = \\frac{l}{\\sigma S}。",
+        "parents": [
+            "1-5-2-2"
+        ],
+        "children": [
+            "1-5-7-1",
+            "3-4-2-1"
+        ]
+    },
+    {
+        "id": "1-5-3-1",
+        "name": "电动势定义",
+        "type": "elec",
+        "definition": "电动势V是非保守场源强度的度量，单位为伏特（V），表示电池内部化学作用产生的等效电场强度线积分。",
+        "parents": [
+            "1-5-2-2"
+        ],
+        "children": [
+            "1-5-3-2",
+            "3-4-2-3"
+        ]
+    },
+    {
+        "id": "1-5-3-2",
+        "name": "基尔霍夫电压定律",
+        "type": "elec",
+        "definition": "闭合电路中电动势代数和等于电阻上电压降代数和，即\\sum V_i = \\sum R_k I_k。",
+        "parents": [
+            "1-5-3-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-5-4-2",
+        "name": "基尔霍夫电流定律",
+        "type": "elec",
+        "definition": "流出电路节点的电流代数和为零，即\\sum I_j = 0。",
+        "parents": [
+            "1-5-2-1",
+            "1-1-2-3"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-5-5-1",
+        "name": "功率密度与焦耳定律",
+        "type": "elec",
+        "definition": "稳定电流下功率密度为\\mathbf{E} \\cdot \\mathbf{J}，总功率P = \\int_V \\mathbf{E} \\cdot \\mathbf{J} dv。恒定截面的导体中可表示为P = VI。",
+        "parents": [
+            "1-5-2-2"
+        ],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-5-6-1",
+        "name": "电流密度的边界条件",
+        "type": "elec",
+        "definition": "两种媒质分界面处，电流密度法向分量连续（J_{1n} = J_{2n}），切向分量与电导率成正比（\\frac{J_{1t}}{J_{2t}} = \\frac{\\sigma_1}{\\sigma_2}）。",
+        "parents": [
+            "1-5-2-1",
+            "1-3-9-1"
+        ],
+        "children": [
+            "3-3-1-2"
+        ]
+    },
+    {
+        "id": "1-5-7-1",
+        "name": "电阻与电容的关系",
+        "type": "elec",
+        "definition": "均匀媒质中电阻R与电容C满足RC = \\frac{\\epsilon}{\\sigma}。",
+        "parents": [
+            "1-3-10-2",
+            "1-5-2-3"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-6-1-1",
+        "name": "静电场与静磁场的基本矢量场量",
+        "type": "elec",
+        "definition": "静电场中的基本矢量场量为电场强度\\mathbf{E}和电通密度\\mathbf{D}；静磁场中的基本矢量场量为磁通密度\\mathbf{B}和磁场强度\\mathbf{H}。",
+        "parents": [
+            "1-1-2-1"
+        ],
+        "children": [
+            "1-6-1-2",
+            "1-6-1-3",
+            "1-6-2-1",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-6-1-2",
+        "name": "静电学与静磁学的对比",
+        "type": "elec",
+        "definition": "静电学中，\\mathbf{D}和\\mathbf{E}的关系由材料的电性质决定（如线性各向同性媒质中\\mathbf{D} = \\epsilon \\mathbf{E}）；静磁学中，\\mathbf{B}和\\mathbf{H}的关系由材料的磁性质决定（如线性各向同性媒质中\\mathbf{B} = \\mu \\mathbf{H}）。",
+        "parents": [
+            "1-6-1-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-6-1-3",
+        "name": "洛仑兹力公式",
+        "type": "elec",
+        "definition": "作用在电荷q上的总电磁力为\\mathbf{F} = q(\\mathbf{E} + \\mathbf{u} \\times \\mathbf{B})，其中\\mathbf{u}为电荷速度矢量，\\mathbf{B}为磁通密度。",
+        "parents": [
+            "1-6-1-1"
+        ],
+        "children": [
+            "1-6-13-1",
+            "3-5-1-1"
+        ]
+    },
+    {
+        "id": "1-6-2-1",
+        "name": "静磁场的基本假设",
+        "type": "elec",
+        "definition": "自由空间中静磁场的基本假设为：微分形式：\\nabla \\cdot \\mathbf{B} = 0，\\nabla \\times \\mathbf{B} = \\mu_0 \\mathbf{J}；积分形式：\\oint_S \\mathbf{B} \\cdot ds = 0，\\oint_C \\mathbf{B} \\cdot dl = \\mu_0 I。",
+        "parents": [
+            "1-6-1-1"
+        ],
+        "children": [
+            "1-6-2-2",
+            "1-6-3-1",
+            "1-6-4-1",
+            "1-6-13-1",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-6-2-2",
+        "name": "安培环路定律",
+        "type": "elec",
+        "definition": "安培环路定律表明，磁通密度绕任意闭合路径的环量为\\mu_0与流过路径所围绕的表面的总电流的乘积，即\\oint_C \\mathbf{B} \\cdot dl = \\mu_0 I。",
+        "parents": [
+            "1-6-2-1"
+        ],
+        "children": [
+            "1-6-4-2",
+            "3-4-2-3"
+        ]
+    },
+    {
+        "id": "1-6-3-1",
+        "name": "矢量磁位的定义",
+        "type": "elec",
+        "definition": "矢量磁位\\mathbf{A}定义为\\mathbf{B} = \\nabla \\times \\mathbf{A}，其散度\\nabla \\cdot \\mathbf{A} = 0（库仑规范），满足矢量泊松方程\\nabla^2 \\mathbf{A} = -\\mu_0 \\mathbf{J}。",
+        "parents": [
+            "1-6-2-1"
+        ],
+        "children": [
+            "1-6-3-2",
+            "1-6-5-2",
+            "1-6-12-1",
+            "1-6-12-3",
+            "1-7-6-2",
+            "2-1-3",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-6-3-2",
+        "name": "矢量磁位与磁通的关系",
+        "type": "elec",
+        "definition": "穿过围线C所围绕面积S的磁通\\Phi与矢量磁位\\mathbf{A}的关系为\\Phi = \\int_S \\mathbf{B} \\cdot ds = \\oint_C \\mathbf{A} \\cdot dl。",
+        "parents": [
+            "1-6-3-1"
+        ],
+        "children": [
+            "3-4-2-3"
+        ]
+    },
+    {
+        "id": "1-6-4-1",
+        "name": "毕奥-萨伐定律",
+        "type": "elec",
+        "definition": "毕奥-萨伐定律用于计算闭合路径C'中电流I产生的磁通密度\\mathbf{B}，公式为\\mathbf{B} = \\frac{\\mu_0 I}{4\\pi} \\oint_{C'} \\frac{d\\mathbf{l}' \\times \\mathbf{a}_R}{R^2}。",
+        "parents": [
+            "1-6-2-1"
+        ],
+        "children": [
+            "1-6-4-2",
+            "1-6-5-1",
+            "3-4-2-3",
+            "3-5-1-1"
+        ]
+    },
+    {
+        "id": "1-6-4-2",
+        "name": "安培环路定律与毕奥-萨伐定律的比较",
+        "type": "elec",
+        "definition": "安培环路定律适用于具有高度对称性的电流分布（如无限长直导线、螺线管等），可通过选取合适的闭合路径简化计算；毕奥-萨伐定律是计算磁场的一般方法，适用于任意电流分布，但积分运算往往更复杂。",
+        "parents": [
+            "1-6-2-2",
+            "1-6-4-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-6-5-1",
+        "name": "磁偶极子的磁通密度",
+        "type": "elec",
+        "definition": "磁偶极子的远区磁通密度\\mathbf{B}与电偶极子的远区电场强度\\mathbf{E}表达式相似，\\mathbf{B} = \\frac{\\mu_0}{4\\pi R^3} [\\mathbf{m} \\cdot (2\\cos\\theta \\mathbf{a}_R + \\sin\\theta \\mathbf{a}_\\theta)]，其中\\mathbf{m} = I \\mathbf{S}为磁偶极矩。",
+        "parents": [
+            "1-6-4-1"
+        ],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-6-5-2",
+        "name": "标量磁位的定义",
+        "type": "elec",
+        "definition": "标量磁位V_m定义为\\mathbf{H} = -\\mu_0 \\nabla V_m（在无电流区域\\nabla \\times \\mathbf{H} = 0时适用），其与电偶极子的标量电位V表达式相似，V_m = \\frac{\\mathbf{m} \\cdot \\mathbf{a}_R}{4\\pi R^2}。",
+        "parents": [
+            "1-6-3-1"
+        ],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-6-7-1",
+        "name": "磁场强度定义",
+        "type": "elec",
+        "definition": "定义磁场强度$\\mathbf{H} = \\frac{\\mathbf{B}}{\\mu_0} - \\mathbf{M}$，使用\\mathbf{H}可以写出旋度方程，把磁场与任意媒介中的自由电流分布相联系。",
+        "parents": [],
+        "children": [
+            "3-5-1-1"
+        ]
+    },
+    {
+        "id": "1-6-7-2",
+        "name": "相对导磁率公式",
+        "type": "elec",
+        "definition": "媒质的相对导磁率$\\mu_r = 1 + \\chi_m = \\frac{\\mu}{\\mu_0}$，其中$\\chi_m$为磁化率，$\\mu$为绝对导磁率。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-6-8-1",
+        "name": "磁路基本方程",
+        "type": "elec",
+        "definition": "磁路中磁动势与磁阻的关系为$\\Phi = \\frac{\\mathcal{F}}{\\mathcal{R}}$，其中磁动势$\\mathcal{F} = NI$，磁阻$\\mathcal{R} = \\frac{l}{\\mu S}$。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-6-9-1",
+        "name": "磁畴理论",
+        "type": "elec",
+        "definition": "铁磁性材料由磁畴组成，磁畴内原子磁矩平行同向排列，外加磁场使得畴壁移动和磁畴内原子磁矩转动，各磁畴磁矩取向趋于相同导致磁化，宏观表现为强磁性。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-6-10-1",
+        "name": "静磁场边界条件",
+        "type": "elec",
+        "definition": "分界面处磁感应强度法向分量连续$B_{1n} = B_{2n}$，磁场强度切向分量满足$a_{n2} \\times (H_1 - H_2) = J_s$。",
+        "parents": [],
+        "children": [
+            "3-3-1-2"
+        ]
+    },
+    {
+        "id": "1-6-11-1",
+        "name": "自感与互感定义",
+        "type": "elec",
+        "definition": "自感$L = \\frac{\\Lambda}{I}$，互感$L_{12} = \\frac{\\Lambda_{12}}{I_1}$，其中$\\Lambda$为磁链数，$N$匝线圈磁链数$\\Lambda = N\\Phi$。",
+        "parents": [],
+        "children": [
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "1-6-12-1",
+        "name": "单个闭合回路的磁能公式",
+        "type": "elec",
+        "definition": "自感为L_1的闭合回路，电流从零增至I_1时储存的磁能为W_1 = \\frac{1}{2} L_1 I_1^2，或用磁链表示为W_1 = \\frac{1}{2} I_1 \\Phi_1（线性媒质）。",
+        "parents": [
+            "1-6-3-1"
+        ],
+        "children": [
+            "1-6-12-2",
+            "1-6-12-3",
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "1-6-12-2",
+        "name": "两个耦合回路的总磁能公式",
+        "type": "elec",
+        "definition": "两回路C_1和C_2的电流分别为I_1和I_2，总磁能为W_2 = \\frac{1}{2} L_1 I_1^2 + L_{12} I_1 I_2 + \\frac{1}{2} L_2 I_2^2；推广到N个回路的系统，总磁能为W_m = \\frac{1}{2} \\sum_{j=1}^N \\sum_{k=1}^N L_{jk} I_j I_k。",
+        "parents": [
+            "1-6-12-1"
+        ],
+        "children": [
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "1-6-12-3",
+        "name": "磁场能量的体积分表示",
+        "type": "elec",
+        "definition": "连续分布电流的磁能可通过矢量磁位\\mathbf{A}和电流密度\\mathbf{J}表示为W_m = \\frac{1}{2} \\int_V \\mathbf{A} \\cdot \\mathbf{J} dv'，或用磁通密度\\mathbf{B}和磁场强度\\mathbf{H}表示为W_m = \\frac{1}{2} \\int_V \\mathbf{H} \\cdot \\mathbf{B} dv'。",
+        "parents": [
+            "1-6-12-1",
+            "1-6-3-1"
+        ],
+        "children": [
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "1-6-13-1",
+        "name": "载流导体在磁场中的安培力公式",
+        "type": "elec",
+        "definition": "载电流I、轮廓为C的闭合电路在磁场\\mathbf{B}中受的磁力为\\mathbf{F}_m = I \\oint_C dl \\times \\mathbf{B}。",
+        "parents": [
+            "1-6-2-1",
+            "1-6-1-3"
+        ],
+        "children": [
+            "3-4-2-3"
+        ]
+    },
+    {
+        "id": "1-7-2-1",
+        "name": "法拉第电磁感应定律的微分形式",
+        "type": "elec",
+        "definition": "时变磁场中电场强度的旋度与磁通密度变化率的关系为$\\nabla \\times E = -\\frac{\\partial B}{\\partial t}$，适用于空间任意点。",
+        "parents": [],
+        "children": [
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-7-2-2",
+        "name": "静止回路中的感应电动势",
+        "type": "elec",
+        "definition": "静止闭合回路中的感应电动势等于磁通变化率的负值，即$\\gamma = -\\frac{d\\Phi}{dt}$，其中$\\Phi = \\int_S B \\cdot ds$。",
+        "parents": [],
+        "children": [
+            "3-4-2-3"
+        ]
+    },
+    {
+        "id": "1-7-2-3",
+        "name": "动生电动势的表达式",
+        "type": "elec",
+        "definition": "运动导体在静磁场中切割磁感线产生的电动势为$\\gamma = \\oint_C (u \\times B) \\cdot dl$，仅当运动方向与磁力线不平行时产生。",
+        "parents": [],
+        "children": [
+            "3-4-2-3"
+        ]
+    },
+    {
+        "id": "1-7-3-1",
+        "name": "麦克斯韦方程组的微分形式",
+        "type": "elec",
+        "definition": "麦克斯韦方程组包含$\\nabla \\times E = -\\frac{\\partial B}{\\partial t}$（法拉第定律）和$\\nabla \\times H = J + \\frac{\\partial D}{\\partial t}$（安培环路定律广义化），以及两个散度方程\\nabla \\cdot \\mathbf{D} = \\rho和\\nabla \\cdot \\mathbf{B} = 0。",
+        "parents": [],
+        "children": [
+            "3-5-3-1",
+            "3-3-3-2"
+        ]
+    },
+    {
+        "id": "1-7-3-2",
+        "name": "位移电流密度的定义",
+        "type": "elec",
+        "definition": "位移电流密度定义为$\\frac{\\partial D}{\\partial t}$，其量纲与电流密度相同（$A/m^2$），用于修正安培定律以符合电荷守恒。",
+        "parents": [],
+        "children": [
+            "3-3-1-2"
+        ]
+    },
+    {
+        "id": "1-7-5-1",
+        "name": "时变电磁场边界条件",
+        "type": "elec",
+        "definition": "电场切向分量连续（$E_{1t} = E_{2t}$），法向分量满足$a_{n2} \\cdot (D_1 - D_2) = \\rho_s$；磁场切向分量满足$a_{n2} \\times (H_1 - H_2) = J_s$，法向分量连续（$B_{1n} = B_{2n}$）。",
+        "parents": [],
+        "children": [
+            "3-3-1-2"
+        ]
+    },
+    {
+        "id": "1-7-6-1",
+        "name": "标量滞后位的表达式",
+        "type": "elec",
+        "definition": "标量电位的解为V(Rt) = \\frac{1}{4\\pi \\epsilon} \\int_{V'} \\frac{\\rho(t - R/u)}{R} dv'，其中u = 1/\\sqrt{\\mu \\epsilon}为传播速度，体现时间滞后效应。",
+        "parents": [
+            "1-4-2-2"
+        ],
+        "children": [
+            "1-7-6-2",
+            "2-1-1",
+            "2-3-6",
+            "3-4-4-1"
+        ]
+    },
+    {
+        "id": "1-7-6-2",
+        "name": "矢量滞后位的表达式",
+        "type": "elec",
+        "definition": "矢量磁位的解为\\mathbf{A}(Rt) = \\frac{\\mu}{4\\pi} \\int_{V'} \\frac{\\mathbf{J}(t - R/u)}{R} dv'，与电位解形式类似，但包含磁导率\\mu。",
+        "parents": [
+            "1-6-3-1",
+            "1-7-6-1"
+        ],
+        "children": [
+            "2-1-1",
+            "2-3-6",
+            "3-4-4-1"
+        ]
+    },
+    {
+        "id": "1-7-7-1",
+        "name": "时谐场的相量表示",
+        "type": "elec",
+        "definition": "时谐场\\mathbf{E}(x,y,z,t)可表示为复数相量形式\\mathbf{E}(x,y,z) e^{j \\omega t}，其中相量\\mathbf{E}(x,y, z)包含振幅、方向和相位信息。",
+        "parents": [],
+        "children": [
+            "1-7-7-2",
+            "3-2-2-3"
+        ]
+    },
+    {
+        "id": "1-7-7-2",
+        "name": "时谐麦克斯韦方程组的相量形式",
+        "type": "elec",
+        "definition": "时谐场中麦克斯韦方程组的相量形式为\\nabla \\times \\mathbf{E} = -j \\omega \\mu \\mathbf{H}，\\nabla \\times \\mathbf{H} = \\mathbf{J} + j \\omega \\epsilon \\mathbf{E}。",
+        "parents": [
+            "1-7-7-1"
+        ],
+        "children": [
+            "1-7-7-3",
+            "3-3-3-2"
+        ]
+    },
+    {
+        "id": "1-7-7-3",
+        "name": "复波数k的定义",
+        "type": "elec",
+        "definition": "波数k = \\omega \\sqrt{\\mu \\epsilon} = \\frac{2\\pi}{\\lambda}，用于描述时谐场中电磁波的传播特性。",
+        "parents": [
+            "1-7-7-2"
+        ],
+        "children": [
+            "1-7-7-4",
+            "1-8-1-1",
+            "1-8-2-1"
+        ]
+    },
+    {
+        "id": "1-7-7-4",
+        "name": "对偶原理的表述",
+        "type": "elec",
+        "definition": "若(\\mathbf{E},\\mathbf{H})是无源波动方程的解，则(\\mathbf{E}' = \\eta \\mathbf{H},\\mathbf{H}' = -\\mathbf{E}/\\eta)也是其解，其中\\eta = \\sqrt{\\mu / \\epsilon}为本征阻抗。",
+        "parents": [
+            "1-7-7-3"
+        ],
+        "children": [
+            "1-8-2-3"
+        ]
+    },
+    {
+        "id": "1-8-1-1",
+        "name": "自由空间中的麦克斯韦方程",
+        "type": "elec",
+        "definition": "在自由空间（真空）中，\\mathbf{E}的无源波动方程为\\nabla^2 \\mathbf{E} - \\frac{1}{c^2} \\frac{\\partial^2 \\mathbf{E}}{\\partial t^2} = 0，其中c = \\frac{1}{\\sqrt{\\mu_0 \\epsilon_0}} \\approx 3 \\times 10^8 m/s。",
+        "parents": [
+            "1-7-7-3"
+        ],
+        "children": [
+            "1-8-2-1",
+            "2-1-1",
+            "3-3-3-2"
+        ]
+    },
+    {
+        "id": "1-8-2-1",
+        "name": "均匀平面波的电场与磁场关系",
+        "type": "elec",
+        "definition": "均匀平面波的电场E_x(z) = E_0^+ e^{-j k_0 z}，磁场H_y(z) = \\frac{E_0^+}{\\eta_0} e^{-j k_0 z}，其中\\eta_0 = \\sqrt{\\frac{\\mu_0}{\\epsilon_0}} \\approx 377 \\Omega。（连续媒质）",
+        "parents": [
+            "1-8-1-1",
+            "1-7-7-3"
+        ],
+        "children": [
+            "1-8-2-2",
+            "1-8-2-3",
+            "1-8-3-1",
+            "1-8-9-1",
+            "1-9-1-1",
+            "1-9-2-1",
+            "3-3-3-1"
+        ]
+    },
+    {
+        "id": "1-8-2-2",
+        "name": "行波的相位速度",
+        "type": "elec",
+        "definition": "在自由空间中，等相位面的传播速度（相速）等于光速c，即\\frac{dz}{dt} = \\frac{\\omega}{k_0} = c。",
+        "parents": [
+            "1-8-2-1"
+        ],
+        "children": [
+            "1-9-2-3",
+            "3-3-1-1"
+        ]
+    },
+    {
+        "id": "1-8-2-3",
+        "name": "波长与波数的关系",
+        "type": "elec",
+        "definition": "波数k_0 = \\frac{\\omega}{c} = \\frac{2\\pi}{\\lambda_0}，波长\\lambda_0 = \\frac{2\\pi}{k_0}。",
+        "parents": [
+            "1-8-2-1",
+            "1-7-7-4"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-8-3-1",
+        "name": "低损耗电介质中的衰减常数与相位常数",
+        "type": "elec",
+        "definition": "低损耗电介质的衰减常数\\alpha \\approx \\frac{\\sigma}{2} \\sqrt{\\frac{\\mu}{\\epsilon}}，相位常数\\beta \\approx \\omega \\sqrt{\\mu \\epsilon}。",
+        "parents": [
+            "1-8-2-1"
+        ],
+        "children": [
+            "1-8-3-2",
+            "3-3-3-1"
+        ]
+    },
+    {
+        "id": "1-8-3-2",
+        "name": "良导体中的衰减常数与相位常数",
+        "type": "elec",
+        "definition": "良导体的衰减常数与相位常数近似相等\\alpha = \\beta = \\sqrt{\\pi f \\mu \\sigma}，本征阻抗\\eta_e = (1 + j) \\sqrt{\\frac{\\pi f \\mu}{\\sigma}}。",
+        "parents": [
+            "1-8-3-1"
+        ],
+        "children": [
+            "1-8-3-3",
+            "3-3-3-1"
+        ]
+    },
+    {
+        "id": "1-8-3-3",
+        "name": "趋肤深度的定义",
+        "type": "elec",
+        "definition": "趋肤深度\\delta = \\frac{1}{\\alpha} = \\frac{1}{\\sqrt{\\pi f \\mu \\sigma}}，表示电磁波在良导体中传播时振幅衰减至e^{-1}的距离。",
+        "parents": [
+            "1-8-3-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-8-4-1",
+        "name": "坡印亭矢量定义",
+        "type": "elec",
+        "definition": "坡印亭矢量$\\mathscr{P}$定义为$\\mathscr{P} = E \\times H$，表示单位面积上的功率流密度。",
+        "parents": [],
+        "children": [
+            "3-5-1-1"
+        ]
+    },
+    {
+        "id": "1-8-4-2",
+        "name": "瞬时与平均功率密度",
+        "type": "elec",
+        "definition": "瞬时坡印亭矢量$\\mathscr{P}(z, t) = E(z, t) \\times H(z, t)$，其时间平均值为$\\mathscr{P}_{av} = \\frac{1}{2}\\text{Re}(E \\times H^*)$。",
+        "parents": [],
+        "children": [
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "1-8-5-1",
+        "name": "导体平面边界垂直入射反射特性",
+        "type": "elec",
+        "definition": "理想导体边界垂直入射时，反射波电场$E_r(z) = -a_xE_{i0}e^{+j\\beta_1 z}$，总场形成驻波$E_1(z) = -a_x j2E_{i0} \\sin(\\beta_1 z)$。 ",
+        "parents": [],
+        "children": [
+            "3-3-3-1"
+        ]
+    },
+    {
+        "id": "1-8-6-1",
+        "name": "导体平面边界垂直极化斜入射",
+        "type": "elec",
+        "definition": "垂直极化波斜入射至理想导体时，反射角等于入射角$\\theta_r = \\theta_i$，表面感应电流$J_s = a_y \\frac{E_{i0}}{\\eta_1} \\cos\\theta_i e^{-j\\beta_0 x \\sin\\theta_i}$。",
+        "parents": [],
+        "children": [
+            "3-3-3-1"
+        ]
+    },
+    {
+        "id": "1-8-7-1",
+        "name": "电介质平面边界垂直入射传输系数",
+        "type": "elec",
+        "definition": "电介质分界面垂直入射时，透射系数$\\tau = \\frac{2\\eta_2}{\\eta_2 + \\eta_1}$，反射系数$\\Gamma = \\frac{\\eta_2 - \\eta_1}{\\eta_2 + \\eta_1}$。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-8-8-1",
+        "name": "多层介质阻抗变换",
+        "type": "elec",
+        "definition": "在本征阻抗为\\eta_1和\\eta_3的两个电介质中插入一个厚度为d、本征阻抗为\\eta_2的电介质，其效果相当于将阻抗\\eta_3转化为Z_2(0),从而可以调整反射系数\\Gamma_0。",
+        "parents": [],
+        "children": [
+            "3-2-2-3"
+        ]
+    },
+    {
+        "id": "1-8-9-1",
+        "name": "斯涅耳折射定律",
+        "type": "elec",
+        "definition": "两种电介质分界面上，折射角正弦与入射角正弦之比等于媒质折射率之比，即\\frac{\\sin \\theta_t}{\\sin \\theta_i} = \\frac{n_1}{n_2}。",
+        "parents": [
+            "1-8-2-1"
+        ],
+        "children": [
+            "1-8-9-2",
+            "1-8-9-4",
+            "1-8-9-6"
+        ]
+    },
+    {
+        "id": "1-8-9-2",
+        "name": "全反射临界角公式",
+        "type": "elec",
+        "definition": "当波从稠密媒质（\\epsilon_1 > \\epsilon_2）入射至稀疏媒质时，全反射临界角\\theta_c满足\\sin \\theta_c = \\sqrt{\\frac{\\epsilon_2}{\\epsilon_1}}或\\theta_c = \\sin^{-1} \\left( \\frac{n_2}{n_1} \\right)。",
+        "parents": [
+            "1-8-9-1"
+        ],
+        "children": [
+            "1-8-9-3"
+        ]
+    },
+    {
+        "id": "1-8-9-3",
+        "name": "表面波特性",
+        "type": "elec",
+        "definition": "当入射角\\theta_i > \\theta_c时，媒质2中仅存在沿分界面传播的表面波，其振幅在法线方向按指数衰减，E_t和H_t都按照e^{-j \\beta_{2x} x} e^{-\\alpha_2 z}因子在空间中变化，其中\\alpha_2 = \\beta_2 \\sqrt{\\frac{\\epsilon_1}{\\epsilon_2} \\sin^2 \\theta_i - 1}，\\beta_{2x} = \\beta_2 \\sqrt{\\frac{\\epsilon_1}{\\epsilon_2}} \\sin \\theta_i。",
+        "parents": [
+            "1-8-9-2"
+        ],
+        "children": [
+            "3-3-3-2"
+        ]
+    },
+    {
+        "id": "1-8-9-4",
+        "name": "垂直极化反射系数",
+        "type": "elec",
+        "definition": "垂直极化波的反射系数\\Gamma_\\perp和透射系数\\tau_\\perp分别为\\Gamma_\\perp = \\frac{\\eta_2 \\cos \\theta_i - \\eta_1 \\cos \\theta_t}{\\eta_2 \\cos \\theta_i + \\eta_1 \\cos \\theta_t}，\\tau_\\perp = \\frac{2 \\eta_2 \\cos \\theta_i}{\\eta_2 \\cos \\theta_i + \\eta_1 \\cos \\theta_t}。",
+        "parents": [
+            "1-8-9-1"
+        ],
+        "children": [
+            "1-8-9-5"
+        ]
+    },
+    {
+        "id": "1-8-9-5",
+        "name": "无反射布儒斯特角条件",
+        "type": "elec",
+        "definition": "垂直极化时无反射的布儒斯特角\\theta_{B\\perp}满足\\eta_2 \\cos \\theta_{B\\perp} = \\eta_1 \\cos \\theta_t，结合斯涅耳定律，可得\\sin^2 \\theta_{B\\perp} = \\frac{1 - \\mu_1 \\epsilon_2 / (\\mu_2 \\epsilon_1)}{1 - (\\mu_1 / \\mu_2)^2}。",
+        "parents": [
+            "1-8-9-4"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-8-9-6",
+        "name": "平行极化反射系数",
+        "type": "elec",
+        "definition": "平行极化波的反射系数\\Gamma_{\\parallel}和透射系数\\tau_{\\parallel}分别为\\Gamma_{\\parallel} = \\frac{\\eta_2 \\cos \\theta_t - \\eta_1 \\cos \\theta_i}{\\eta_2 \\cos \\theta_t + \\eta_1 \\cos \\theta_i}，\\tau_{\\parallel} = \\frac{2 \\eta_2 \\cos \\theta_i}{\\eta_2 \\cos \\theta_t + \\eta_1 \\cos \\theta_i}。",
+        "parents": [
+            "1-8-9-1"
+        ],
+        "children": [
+            "1-8-9-7"
+        ]
+    },
+    {
+        "id": "1-8-9-7",
+        "name": "平行极化布儒斯特角",
+        "type": "elec",
+        "definition": "平行极化时无反射的布儒斯特角\\theta_{B\\parallel}满足\\sin^2 \\theta_{B\\parallel} = \\frac{1 - \\frac{\\mu_2 \\epsilon_1}{\\mu_1 \\epsilon_2}}{1 - \\left( \\frac{\\epsilon_1}{\\epsilon_2} \\right)^2}。",
+        "parents": [
+            "1-8-9-6"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-9-1-1",
+        "name": "TEM波的定义与特性",
+        "type": "elec",
+        "definition": "横电磁（TEM）波中，电场强度\\mathbf{E}与磁场强度\\mathbf{H}相互垂直，且均垂直于波的传播方向。",
+        "parents": [
+            "1-8-2-1"
+        ],
+        "children": [
+            "1-9-1-2",
+            "1-9-1-3",
+            "1-9-2-1"
+        ]
+    },
+    {
+        "id": "1-9-1-2",
+        "name": "传输线导向的TEM波特性",
+        "type": "elec",
+        "definition": "由传输线导向的TEM波与无界电介媒质中的均匀平面波具有相似特性，如传播常数、阻抗等。",
+        "parents": [
+            "1-9-1-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-9-1-3",
+        "name": "三种常用传输线类型",
+        "type": "elec",
+        "definition": "平行板传输线：由两块被介质隔开的平行导体板构成，支持TEM波传播；双线传输线：由一对平行导线构成，适用于野外架空电力线和电话线；同轴传输线：由电介质隔开的内导体和同轴外导体构成，电场和磁场完全限制在介质区域内。",
+        "parents": [
+            "1-9-1-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-9-2-1",
+        "name": "平行板传输线的波动方程解",
+        "type": "elec",
+        "definition": "TEM波沿均匀平行板传输线传播时，电场\\mathbf{E} = \\mathbf{a}_y E_0 e^{-\\gamma z}，磁场\\mathbf{H} = -\\mathbf{a}_x \\frac{E_0}{\\eta} e^{-\\gamma z}，其中\\gamma = j \\beta = j \\omega \\sqrt{\\mu \\epsilon}，\\eta = \\sqrt{\\frac{\\mu}{\\epsilon}}。",
+        "parents": [
+            "1-9-1-1",
+            "1-8-2-1"
+        ],
+        "children": [
+            "1-9-2-2",
+            "1-9-2-3",
+            "1-9-2-4",
+            "2-2-1",
+            "3-3-3-1"
+        ]
+    },
+    {
+        "id": "1-9-2-2",
+        "name": "传输线方程组推导",
+        "type": "elec",
+        "definition": "通过麦克斯韦方程组和边界条件，导出传输线方程组：\\frac{dV(z)}{dz} = -j \\omega L I(z)，\\frac{dI(z)}{dz} = -j \\omega C V(z)，其中L = \\mu \\frac{d}{w}（单位长度电感），C = \\epsilon \\frac{w}{d}（单位长度电容）。",
+        "parents": [
+            "1-9-2-1"
+        ],
+        "children": [
+            "2-2-1",
+            "3-3-3-1"
+        ]
+    },
+    {
+        "id": "1-9-2-3",
+        "name": "特性阻抗与传播速度",
+        "type": "elec",
+        "definition": "特性阻抗Z_0 = \\sqrt{\\frac{L}{C}} = \\frac{d}{w} \\eta；传播速度v_p = \\frac{1}{\\sqrt{LC}} = \\frac{1}{\\sqrt{\\mu \\epsilon}}，与TEM平面波的相速相同。",
+        "parents": [
+            "1-9-2-1",
+            "1-8-2-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "1-9-2-4",
+        "name": "损耗来源与分布参数",
+        "type": "elec",
+        "definition": "实际传输线的损耗包括介质损耗（跨接在两平板间每单位长度电导G = \\sigma \\frac{w}{d}）和导体损耗（两块导体板每单位长度电阻R = \\frac{2}{w} \\sqrt{\\frac{\\pi f \\mu_c}{\\sigma_c}}）。（\\sigma_c和\\mu_c分别为导体的电导率和磁导率）",
+        "parents": [
+            "1-9-2-1"
+        ],
+        "children": [
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "1-9-3-1",
+        "name": "传输线方程组",
+        "type": "elec",
+        "definition": "均匀传输线的微分方程组为$\\frac{\\partial \\upsilon (z, t)}{\\partial z}=Ri(z, t)+L\\frac{\\partial i(z, t)}{\\partial t}$和$\\frac{\\partial l(z, t)}{\\partial z}=Gv(z, t)+C\\frac{\\partial v(z, t)}{\\partial t}$，其中R、L、G、C为单位长度参数。",
+        "parents": [],
+        "children": [
+            "2-3-9",
+            "2-3-8",
+            "3-3-3-1"
+        ]
+    },
+    {
+        "id": "1-9-3-2",
+        "name": "特性阻抗与传播常数",
+        "type": "elec",
+        "definition": "传输线的特性阻抗$Z_{0}=\\sqrt{\\frac{R+j\\omega L}{G+j\\omega C}}$，传播常数$\\gamma =\\sqrt{(R+j\\omega L)(G+j\\omega C)}$，两者均为复数且与频率相关。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-9-3-3",
+        "name": "无失真线条件",
+        "type": "elec",
+        "definition": "当满足$\\frac{R}{L}=\\frac{G}{C}$时，传输线称为无失真线，其衰减常数$\\alpha =R\\sqrt{\\frac{C}{L}}$，相位常数$\\beta =\\omega \\sqrt{LC}$，特性阻抗$Z_{0}=\\sqrt{\\frac{L}{C}}$。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-9-4-1",
+        "name": "驻波比与反射系数",
+        "type": "elec",
+        "definition": "驻波比$S=\\frac{1+|\\Gamma|}{1-|\\Gamma|}$，反射系数$\\Gamma =\\frac{Z_{L}-Z_{0}}{Z_{L}+Z_{0}}$，两者关系为$|\\Gamma|=\\frac{S-1}{S+1}$，用于描述传输线失配程度。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-9-4-2",
+        "name": "输入阻抗公式",
+        "type": "elec",
+        "definition": "有限长传输线输入阻抗$Z_{i}=Z_{0}\\frac{Z_{L}+Z_{0}\\tanh \\gamma l}{Z_{0}+Z_{L}\\tanh \\gamma l}$，当终端接匹配负载时$Z_{i}=Z_{0}$，此时线上无反射波。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-9-4-3",
+        "name": "功率传输条件",
+        "type": "elec",
+        "definition": "最大功率传输条件为负载阻抗等于传输线特性阻抗的复共轭，即$Z_{L}=Z_{0}^{*}$，此时输入阻抗$Z_{i}=Z_{0}$，线上呈行波状态。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-9-5-1",
+        "name": "电压反射系数与归一化阻抗关系",
+        "type": "elec",
+        "definition": "电压反射系数$\\Gamma = \\frac{Z_L - Z_0}{Z_L + Z_0}$可转化为归一化阻抗$z_L = \\frac{Z_L}{Z_0} = r + jx$，其关系为$\\Gamma = \\frac{z_L - 1}{z_L + 1}$。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-9-5-2",
+        "name": "史密斯圆图构成原理",
+        "type": "elec",
+        "definition": "史密斯圆图由等$r$圆和等$x$圆组成，$r$圆方程为$(\\Gamma_r - \\frac{r}{1+r})^2 + \\Gamma_i^2 = (\\frac{1}{1+r})^2$，所有$r$圆在$\\Gamma_r$轴上且通过$(1,0)$点。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-9-5-3",
+        "name": "驻波比与反射系数关系",
+        "type": "elec",
+        "definition": "驻波比$S = \\frac{1 + |\\Gamma|}{1 - |\\Gamma|}$，其中$\\Gamma$为电压反射系数，$|\\Gamma| \\leq 1$。 知识点编号：9-6-1 四分之一波长阻抗变换器匹配条件  具体描述 ：当负载阻抗$R_L$与特性阻抗$Z_0$不匹配时，插入$\\lambda/4$变换器满足$Z_0' = \\sqrt{Z_0 R_L}$可实现匹配。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-9-6-2",
+        "name": "单短截线匹配原理",
+        "type": "elec",
+        "definition": "单短截线匹配需满足$Y_B + Y_s = Y_0$，其中$Y_B = 1 + jb_B$为负载段导纳，$Y_s = -jb_B$为短截线输入导纳。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-9-6-3",
+        "name": "双短截线匹配原理",
+        "type": "elec",
+        "definition": "双短截线通过固定间距$d_0$并调节两短截线长度$l_A$和$l_B$，使$y_B = 1 + jb_B$且$y_{sB} = -jb_B$，实现$Y_B + Y_{sB} = Y_0$。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-10-2-1",
+        "name": "横电磁波（TEM）特性",
+        "type": "elec",
+        "definition": "TEM波的电场和磁场均无纵向分量，传播常数$\\gamma_{TEM} = j\\omega\\sqrt{\\mu\\epsilon}$，相速$v_{p(TEM)} = \\frac{1}{\\sqrt{\\mu\\epsilon}}$，波阻抗$Z_{TEM} = \\sqrt{\\frac{\\mu}{\\epsilon}} = \\eta$，与频率无关。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-20-2-2",
+        "name": "TM波特征方程与场分量关系",
+        "type": "elec",
+        "definition": "TM波满足标量亥姆霍兹方程$\\nabla_{xy}^2 E_z^0 + (\\gamma^2 + k^2)E_z^0 = 0$，横向场分量可通过$E_z^0$表示，如$H_x^0 = \\frac{j\\omega\\epsilon}{h^2}\\frac{\\partial E_z^0}{\\partial y}$，其中$h^2 = \\gamma^2 + k^2$。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-10-2-3",
+        "name": "TE波特征方程与场分量关系",
+        "type": "elec",
+        "definition": "TE波满足标量亥姆霍兹方程$\\nabla_{xy}^2 H_z^0 + (\\gamma^2 + k^2)H_z^0 = 0$，横向场分量可通过$H_z^0$表示，如$E_x^0 = -\\frac{j\\omega\\mu}{h^2}\\frac{\\partial H_z^0}{\\partial y}$，波阻抗$Z_{TE} = \\frac{\\eta}{\\sqrt{1 - (f_c/f)^2}}$。",
+        "parents": [],
+        "children": [
+            "2-2-1",
+            "2-5-1",
+            "3-3-3-2",
+            "3-5-3-1"
+        ]
+    },
+    {
+        "id": "1-10-2-4",
+        "name": "截止频率与传播条件",
+        "type": "elec",
+        "definition": "波导模式的截止频率$f_c = \\frac{h}{2\\pi\\sqrt{\\mu\\epsilon}}$，当$f > f_c$时，$\\gamma = j\\beta$为传输模，$\\beta = k\\sqrt{1 - (f_c/f)^2}$；当$f < f_c$时，$\\gamma = \\alpha$为迅衰模，无功率传输。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-10-2-5",
+        "name": "波导色散特性",
+        "type": "elec",
+        "definition": "波导中相速$v_p = \\frac{u}{\\sqrt{1 - (f_c/f)^2}}$，群速$v_s = u\\sqrt{1 - (f_c/f)^2}$，满足$v_p v_s = u^2$，表明波导是色散系统，相速与群速均随频率变化。 ",
+        "parents": [],
+        "children": [
+            "3-3-1-1"
+        ]
+    },
+    {
+        "id": "1-10-2-6",
+        "name": "TM与TE波阻抗特性",
+        "type": "elec",
+        "definition": "TM波阻抗$Z_{TM} = \\eta\\sqrt{1 - (f_c/f)^2}$（纯电阻性，低于$\\eta$），TE波阻抗$Z_{TE} = \\frac{\\eta}{\\sqrt{1 - (f_c/f)^2}}$（纯电阻性，高于$\\eta$）；当$f < f_c$时，两者均为纯电抗性，无功率传输。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-10-3-1",
+        "name": "平行板波导中的TM模的波动方程",
+        "type": "elec",
+        "definition": "对于由电介媒质隔开的两块理想导体板构成的平行板波导，TM波的$E_{z}^{0}(y)$满足波动方程$\\frac{d^{2}E_{z}^{0}(y)}{dy^{2}}+h^{2}E_{z}^{0}(y)=0$，其解为$E_{z}^{0}(y)=A_{n}\\sin(\\frac{n\\pi y}{b})$，其中$h=\\frac{n\\pi}{b}$。",
+        "parents": [],
+        "children": [
+            "2-2-1",
+            "3-3-3-2"
+        ]
+    },
+    {
+        "id": "1-10-3-2",
+        "name": "平行板波导中的TM模的截止频率",
+        "type": "elec",
+        "definition": "TM模的截止频率由$f_{c}=\\frac{n}{2b\\sqrt{\\mu \\epsilon}}$给出，对应的相位常数$\\beta=\\sqrt{\\omega^{2}\\mu\\epsilon-(\\frac{n\\pi}{b})^{2}}$，当$f>f_{c}$时波传播，$f\\leq f_{c}$时波衰减。",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "1-10-3-3",
+        "name": "平行板波导中的TE模的波动方程",
+        "type": "elec",
+        "definition": "对于横电波（TE模），$H_{z}^{0}(y)$满足波动方程$\\frac{d^{2}H_{z}^{0}(y)}{dy^{2}}+h^{2}H_{z}^{0}(y)=0$，其解为$H_{z}^{0}(y)=B_{n}\\cos(\\frac{n\\pi y}{b})$，边界条件为$\\frac{dH_{z}^{0}(y)}{dy}=0$在$y=0$和$y=b$处。",
+        "parents": [],
+        "children": [
+            "2-2-1",
+            "3-3-3-2"
+        ]
+    },
+    {
+        "id": "1-10-4-1",
+        "name": "矩形波导中TM模的波动方程",
+        "type": "elec",
+        "definition": "矩形波导中TM模的$E_{z}^{0}(x,y)$满足二维波动方程$(\\frac{\\partial^{2}}{\\partial x^{2}}+\\frac{\\partial^{2}}{\\partial y^{2}}+h^{2})E_{z}^{0}(x,y)=0$，其分离变量解为$E_{z}^{0}(x,y)=E_{0}\\sin(\\frac{m\\pi x}{a})\\sin(\\frac{n\\pi y}{b})$，其中$h^{2}=(\\frac{m\\pi}{a})^{2}+(\\frac{n\\pi}{b})^{2}$。",
+        "parents": [],
+        "children": [
+            "2-2-1",
+            "2-2-4",
+            "3-3-3-2"
+        ]
+    },
+    {
+        "id": "1-10-4-2",
+        "name": "矩形波导中TE模的波动方程",
+        "type": "elec",
+        "definition": "TE模的截止频率由$(f_{c})_{mn}=\\frac{1}{2\\pi\\sqrt{\\mu\\epsilon}}\\sqrt{(\\frac{m\\pi}{a})^{2}+(\\frac{n\\pi}{b})^{2}}$给出，主模$TE_{10}$的截止频率为$(f_{c})_{TE_{10}}=\\frac{u}{2a}$，对应截止波长$\\lambda_{c}=2a$。",
+        "parents": [],
+        "children": [
+            "2-2-1",
+            "2-2-4"
+        ]
+    },
+    {
+        "id": "1-10-4-3",
+        "name": "矩形波导中TE_{10}模的衰减常数",
+        "type": "elec",
+        "definition": "TE_{10}模由导体壁损耗产生的衰减常数为$\\alpha_{e}=\\frac{1}{\\eta b}\\sqrt{\\frac{\\pi f\\mu_{e}}{\\sigma_{e}}[1-(\\frac{f_{c}}{f})^{2}]}[1+\\frac{2b}{a}(\\frac{f_{c}}{f})^{2}]$，其中$\\eta=\\sqrt{\\frac{\\mu}{\\epsilon}}$为本征阻抗，$f_{c}$为截止频率。",
+        "parents": [],
+        "children": [
+            "3-4-2-2"
+        ]
+    },
+    {
+        "id": "2-1-1",
+        "name": "弦振动方程（一维波动方程）",
+        "type": "calculus",
+        "definition": "推导假设：柔软均匀弦微小横振动，忽略重力，张力为常数 T_0，线密度 \\rho；公式：\\frac{\\partial^2 u}{\\partial t^2}=a^2\\frac{\\partial^2 u}{\\partial x^2}, a^2=\\frac{T_0}{\\rho}；强迫振动（外力密度 F(x,t)）：\\frac{\\partial^2 u}{\\partial t^2}=a^2\\frac{\\partial^2 u}{\\partial x^2}+f(x,t), f=\\frac{F}{\\rho}",
+        "parents": [
+            "1-7-6-1",
+            "1-7-6-2",
+            "1-8-1-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-1-2",
+        "name": "热传导方程",
+        "type": "calculus",
+        "definition": "推导：傅里叶定律 + 能量守恒，热传导系数 k，比热 c，密度 \\rho；三维非齐次方程：c\\rho\\frac{\\partial u}{\\partial t}=\\frac{\\partial}{\\partial x}\\left(k\\frac{\\partial u}{\\partial x}\\right)+\\frac{\\partial}{\\partial y}\\left(k\\frac{\\partial u}{\\partial y}\\right)+\\frac{\\partial}{\\partial z}\\left(k\\frac{\\partial u}{\\partial z}\\right)；均匀物体（k,c,\\rho 常数）：\\frac{\\partial u}{\\partial t}=a^2\\left(\\frac{\\partial^2 u}{\\partial x^2}+\\frac{\\partial^2 u}{\\partial y^2}+\\frac{\\partial^2 u}{\\partial z^2}\\right), a^2=\\frac{k}{c\\rho}；存在热源（热源密度 F(x,y,z,t)）：\\frac{\\partial u}{\\partial t}=a^2\\left(\\frac{\\partial^2 u}{\\partial x^2}+\\frac{\\partial^2 u}{\\partial y^2}+\\frac{\\partial^2 u}{\\partial z^2}\\right)+f(x,y,z,t), f=\\frac{F}{c\\rho}",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-1-3",
+        "name": "拉普拉斯方程与泊松方程",
+        "type": "calculus",
+        "definition": "稳态过程（\\frac{\\partial u}{\\partial t}=0）：\\Delta u=0(Laplace),\\Delta u=-f(Poisson)；其中\\Delta u=\\frac{\\partial^2 u}{\\partial x^2}+\\frac{\\partial^2 u}{\\partial y^2}+\\frac{\\partial^2 u}{\\partial z^2}；应用：静电场电位（电荷密度 f）：\\Delta u=-\\frac{f}{4\\pi\\epsilon_0}；拉普拉斯方程极坐标形式（二维）：\\frac{\\partial^2 u}{\\partial r^2}+\\frac{1}{r}\\frac{\\partial u}{\\partial r}+\\frac{1}{r^2}\\frac{\\partial^2 u}{\\partial \\theta^2}=0",
+        "parents": [
+            "1-4-2-2",
+            "1-6-3-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-1-4",
+        "name": "定解条件",
+        "type": "calculus",
+        "definition": "弦振动初始条件：u|_{t=0}=\\varphi(x), \\frac{\\partial u}{\\partial t}|_{t=0}=\\psi(x)；弦振动边界条件包括三类：第一类（一端运动规律已知）：u|_{x=0}=\\mu_1(t)；第二类（自由边界）：\\frac{\\partial u}{\\partial x}|_{x=0}=\\mu_2(t)；第三类（一端为弹性支承，满足胡克定律）：\\left(\\frac{\\partial u}{\\partial x}+\\alpha u\\right)|_{x=l}=\\mu_3(t)，\\alpha=\\frac{k}{T_0}为已知常数，若\\mu_i(t)=0为齐次，否则非齐次；热传导初始条件：u|_{t=0}=\\varphi(x,y,z)；热传导边界条件包括三类：第一类（物体表面温度已知）：u(x,y,z,t)|_{S=0}=f_1(t)；第二类（物体表面各点热流量已知）：\\frac{\\partial u}{\\partial n}|_{S}=f_2(t)；第三类（物体置于另一介质中）：\\left(\\frac{\\partial u}{\\partial n}+\\alpha u\\right)|_{S}=f_3(t)，\\alpha为已知正数，若f_i(t)=0为齐次，否则非齐次；拉普拉斯方程与泊松方程无初始条件；其边界条件包括三类（与热传导相对应）：第一类：u(x,y,z)|_{S=0}=f_1(x,y,z)；第二类：\\frac{\\partial u}{\\partial n}|_{S}=f_2(x,y,z)；第三类：\\left(\\frac{\\partial u}{\\partial n}+\\alpha u\\right)|_{S}=f_3(x,y,z)，\\alpha为已知正数，若f_i(t)=0为齐次，否则非齐次",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-1-5",
+        "name": "二阶线性偏微分方程分类",
+        "type": "calculus",
+        "definition": "设a_{11}u_{xx}+2a_{12}u_{xy}+a_{22}u_{yy}+b_1u_x+b_2u_y+cu=f为二阶线性偏微分方程，自变量为x，y，a_{11},a_{12},a_{22},b_1,b_2,c,f都是自变量在区域S上的函数；判别式：\\Delta=a_{12}^2-a_{11}a_{22}，\\Delta>0为双曲型（例：弦振动方程），\\Delta=0为抛物线型（例：一维热传导方程），\\Delta<0为椭圆型（例：二维拉普拉斯方程与泊松方程）；标准形式：双曲型：u_{\\xi\\eta}=\\Phi(\\cdots)或u_{ss}-u_{tt}=\\Phi_1(\\cdots)；抛物型：u_{\\eta\\eta}=\\Phi(\\cdots)；椭圆型：u_{\\xi\\xi}+u_{\\eta\\eta}=\\Phi(\\cdots)，其中\\xi，\\eta，s，t为关于自变量x，y的函数",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-1-6",
+        "name": "叠加原理",
+        "type": "calculus",
+        "definition": "设L=fi为二阶线性偏微分方程，ui为对应的解；线性方程解叠加：u=\\sum_{i=1}^{\\infty}c_i u_i 满足 L[u]=\\sum_{i=1}^{\\infty}c_i f_i；应用：将复杂解分解为简单解叠加（如傅里叶级数）",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-1-7",
+        "name": "傅里叶级数展开",
+        "type": "calculus",
+        "definition": "系数公式（周期 2\\pi）：a_k=\\frac{1}{\\pi}\\int f(x)\\cos kx dx, b_k=\\frac{1}{\\pi}\\int f(x)\\sin kx dx；级数形式：f(x)=\\frac{a_0}{2}+\\sum_{k=1}^{\\infty}(a_k\\cos kx+b_k\\sin kx)",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-1-8",
+        "name": "定解问题适定性",
+        "type": "calculus",
+        "definition": "要求：解需满足存在性、唯一性、稳定性；稳定性物理意义：定解条件微小变化时，解的变化也微小（避免无效解）",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-2-1",
+        "name": "分离变量法的基本原理",
+        "type": "calculus",
+        "definition": "分离变量法是求解线性偏微分方程（如波动方程、热传导方程）的重要方法，核心思想是将多变量函数表示为单变量函数的乘积（如 u(x,t)=X(x)T(t)），将偏微分方程转化为常微分方程，适用于齐次方程和齐次边界条件的问题，通过叠加特解构造通解，物理上对应驻波叠加（如弦振动）；假设解的形式：u(x,t)=X(x)T(t)，代入波动方程 u_{tt}=a^2 u_{xx}，分离变量：\\frac{T''(t)}{a^2 T(t)}=\\frac{X''(x)}{X(x)}=-\\lambda 得到两个常微分方程：T''(t)+\\lambda a^2 T(t)=0, X''(x)+\\lambda X(x)=0，边界条件（如X(0)=X(l)=0）保证解的非平凡性，决定固有值\\lambda_n和固有函数 X_n(x)；在X(0)=X(l)=0边界条件下（第一类边界条件），只有\\lambda>0时存在非平凡解，此时X_n(x)=B_n \\sin\\frac{n\\pi x}{l}，\\lambda_n=(\\frac{n\\pi}{l})^2, T_n(t)=C_n \\cos\\frac{n\\pi a t}{l}+D_n \\sin\\frac{n\\pi a t}{l},n=1,2,3\\cdots",
+        "parents": [
+            "1-9-2-1",
+            "1-9-2-2",
+            "1-10-2-3",
+            "1-10-3-1",
+            "1-10-3-3",
+            "1-10-4-1",
+            "1-10-4-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-2-2",
+        "name": "波动方程的有界弦自由振动（齐次边界）",
+        "type": "calculus",
+        "definition": "求解两端固定的弦的自由振动问题，方程齐次且边界齐次，解由一系列驻波叠加而成，每个驻波对应固有频率，初值条件通过傅里叶级数展开确定系数，解具有明确的物理意义（如节点、腹点）；定解问题：\\begin{cases}u_{tt}=a^2 u_{xx}&(0<x<l,t>0),\\\\u(0,t)=0, u(l,t)=0,\\\\u(x,0)=\\varphi(x), u_t(x,0)=\\psi(x).\\end{cases}；解的形式：u(x,t)=\\sum_{n=1}^{\\infty}\\left(a_n \\cos\\frac{n\\pi a t}{l}+b_n \\sin\\frac{n\\pi a t}{l}\\right)\\sin\\frac{n\\pi x}{l}；系数由初值条件确定：a_n=\\frac{2}{l}\\int \\varphi(x)\\sin\\frac{n\\pi x}{l}dx, b_n=\\frac{2}{n\\pi a}\\int \\psi(x)\\sin\\frac{n\\pi x}{l}dx；物理意义：u_n为一系列驻波，频率、振幅、初相随n而异，节点x_m=\\frac{ml}{n},腹点x_k=\\frac{(2k-1)l}{2n},解由一系列驻波叠加而成",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-2-3",
+        "name": "热传导方程的齐次问题（无热源）",
+        "type": "calculus",
+        "definition": "描述有限长杆的热传导过程，方程齐次且边界齐次，解表示温度随时间的指数衰减，初值温度分布通过傅里叶正弦级数展开，适用于绝热或恒温边界；定解问题：\\begin{cases}u_t=a^2 u_{xx}&(0<x<l,t>0),\\\\u(0,t)=0, u(l,t)=0,\\\\u(x,0)=\\varphi(x).\\end{cases}；解的形式：u(x,t)=\\sum_{n=1}^{\\infty}C_n e^{-\\left(\\frac{n\\pi a}{l}\\right)^2 t}\\sin\\frac{n\\pi x}{l}；系数计算：C_n=\\frac{2}{l}\\int \\varphi(x)\\sin\\frac{n\\pi x}{l}dx；物理意义：热量的扩散导致高频分量快速衰减，稳态时温度趋于零",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-2-4",
+        "name": "拉普拉斯方程在矩形域的求解",
+        "type": "calculus",
+        "definition": "用于稳态温度分布问题（如矩形薄板），通过分离变量将二维问题转化为两个一维问题，边界条件决定固有函数系（正弦或余弦），解是调和函数的级数展开；定解问题：\\begin{cases}u_{xx}+u_{yy}=0&(0<x<a,0<y<b),\\\\u(0,y)=0, u(a,y)=0,\\\\u(x,0)=f(x), u(x,b)=g(x).\\end{cases}；解的形式：u(x,y)=\\sum_{n=1}^{\\infty}\\left(a_n e^{\\frac{n\\pi y}{a}}+b_n e^{-\\frac{n\\pi y}{a}}\\right)\\sin\\frac{n\\pi x}{a}，系数由边界条件确定：a_n+b_n=\\frac{2}{a}\\int f(x)\\sin\\frac{n\\pi x}{a}dx, a_n e^{\\frac{n\\pi b}{a}}+b_n e^{-\\frac{n\\pi b}{a}}=\\frac{2}{a}\\int g(x)\\sin\\frac{n\\pi x}{a}dx；物理意义：解表示温度场的稳态分布，指数项反映y方向衰减",
+        "parents": [
+            "1-10-4-1",
+            "1-10-4-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-2-5",
+        "name": "拉普拉斯方程在圆域的求解（极坐标）",
+        "type": "calculus",
+        "definition": "适用于圆形区域的稳态问题（如圆板温度分布），极坐标下分离变量，周期性边界条件导致固有值非负，解的系数由傅里叶级数确定，有界性条件排除奇异项；定解问题：\\begin{cases}\\frac{\\partial^2 u}{\\partial r^2}+\\frac{1}{r}\\frac{\\partial u}{\\partial r}+\\frac{1}{r^2}\\frac{\\partial^2 u}{\\partial \\theta^2}=0&(0<r<r_0),\\\\u(r_0,\\theta)=f(\\theta).\\end{cases}；解的形式：u(r,\\theta)=\\frac{a_0}{2}+\\sum_{n=1}^{\\infty}r^n(a_n \\cos n\\theta+b_n \\sin n\\theta)；系数计算：a_n=\\frac{1}{\\pi r_0^n}\\int f(\\varphi)\\cos n\\varphi d\\varphi, b_n=\\frac{1}{\\pi r_0^n}\\int f(\\varphi)\\sin n\\varphi d\\varphi；物理意义：径向部分 r^n 表示温度从边界向内衰减，角向部分反映周期性分布",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-2-6",
+        "name": "非齐次波动方程的求解（强迫振动）",
+        "type": "calculus",
+        "definition": "处理有外力作用的弦振动问题（方程非齐次），使用固有函数展开法：将解和自由项按固有函数系（如 \\sin\\frac{n\\pi x}{l}）展开，转化为常微分方程（ODE）初值问题；定解问题：\\begin{cases}u_{tt}=a^2 u_{xx}+f(x,t)&(0<x<l,t>0),\\\\u(0,t)=0, u(l,t)=0,\\\\u(x,0)=0, u_t(x,0)=0.\\end{cases}；解的形式：u(x,t)=\\sum_{n=1}^{\\infty}u_n(t)\\sin\\frac{n\\pi x}{l}；其中 u_n(t) 满足ODE：u_n''(t)+\\left(\\frac{n\\pi a}{l}\\right)^2 u_n(t)=f_n(t), u_n(0)=u_n'(0)=0；f_n(t)=\\frac{2}{l}\\int f(x,t)\\sin\\frac{n\\pi x}{l}dx，解为：u_n(t)=\\frac{l}{n\\pi a}\\int f_n(\\tau)\\sin\\frac{n\\pi a(t-\\tau)}{l}d\\tau，n=1,2,\\cdots；物理意义：外力 f(x,t) 激发各阶驻波，响应是历史力的叠加；若初始条件是非齐次的，可将方程分解为齐次初值的强迫振动和非齐次初值的自由振动，利用叠加原理求解",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-2-7",
+        "name": "非齐次热传导方程的求解（有热源）",
+        "type": "calculus",
+        "definition": "描述有热源的杆的热传导（方程非齐次），类似波动方程，使用固有函数展开，但方程为抛物型，解涉及指数衰减核；定解问题：\\begin{cases}u_t=a^2 u_{xx}+f(x,t)&(0<x<l,t>0),\\\\u(0,t)=0, u(l,t)=0,\\\\u(x,0)=0.\\end{cases}；解的形式：u(x,t)=\\sum_{n=1}^{\\infty}u_n(t)\\sin\\frac{n\\pi x}{l}；其中 u_n(t) 满足ODE：u_n'(t)+\\left(\\frac{n\\pi a}{l}\\right)^2 u_n(t)=f_n(t), u_n(0)=0；解为：u_n(t)=\\int f_n(\\tau)e^{-\\left(\\frac{n\\pi a}{l}\\right)^2 (t-\\tau)}d\\tau；物理意义：热源 f(x,t) 贡献瞬态热流，解表示温度响应的累积效应",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-2-8",
+        "name": "泊松方程在圆域的求解",
+        "type": "calculus",
+        "definition": "非齐次拉普拉斯方程（如恒定热源），固有函数法求解：圆域下使用极坐标，通过傅里叶级数展开求解；特解法：先找特解，转换为拉普拉斯方程求解；定解问题：\\begin{cases}\\frac{\\partial^2 u}{\\partial r^2}+\\frac{1}{r}\\frac{\\partial u}{\\partial r}+\\frac{1}{r^2}\\frac{\\partial^2 u}{\\partial \\theta^2}=-2r\\cos\\theta&(0<r<1),\\\\u(1,\\theta)=0.\\end{cases}；特解法：u(r,\\theta)=v(r,\\theta)+w(r,\\theta), w(r,\\theta)=-\\frac{1}{4}r^3\\cos\\theta (特解)；方程转化为\\begin{cases}\\frac{\\partial^2 v}{\\partial r^2}+\\frac{1}{r}\\frac{\\partial v}{\\partial r}+\\frac{1}{r^2}\\frac{\\partial^2 v}{\\partial \\theta^2}=0&(0<r<1),\\\\v(1,\\theta)=\\frac{1}{4}\\cos\\theta.\\end{cases}；求解该齐次方程得解；物理意义：特解对应源项贡献，齐次解满足边界条件；固有函数法求解：解的形式为u(r,\\theta)=a_0(r)+\\sum_{n=1}^{\\infty}[a_n(r)\\cos n\\theta+b_n(r)\\sin n\\theta]；带入方程比较\\cos n\\theta和\\sin n\\theta系数求解",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-2-9",
+        "name": "非齐次边界条件的处理",
+        "type": "calculus",
+        "definition": "当边界条件非齐次时（如端点温度随时间变化），通过辅助函数 w(x,t) 将边界齐次化，剩余问题用固有函数法求解；定解问题（波动方程）：\\begin{cases}u_{tt}=a^2 u_{xx}+f(x,t)&(0<x<l,t>0),\\\\u(0,t)=u_1(t), u(l,t)=u_2(t),\\\\u(x,0)=\\varphi(x), u_t(x,0)=\\psi(x).\\end{cases}；辅助函数构造（线性形式）：w(x,t)=\\frac{x}{l}[u_2(t)-u_1(t)]+u_1(t)；代换 u=v+w，新问题：\\begin{cases}v_{tt}=a^2 v_{xx}+f_1(x,t)&(f_1=f-w_{tt}+a^2 w_{xx}),\\\\v(0,t)=0, v(l,t)=0,\\\\v(x,0)=\\varphi(x)-w(x,0), v_t(x,0)=\\psi(x)-w_t(x,0).\\end{cases}；物理意义：辅助函数吸收边界非齐次性，剩余问题为标准形式",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-2-10",
+        "name": "施图姆-刘维尔问题及固有函数性质",
+        "type": "calculus",
+        "definition": "分离变量法导出的固有值问题称为Sturm-Liouville问题，固有函数系正交完备，用于级数展开，固有值实数非负，解收敛性由函数光滑性保证；一般形式：\\frac{d}{dx}\\left(p(x)\\frac{dy}{dx}\\right)-q(x)y+\\lambda\\rho(x)y=0, a<x<b；其中p(x)>0,q(x)\\geq0,\\rho(x)>0；边界条件：一般给定齐次边界条件，对应点处的未知函数应满足自然边界条件（即有界性）；固有函数正交性：\\int \\rho(x)y_m(x)y_n(x)dx=0 (\\lambda_m\\neq\\lambda_n)；级数展开：若 f(x) 光滑，f(x)=\\sum_{n=1}^{\\infty}c_n y_n(x), c_n=\\frac{\\int \\rho(x)f(x)y_n(x)dx}{\\int \\rho(x)y_n^2(x)dx}",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-3-1",
+        "name": "达朗贝尔公式（一维波动方程初值问题）",
+        "type": "calculus",
+        "definition": "无限长弦自由振动的达朗贝尔解（边界条件可忽略）；公式：u(x,t)=\\frac{\\varphi(x-at)+\\varphi(x+at)}{2}+\\frac{1}{2a}\\int \\psi(\\alpha)d\\alpha；其中：\\varphi(x) 是初始位移，\\psi(x) 是初始速度，积分项表示初始速度对解的累积贡献，依赖区间为 [x-at,x+at]",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-3-2",
+        "name": "行波法的物理意义（波的传播方向）",
+        "type": "calculus",
+        "definition": "右行波：u_1=f(x-at)，在 t=0 时为 f(x)，经时间 t_0 后波形右移 a t_0；左行波：u_2=g(x+at)，在 t=0 时为 f(x)，经时间 t_0 后波形左移 a t_0；通解表示任意扰动以行波形式双向传播",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-3-3",
+        "name": "依赖区间、决定区域与影响区域",
+        "type": "calculus",
+        "definition": "依赖区间：点 (x,t) 的解仅依赖 x 轴上区间 [x-at,x+at] 的初值；决定区域：初始区间 [x_1,x_2] 决定的解的区域为特征线 x=x_1+at 和 x=x_2-at 构成的三角形；影响区域：初始扰动 [x_1,x_2] 在 t 时刻的影响范围为 x_1-at\\leq x\\leq x_2+at",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-3-4",
+        "name": "半无限长弦振动的奇延拓法",
+        "type": "calculus",
+        "definition": "延拓函数为：\\bar{\\varphi}(x)=\\begin{cases}-\\varphi(-x),&x<0\\\\\\varphi(x),&x\\geq0\\end{cases}, \\bar{\\psi}(x)=\\begin{cases}-\\psi(-x),&x<0\\\\\\psi(x),&x\\geq0\\end{cases}；解的分段表达式：u(x,t)=\\begin{cases}\\frac{\\varphi(x-at)+\\varphi(x+at)}{2}+\\frac{1}{2a}\\int \\psi(\\tau)d\\tau,&x\\geq at\\\\\\frac{\\varphi(x+at)-\\varphi(at-x)}{2}+\\frac{1}{2a}\\int \\psi(\\tau)d\\tau,&0\\leq x<at\\end{cases}；物理意义：左行波在 x=0 处镜面反射后与原来的波叠加得到新的波",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-3-5",
+        "name": "齐次化原理（非齐次波动方程求解）",
+        "type": "calculus",
+        "definition": "若解 w(x,t;\\tau) 满足：\\begin{cases}w_{tt}=a^2 w_{xx},&t>\\tau\\\\w|_{t=\\tau}=0, w_t|_{t=\\tau}=f(x,\\tau)\\end{cases}；原问题解为：u(x,t)=\\int w(x,t;\\tau)d\\tau=\\frac{1}{2a}\\iint f(\\xi,\\tau)d\\xi d\\tau；应用范围：热传导方程和波动方程（有界/无界区域）",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-3-6",
+        "name": "三维波动方程的基尔霍夫公式",
+        "type": "calculus",
+        "definition": "无限大区域，齐次方程，初值问题，其解为：u(M,t)=\\frac{\\partial}{\\partial t}\\left(\\frac{t}{4\\pi}\\iint_{S_1^O} \\varphi(M+at\\omega)d\\omega\\right)+\\frac{t}{4\\pi}\\iint_{S_1^O} \\psi(M+at\\omega)d\\omega；其中：d\\omega=\\sin\\theta d\\theta d\\phi 是单位球面 S_1^O 的面积元，\\varphi,\\psi 为初始位移和速度",
+        "parents": [
+            "1-7-6-1",
+            "1-7-6-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-3-7",
+        "name": "二维波动方程的泊松公式（降维法）",
+        "type": "calculus",
+        "definition": "公式为u(x,y,t)=\\frac{1}{2\\pi a}\\frac{\\partial}{\\partial t}\\left[\\iint_{\\Sigma_{at}^M} \\frac{\\varphi(\\xi,\\eta)d\\sigma}{\\sqrt{(at)^2-(\\xi-x)^2-(\\eta-y)^2}}\\right]+\\frac{1}{2\\pi a}\\iint_{\\Sigma_{at}^M} \\frac{\\psi(\\xi,\\eta)d\\sigma}{\\sqrt{(at)^2-(\\xi-x)^2-(\\eta-y)^2}}；其中：\\Sigma_{at}^M 是圆域 (\\xi-x)^2+(\\eta-y)^2\\leq (at)^2，d\\sigma 为投影面积元，与球面元关系：d\\sigma=\\cos\\gamma\\cdot dS，\\cos\\gamma=\\sqrt{(at)^2-\\rho^2}（\\rho=\\sqrt{(\\xi-x)^2+(\\eta-y)^2}）",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-3-8",
+        "name": "傅里叶变换的性质与微分规则",
+        "type": "calculus",
+        "definition": "条件：f（x）在（-∞，∞）连续可导，且绝对可积（对于一些非绝对可积函数，仍可定义其傅里叶变换）；定义：\\bar{f}(\\lambda)=\\int f(x)e^{-i\\lambda x}dx，逆变换：f(x)=\\frac{1}{2\\pi}\\int \\bar{f}(\\lambda)e^{i\\lambda x}d\\lambda；微分性质：F[f'(x)]=i\\lambda \\bar{f}(\\lambda), F[f^{(n)}(x)]=(i\\lambda)^n \\bar{f}(\\lambda)；卷积定理：F[f_1*f_2]=F[f_1]\\cdot F[f_2]，其中 f_1*f_2=\\int f_1(y)f_2(x-y)dy",
+        "parents": [
+            "1-9-3-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-3-9",
+        "name": "拉普拉斯变换的性质与微分规则",
+        "type": "calculus",
+        "definition": "条件：f（t）在[0,+∞)上满足|f(t)|\\leq Me^{ct},其中M>0，c>0；定义：F(s)=\\int f(t)e^{-st}dt（Re s>c)；微分性质：L[f'(t)]=sF(s)-f(0), L[f^{(n)}(t)]=s^n F(s)-\\sum_{k=0}^{n-1} s^{n-1-k}f^{(k)}(0)；卷积定理：L[f_1*f_2]=L[f_1]\\cdot L[f_2]，其中 f_1*f_2=\\int f_1(\\tau)f_2(t-\\tau)d\\tau",
+        "parents": [
+            "1-9-3-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-3-10",
+        "name": "积分变换法求解热传导方程",
+        "type": "calculus",
+        "definition": "对空间变量用傅里叶变换（通常为初值问题），对于时间变量用拉普拉斯变换（通常为带有边界条件的定解问题），将偏微分方程化为常微分方程，再求解象函数并逆变换，步骤包括：变换方程→求解象函数ODE→逆变换（常需卷积定理）；原问题：\\begin{cases}u_t=a^2 u_{xx}+f(x,t),&-\\infty<x<+\\infty,t>0\\\\u|_{t=0}=\\varphi(x)\\end{cases}；傅里叶变换后：\\frac{dU}{dt}=-a^2 \\lambda^2 U+G(\\lambda,t), U(\\lambda,0)=\\Phi(\\lambda)；对该方程做拉普拉斯变换进行求解，再做逆变换求解得：U(\\lambda,t)=\\Phi(\\lambda)e^{-a^2 \\lambda^2 t}+\\int G(\\lambda,\\tau)e^{-a^2 \\lambda^2 (t-\\tau)}d\\tau；逆变换（卷积定理）：u(x,t)=\\frac{1}{2a\\sqrt{\\pi t}}\\int \\varphi(\\xi)e^{-\\frac{(x-\\xi)^2}{4a^2 t}}d\\xi+\\frac{1}{2a\\sqrt{\\pi}}\\iint f(\\xi,\\tau)\\frac{e^{-\\frac{(x-\\xi)^2}{4a^2 (t-\\tau)}}}{\\sqrt{t-\\tau}}d\\xi d\\tau",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-4-1",
+        "name": "格林公式（三维）",
+        "type": "calculus",
+        "definition": "第一格林公式：\\iiint_{\\Omega} u\\Delta vd\\Omega=\\iint_{\\Gamma} u\\frac{\\partial v}{\\partial n}dS-\\iiint_{\\Omega} \\nabla u\\cdot\\nabla vd\\Omega；第二格林公式：\\iiint_{\\Omega} (u\\Delta v-v\\Delta u)d\\Omega=\\iint_{\\Gamma} \\left(u\\frac{\\partial v}{\\partial n}-v\\frac{\\partial u}{\\partial n}\\right)dS；关键点：\\Omega：有界开区域，\\Gamma：边界曲面，n：外法线方向",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-4-2",
+        "name": "调和函数的积分表达式",
+        "type": "calculus",
+        "definition": "调和函数在区域内任一点的值可通过边界积分表示，依赖边界函数值及其法向导数值；公式：u(M_0)=-\\frac{1}{4\\pi}\\iint_{\\Gamma} \\left[u(M)\\frac{\\partial}{\\partial n}\\left(\\frac{1}{r_{MM_0}}\\right)-\\frac{1}{r_{MM_0}}\\frac{\\partial u(M)}{\\partial n}\\right]dS；推导：挖去奇点 M_0 的小球，应用格林第二公式，令小球半径 \\epsilon→0，结合球面平均值性质",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-4-3",
+        "name": "格林函数的定义与性质",
+        "type": "calculus",
+        "definition": "格林函数 G(M,M_0) 是求解狄利克雷问题的核心工具，表示 M_0 处单位点电荷在接地边界条件下产生的电位；定义：G(M,M_0)=\\frac{1}{4\\pi r_{MM_0}}-v(M,M_0)；其中 v 是调和函数，满足 v|_{\\Gamma}=\\left.\\frac{1}{4\\pi r_{MM_0}}\\right|_{\\Gamma}；性质：G|_{\\Gamma}=0（边界电位为零），0<G<\\frac{1}{4\\pi r_{MM_0}}（正性），对称性：G(M_1,M_2)=G(M_2,M_1)（互易原理），法向导数积分：\\iint_{\\Gamma} \\frac{\\partial G}{\\partial n}dS=-1（总感应电荷）",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-4-4",
+        "name": "狄利克雷问题的解",
+        "type": "calculus",
+        "definition": "利用格林函数将拉普拉斯方程边值问题转化为边界积分，消去法向导数项；公式：u(M_0)=-\\iint_{\\Gamma} f(M)\\frac{\\partial G}{\\partial n}dS；步骤：求解辅助问题：\\Delta v=0，v|_{\\Gamma}=\\frac{1}{4\\pi r_{MM_0}}|_{\\Gamma}，构造格林函数 G=\\frac{1}{4\\pi r_{MM_0}}-v，代入边界条件 u|_{\\Gamma}=f（§4.2）",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-4-5",
+        "name": "特殊区域的格林函数（镜像法）",
+        "type": "calculus",
+        "definition": "通过对称点放置镜像电荷，使边界电位为零；在半空间（z>0）中，镜像点：M_0(x_0,y_0,z_0) 的对称点 M_1(x_0,y_0,-z_0)，格林函数：G(M,M_0)=\\frac{1}{4\\pi}\\left(\\frac{1}{r_{MM_0}}-\\frac{1}{r_{MM_1}}\\right)，狄利克雷问题解：u(x_0,y_0,z_0)=\\frac{z_0}{2\\pi}\\iint_{-\\infty}^{\\infty} \\frac{f(x,y)dxdy}{[(x-x_0)^2+(y-y_0)^2+z_0^2]^{3/2}}；在球域（半径 R）中，镜像点：M_0 的反演点 M_1 满足 r_0\\cdot r_1=R^2，格林函数：G(M,M_0)=\\frac{1}{4\\pi}\\left(\\frac{1}{r_{MM_0}}-\\frac{R}{r_0}\\frac{1}{r_{MM_1}}\\right)，泊松公式：u(M_0)=\\frac{1}{4\\pi R}\\iint_{\\Gamma} f\\frac{R^2-r_0^2}{(R^2+r_0^2-2R r_0 \\cos\\gamma)^{3/2}}dS；OM0和OM1位于同一条半射线上，γ为OM和OM0的夹角",
+        "parents": [
+            "1-4-4-1",
+            "1-4-4-6"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-4-6",
+        "name": "调和函数的性质",
+        "type": "calculus",
+        "definition": "平均值定理：u(M_0)=\\frac{1}{4\\pi a^2}\\iint_{\\Gamma_a} udS；其中 \\Gamma_a 是以 M_0 为中心、半径 a 的球面；极值原理：非常数调和函数的最大/最小值只能在边界达到；唯一性：狄利克雷问题解唯一；法向导数积分：\\iint_{\\Gamma} \\frac{\\partial u}{\\partial n}dS=0",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-5-1",
+        "name": "贝塞尔方程的导出",
+        "type": "calculus",
+        "definition": "贝塞尔方程是从柱坐标系下的分离变量过程中导出的，描述圆形域物理问题（如温度分布、振动）的基础方程；公式：x^2 y''+x y'+(x^2-n^2)y=0；说明：该方程是变系数二阶线性常微分方程，其中 n 为阶数（实数），解称为贝塞尔函数（或柱函数），方程通过极坐标变换和分离变量法从亥姆霍兹方程导出",
+        "parents": [
+            "1-10-2-3"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-5-2",
+        "name": "贝塞尔函数的级数表示",
+        "type": "calculus",
+        "definition": "第一类贝塞尔函数 J_n(x) 是贝塞尔方程的特解，通过广义幂级数法求解得到；公式：J_n(x)=\\sum_{m=0}^{\\infty} (-1)^m \\frac{x^{n+2m}}{2^{n+2m} m! \\Gamma(n+m+1)}；第二类贝塞尔函数Y_n(x)=\\frac{J_n(x)\\cos n\\pi-J_{-n}(x)}{\\sin n\\pi}(n不为整数)；Y_n(x)=\\lim_{\\alpha→n} Y_{\\alpha}(x)(n为整数)；方程通解y(x)=C J_n(x)+D Y_n(x)；说明：当 n 为整数时，\\Gamma(n+m+1)=(n+m)!，J_n(x)在整个实轴上绝对收敛，该函数是贝塞尔方程在 x=0 处有限解的基础，当n为半奇数时，J_n(x)可用初等函数表示",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-5-3",
+        "name": "贝塞尔函数的递推公式",
+        "type": "calculus",
+        "definition": "递推公式建立了不同阶贝塞尔函数间的微分和代数关系，用于简化计算和求解高阶函数；核心公式：\\frac{d}{dx}\\left[x^n J_n(x)\\right]=x^n J_{n-1}(x)，\\frac{d}{dx}\\left[x^{-n} J_n(x)\\right]=-x^{-n} J_{n+1}(x)；J_{n-1}(x)+J_{n+1}(x)=\\frac{2n}{x} J_n(x)，J_{n-1}(x)-J_{n+1}(x)=2 J'_n(x)",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-5-4",
+        "name": "贝塞尔函数的零点与固有值",
+        "type": "calculus",
+        "definition": "贝塞尔函数的零点决定了分离变量法中的固有值，是求解定解问题的关键；公式：\\lambda_{m}^{(n)}=\\left(\\frac{\\mu_{m}^{(n)}}{R}\\right)^2；说明：\\mu_{m}^{(n)} 是 J_n(x) 的第 m 个正零点（m=1,2,\\cdots），满足 0<\\mu_{1}^{(n)}<\\mu_{2}^{(n)}<\\cdots，且相邻零点差趋近于 \\pi，固有值 \\lambda_{m}^{(n)} 用于构造定解问题的解",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-5-5",
+        "name": "贝塞尔函数系的正交性与模",
+        "type": "calculus",
+        "definition": "贝塞尔函数系在区间（0，R）上带权r正交，是函数展开的理论基础；正交性公式：\\int r J_n\\left(\\frac{\\mu_{m}^{(n)}}{R}r\\right) J_n\\left(\\frac{\\mu_{k}^{(n)}}{R}r\\right)dr=0 (m\\neq k)；模公式：\\int r J_n^2\\left(\\frac{\\mu_{m}^{(n)}}{R}r\\right)dr=\\frac{R^2}{2} J_{n+1}^2(\\mu_{m}^{(n)})，其平方根称为贝塞尔函数的模；说明：模用于归一化系数，由洛必达法则和递推公式导出",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-5-6",
+        "name": "傅里叶-贝塞尔级数展开",
+        "type": "calculus",
+        "definition": "区间（0，R）上分段光滑函数可按贝塞尔函数系展开为级数，用于满足初始条件；展开公式：\\frac{1}{2}[f(r+0)+f(r-0)]=\\sum_{m=1}^{\\infty} C_m J_n\\left(\\frac{\\mu_{m}^{(n)}}{R}r\\right)；系数公式：C_m=\\frac{\\int r f(r) J_n\\left(\\frac{\\mu_{m}^{(n)}}{R}r\\right)dr}{\\frac{R^2}{2} J_{n+1}^2(\\mu_{m}^{(n)})}；说明：系数 C_m 由正交性和模确定，要求 \\int r^{1/2}|f(r)|dr<\\infty",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-6-1",
+        "name": "勒让德方程的导出",
+        "type": "calculus",
+        "definition": "勒让德方程是在球坐标系下分离变量求解拉普拉斯方程时导出的，描述球对称问题中的角向分布；公式：(1-x^2)\\frac{d^2 y}{dx^2}-2x\\frac{dy}{dx}+n(n+1)y=0 (6.9)；说明：通过变量替换 x=\\cos\\theta 从连带勒让德方程（当 m=0 时）得到，其中 n 为常数（通常取非负整数），解称为勒让德函数",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-6-2",
+        "name": "勒让德多项式的显式表示（罗德里格斯公式）",
+        "type": "calculus",
+        "definition": "勒让德多项式是勒让德方程在 n 为非负整数时的多项式解，其显式由罗德里格斯公式给出；公式：P_n(x)=\\frac{1}{2^n n!}\\frac{d^n}{dx^n}(x^2-1)^n (6.18)；说明：此公式是计算勒让德多项式的封闭表达式（如 P_0=1,P_1=x,P_2=\\frac{1}{2}(3x^2-1)），推导基于二项式展开和高阶导数",
+        "parents": [
+            "1-4-4-6"
+        ],
+        "children": []
+    },
+    {
+        "id": "2-6-3",
+        "name": "母函数与生成关系",
+        "type": "calculus",
+        "definition": "勒让德多项式的母函数提供了一种级数展开方式，可用于推导多项式性质；公式：(1-2xz+z^2)^{-1/2}=\\sum_{n=0}^{\\infty} P_n(x) z^n (|z|<1)（z为复数）；说明：该生成函数物理背景是单位球北极置一点电荷，其区域内的电位（1/\\sqrt{1-2r\\cos\\theta+r^2}），由母函数可导出 P_n(1)=1,P_n(-x)=(-1)^n P_n(x) 等性质",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-6-4",
+        "name": "递推公式",
+        "type": "calculus",
+        "definition": "递推公式建立了不同阶勒让德多项式间的关系，用于高效计算；核心公式：(n+1) P_{n+1}(x)-(2n+1)x P_n(x)+n P_{n-1}(x)=0 (n\\geq1)(6.24)；P'_{n+1}(x)-P'_{n-1}(x)=(2n+1) P_n(x) (n\\geq1)(6.28)；说明：公式为三阶递推关系，可从母函数的微分恒等式导出；公式 (6.28) 涉及导数，用于简化微分运算",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-6-5",
+        "name": "正交性与模",
+        "type": "calculus",
+        "definition": "勒让德多项式在区间 [-1,1] 上带权 1 正交，是函数展开的理论基础；正交性公式：\\int P_m(x) P_n(x)dx=0 (m\\neq n)(6.29)；模公式：\\int P_n^2(x)dx=\\frac{2}{2n+1} (6.32)，其平方根称为勒让德多项式的模；说明：正交性通过勒让德方程和分部积分证明；模值计算利用罗德里格斯公式和分部积分",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-6-6",
+        "name": "傅里叶-勒让德级数展开",
+        "type": "calculus",
+        "definition": "分段光滑函数且积分\\int f^2(x)dx的值有限，可在 [-1,1] 上按勒让德多项式展开为广义傅里叶级数；展开公式：\\frac{1}{2}[f(x+0)+f(x-0)]=\\sum_{n=0}^{\\infty} C_n P_n(x) (|x|<1)(6.33)；系数公式：C_n=\\frac{2n+1}{2}\\int f(x) P_n(x)dx (6.34)；说明：系数 C_n 由正交性和模确定",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-7-1",
+        "name": "埃尔米特方程的定义",
+        "type": "calculus",
+        "definition": "描述：埃尔米特多项式是埃尔米特方程的多项式形式解，该方程是二阶线性微分方程，参数 n 为非负整数时，存在多项式解；公式：y''-2x y'+2n y=0",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-7-2",
+        "name": "埃尔米特多项式的显式定义",
+        "type": "calculus",
+        "definition": "描述：埃尔米特多项式 H_n(x) 的显式表达式，通过级数形式给出，其中 n 为非负整数，求和上限为 [\\frac{n}{2}]（取整函数）；公式：H_n(x)=\\sum_{m=0}^{[\\frac{n}{2}]} (-1)^m \\frac{n!}{m!(n-2m)!}(2x)^{n-2m}",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-7-3",
+        "name": "埃尔米特多项式的母函数",
+        "type": "calculus",
+        "definition": "描述：母函数是生成埃尔米特多项式的关键工具，函数 w(x,t)=e^{2xt-t^2} 的泰勒级数展开系数即为 H_n(x)，适用于所有 t（收敛半径为无穷），t为复数；公式：w(x,t)=e^{2xt-t^2}=\\sum_{n=0}^{\\infty} \\frac{1}{n!} H_n(x) t^n；埃尔米特多项式微分表达式：H_n(x)=(-1)^n e^{x^2} \\frac{d^n}{dx^n} e^{-x^2}",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-7-4",
+        "name": "递推公式",
+        "type": "calculus",
+        "definition": "描述：埃尔米特多项式满足递推关系，便于高效计算高阶多项式，包括一个三项递推和一个导数关系，其中 n\\geq1；公式：H_{n+1}(x)-2x H_n(x)+2n H_{n-1}(x)=0，H'_n(x)=2n H_{n-1}(x)",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-7-5",
+        "name": "正交性",
+        "type": "calculus",
+        "definition": "描述：埃尔米特多项式在区间 (-\\infty,+\\infty) 上关于权函数 e^{-x^2} 正交，即不同阶多项式乘积的积分为零，这是函数展开的基础；公式：\\int e^{-x^2} H_m(x) H_n(x)dx=0 (m\\neq n)",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-7-6",
+        "name": "模（范数）的表达式",
+        "type": "calculus",
+        "definition": "描述：埃尔米特多项式的模（或范数）是其自身平方的加权积分平方根，用于归一化系数，积分结果与阶乘和 \\sqrt{\\pi} 相关；公式：\\int e^{-x^2} H_n^2(x)dx=2^n n! \\sqrt{\\pi}",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "2-7-7",
+        "name": "级数展开",
+        "type": "calculus",
+        "definition": "若f(x)为定义在（-∞，+∞）上的实值函数，在任意有限区间内分段光滑，且反常积分\\int e^{-x^2} f^2(x)dx收敛，则\\frac{1}{2}[f(x+0)+f(x-0)]=\\sum_{n=0}^{\\infty} C_n H_n(x)；其中系数C_n=\\frac{1}{2^n n! \\sqrt{\\pi}}\\int e^{-x^2} f(x) H_n(x)dx",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-1-1-1",
+        "name": "实数的七大定理",
+        "type": "pde",
+        "definition": "确界原理，Cauchy收敛准则，闭区间套定理，单调有界原理，致密性定理，聚点定理，有限覆盖定理",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-1-1-2",
+        "name": "\\mathbb{R}^n 中的点集与性质",
+        "type": "pde",
+        "definition": "开集与闭集、内点、聚点、导集、闭包、区域的定义",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-1-2-1",
+        "name": "函数的定义与连续性",
+        "type": "pde",
+        "definition": "函数的左、右连续性的定义，函数在某点收敛的定义",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-2-1-1",
+        "name": "数列与级数",
+        "type": "pde",
+        "definition": "数列极限的\\varepsilon-N定义与Stolz定理",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-2-1-2",
+        "name": "级数的收敛性与绝对收敛性",
+        "type": "pde",
+        "definition": "比较判别法、Cauchy判别法、D‘Alembert判别法、Raabe判别法、积分判别法，Leibniz判别法，级数的Cauchy乘积，A-D判别法",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-2-2-1",
+        "name": "函数的极限，无穷大与无穷小",
+        "type": "pde",
+        "definition": "Heine定理，小o与大O的定义，L'Hospital法则",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-2-2-2",
+        "name": "函数列与函数项级数的收敛性与一致收敛性",
+        "type": "pde",
+        "definition": "Weierstrass判别法，A-D判别法，极限与极限、导数、积分的交换顺序",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-2-2-3",
+        "name": "幂级数与Fourier级数",
+        "type": "pde",
+        "definition": "Abel定理，Cauchy-Hadamard定理，幂级数的逐项求导与积分，Taylor展开式与Maclaurin展开式；Fourier系数的计算，正弦级数与余弦级数，Bessel不等式与Parseval等式",
+        "parents": [
+            "1-4-4-1",
+            "1-7-7-1",
+            "1-8-8-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-3-1-1",
+        "name": "一元函数导数的定义与计算",
+        "type": "pde",
+        "definition": "导数的定义，参数方程与隐函数的求导法则，高阶导数的计算方法",
+        "parents": [
+            "1-8-2-2",
+            "1-10-2-5"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-3-1-2",
+        "name": "多元函数的偏导数与方向导数的定义与计算",
+        "type": "pde",
+        "definition": "偏导数与方向导数的定义，参数方程与隐函数的求导法则，高阶偏导数与混合偏导数的计算",
+        "parents": [
+            "1-1-2-3",
+            "1-2-5-2",
+            "1-2-6-2",
+            "1-3-9-1",
+            "1-5-2-2",
+            "1-5-6-1",
+            "1-6-10-1",
+            "1-7-3-2",
+            "1-7-5-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-3-2-1",
+        "name": "一元函数的微分与Taylor公式",
+        "type": "pde",
+        "definition": "微分算子的定义，微分中值定理",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-3-2-2",
+        "name": "多元函数的微分与Taylor公式",
+        "type": "pde",
+        "definition": "微分与偏导的关系，全微分的计算，Jacobi矩阵的定义",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-3-3-1",
+        "name": "常微分方程的解法",
+        "type": "pde",
+        "definition": "分离变量法，线性方程与齐次方程的解法，参数法与幂级数法",
+        "parents": [
+            "1-8-2-1",
+            "1-8-3-1",
+            "1-8-3-2",
+            "1-8-5-1",
+            "1-8-6-1",
+            "1-9-2-1",
+            "1-9-2-2",
+            "1-9-3-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-3-3-2",
+        "name": "微分方程组与高阶微分方程",
+        "type": "pde",
+        "definition": "Liouville公式与非齐次线性方程的解法",
+        "parents": [
+            "1-4-2-1",
+            "1-7-3-1",
+            "1-7-7-2",
+            "1-8-1-1",
+            "1-8-9-3",
+            "1-10-2-3",
+            "1-10-3-1",
+            "1-10-3-3",
+            "1-10-4-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-4-1-1",
+        "name": "不定积分的定义与计算方法",
+        "type": "pde",
+        "definition": "换元法与分部积分法，有理函数与可化为有理函数的积分法",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-4-1-2",
+        "name": "全微分方程的求解",
+        "type": "pde",
+        "definition": "分次积分法，微分因子法",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-4-2-1",
+        "name": "一元函数的定积分",
+        "type": "pde",
+        "definition": "定积分的定义与性质，积分中值定理，换元法与分部积分法",
+        "parents": [
+            "1-3-10-1",
+            "1-5-2-3"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-4-2-2",
+        "name": "多元数量值函数的积分",
+        "type": "pde",
+        "definition": "重积分与第一型积分的定义与计算，参数方程下的计算，坐标系变换",
+        "parents": [
+            "1-3-10-2",
+            "1-4-4-1",
+            "1-4-4-5",
+            "1-4-4-6",
+            "1-4-4-7",
+            "1-6-11-1",
+            "1-6-12-1",
+            "1-6-12-2",
+            "1-6-12-3",
+            "1-8-4-2",
+            "1-9-2-4",
+            "1-10-4-3"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-4-2-3",
+        "name": "多元向量值函数的积分",
+        "type": "pde",
+        "definition": "第二型积分的计算与换元法，坐标系的变换",
+        "parents": [
+            "1-4-4-4",
+            "1-5-3-1",
+            "1-6-2-2",
+            "1-6-3-2",
+            "1-6-4-1",
+            "1-6-13-1",
+            "1-7-2-2",
+            "1-7-2-3"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-4-3-1",
+        "name": "无穷积分与瑕积分",
+        "type": "pde",
+        "definition": "收敛性：比较判别法，A-D判别法；计算（利用含参变量积分）",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-4-4-1",
+        "name": "含参变量积分及其一致收敛性",
+        "type": "pde",
+        "definition": "积分与极限，积分，求导的交换顺序；一致收敛性的判定：Weierstrass判别法，A-D判别法",
+        "parents": [
+            "1-7-6-1",
+            "1-7-6-2"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-5-1-1",
+        "name": "\\mathbb{R}^3 中的向量，曲面与曲线",
+        "type": "pde",
+        "definition": "向量的加法与内积外积混合积，直线与平面的表示方法与位置关系，曲线与曲面的表示方法与切线切平面，",
+        "parents": [
+            "1-3-7-2",
+            "1-4-4-4",
+            "1-4-4-6",
+            "1-6-1-3",
+            "1-6-4-1",
+            "1-6-7-1",
+            "1-8-4-1"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-5-1-2",
+        "name": "物理参数的计算",
+        "type": "pde",
+        "definition": "利用重积分的计算：长度，面积，体积，质心，转动惯量，引力",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-5-2-1",
+        "name": "一元函数的极值与凹凸性",
+        "type": "pde",
+        "definition": "极值与最值的计算，凹凸性的判断与Jensen不等式",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-5-2-2",
+        "name": "多元函数的极值与条件极值",
+        "type": "pde",
+        "definition": "极值的判断（Hesse矩阵），Lagrange乘数法",
+        "parents": [],
+        "children": []
+    },
+    {
+        "id": "3-5-3-1",
+        "name": "数量场与向量场，梯度、散度、旋度",
+        "type": "pde",
+        "definition": "Nabla算子与Laplace算子",
+        "parents": [
+            "1-1-2-1",
+            "1-1-2-2",
+            "1-2-5-1",
+            "1-2-6-1",
+            "1-2-8-1",
+            "1-3-7-1",
+            "1-3-7-3",
+            "1-3-8-1",
+            "1-3-9-2",
+            "1-3-9-3",
+            "1-4-2-1",
+            "1-4-2-2",
+            "1-4-4-3",
+            "1-5-2-1",
+            "1-5-5-1",
+            "1-6-1-1",
+            "1-6-2-1",
+            "1-6-3-1",
+            "1-6-5-1",
+            "1-6-5-2",
+            "1-7-2-1",
+            "1-7-3-1",
+            "1-10-2-3"
+        ],
+        "children": []
+    },
+    {
+        "id": "3-5-3-2",
+        "name": "微积分定理",
+        "type": "pde",
+        "definition": "Newton-Leibniz公式，Green公式，Gauss公式，Stokes公式",
+        "parents": [
+            "1-2-7-1"
+        ],
+        "children": []
+    }
+]

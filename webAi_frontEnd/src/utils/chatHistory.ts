@@ -1,8 +1,39 @@
-import { interviewApi } from '@/api/interview/interviewApi'
 import { useUsersStore } from '@/store'
-import type { ChatHistory, ChatSession, ChatMessage, ChatSessionState } from '@/types/resume'
 import { ElMessage } from 'element-plus'
 import { nextTick, ref, Ref} from 'vue'
+
+export interface ChatMessage {
+  role: 'user' | 'assistant'
+  content: string
+}
+
+export interface ChatSessionState {
+  typingIndex: number
+  isStreaming: boolean
+  lastContent: string   //用于缓存最新的打字机结果
+}
+
+export interface ChatSession {
+  session_id: string
+  messages: ChatMessage[]
+  created_at: number | null
+  updated_at: number | null
+  title: string
+  state: ChatSessionState
+}
+
+export interface ChatSessionUpdated{
+  id : string
+  title: string
+  messages: ChatMessage[]
+  create_time: number | null
+  update_time: number | null
+}
+
+export interface ChatHistory {
+  sessions: ChatSession[]
+  current_session_id: string | null
+}
 
 /**
  * 聊天会话记录管理
@@ -179,20 +210,18 @@ export class ChatHistoryManager {
   }
 
   /**
-   * 从后端更新整个会话历史记录
+   * 从后端回复更新整个会话历史记录，
+   * 更新会话的 created_time、updated_time、
    */
-  public async updateSessionHistoryFromServer() {
-    const response = await interviewApi.getSessionHistory("")
-    // console.log("updateSessionHistoryFromServer response:",response)
-    const sessions_updated = response.data
+  public async updateSession(sessions_updated : ChatSessionUpdated[]) {
     this.history.value.sessions = [] // clear the original history
     sessions_updated.forEach(session => {
       this.history.value.sessions.push({
         session_id : session.id,
         messages : session.messages,
         title : session.title,
-        created_at : null,
-        updated_at : null,
+        created_at : session.create_time,
+        updated_at : session.update_time,
         state : this.createDefaultSessionState()
       })
     });
@@ -514,7 +543,7 @@ export class ChatHistoryManager {
       
       // 保存最新内容到会话状态
       this.updateSessionState(session_id, {
-        lastContent: data.content
+        lastContent: this.getSessionState(session_id)?.lastContent + data.content
       });
       
       // // 只有当前会话才尝试启动打字机效果
@@ -527,10 +556,6 @@ export class ChatHistoryManager {
       //   this.updateTypingIndex(session_id,data.content.length)
       // }
     }) as EventListener;
-    
-    // 保存处理器引用并注册
-    this.addSessionListener(session_id, "sse-message-start", startHandler);
-    this.addSessionListener(session_id, "sse-message", messageHandler);
     
     /** 完成处理器 - 处理会话结束事件；
      *  特别注意：事件触发时，TypeWriter可能并没有结束
@@ -590,6 +615,10 @@ export class ChatHistoryManager {
       }
     }) as EventListener;
     
+
+    // 保存处理器引用并注册
+    this.addSessionListener(session_id, "sse-message-start", startHandler);
+    this.addSessionListener(session_id, "sse-message", messageHandler);
     this.addSessionListener(session_id, "sse-session-completed", completionHandler);
     
     // 错误处理器 - 处理会话错误

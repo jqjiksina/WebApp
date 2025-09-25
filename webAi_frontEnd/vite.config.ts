@@ -1,40 +1,36 @@
-import { fileURLToPath, URL } from 'node:url'
-
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueDevTools from 'vite-plugin-vue-devtools'
-import path from 'path'
+import { resolve } from 'path'
 
-// https://vite.dev/config/
-export default defineConfig(({mode})=>{
-  const env = loadEnv(mode,process.cwd());
-
-  return {
-    mode: "development",
-    plugins: [
-      vue(),
-      vueJsx(),
-      vueDevTools(),
-    ],
-    server:{
-      host: 'localhost',
-      port: 5173,
-      strictPort: true,
-      headers: {
-        'Cross-Origin-Embedder-Policy': 'require-corp',
-        'Cross-Origin-Opener-Policy': 'same-origin',
-        'Cross-Origin-Resource-Policy': 'cross-origin'
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src')
+    }
+  },
+  server: {
+    port: 5173,
+    host: true,
+    proxy: {
+      '/api': {
+        target: 'http://222.20.98.159:5180',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api')
       }
-    },
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, 'src')
-      },
-    },
-    define:{
-
-    },
-    envPrefix: 'VITE'
+    }
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['vue', 'vue-router', 'pinia'],
+          elementPlus: ['element-plus']
+        }
+      }
+    }
   }
 })
+

@@ -1,11 +1,15 @@
+<!--
+  @ Description：网页应用视图入口文件，负责将路由组件组装展示
+-->
+
 <script setup lang="ts" name="App">
 import { onBeforeMount, ref } from 'vue';
 import { RouterView } from 'vue-router';
-import { userApi } from './api/user/userApi';
-import { useUsersStore } from './store/modules/user';
-import type { Request_Login } from './types/formSubmit';
-import SideBar from '@/components/layout/SideBar.vue'
-import Header from '@/components/layout/Header.vue'
+import { userApi } from './api/userApi';
+import { useUsersStore } from './store/user';
+import type { Request_Login } from '@/api/userApi';
+import SideBar from '@/layout/SideBar.vue'
+import Header from '@/layout/Header.vue'
 
 onBeforeMount(async ()=>{
   // const userStore = useUsersStore()
@@ -58,8 +62,6 @@ const showSlide = ref(true)
 </template>
 
 <style scoped>
-@import './assets/theme.css';
-
 .app-container {
   height: 100vh;
   width: 100vw;
@@ -92,22 +94,22 @@ const showSlide = ref(true)
 }
 
 .el-aside {
-  background-color: #304156;
-  color: #fff;
+  background-color: var(--color-background-sidebar);
+  color: var(--color-text);
   width: 200px;
   height: 100%;
 }
 
 .el-header {
-  background-color: #fff;
+  background-color: var(--color-background-header);
   border-bottom: 1px solid #e6e6e6;
   padding: 0;
   line-height: 60px;
 }
 
 .el-main {
-  background-color: --background-color;
-  padding: 20px;
+  background-color: var(--color-background-soft);
+  /* padding: 20px; */
   flex: 1;
   overflow: hidden;
 }
