@@ -1,0 +1,44 @@
+<testsuites id="" name="" tests="3" failures="2" skipped="1" errors="0" time="9.488880000000002">
+<testsuite name="sse-performance.spec.js" timestamp="2025-09-27T07:59:43.700Z" hostname="chromium" tests="1" failures="0" skipped="1" time="8.518" errors="0">
+<testcase name="SSE流式响应性能测试 › 测试简历分析SSE首消息到达时间" classname="sse-performance.spec.js" time="8.518">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="sse-performance.spec.js" timestamp="2025-09-27T07:59:43.700Z" hostname="firefox" tests="1" failures="1" skipped="0" time="0.005" errors="0">
+<testcase name="SSE流式响应性能测试 › 测试简历分析SSE首消息到达时间" classname="sse-performance.spec.js" time="0.005">
+<failure message="sse-performance.spec.js:4:3 测试简历分析SSE首消息到达时间" type="FAILURE">
+<![CDATA[  [firefox] › sse-performance.spec.js:4:3 › SSE流式响应性能测试 › 测试简历分析SSE首消息到达时间 ─────────────────────────
+
+    Error: browserType.launch: Executable doesn't exist at /home/jhyang/.cache/ms-playwright/firefox-1490/firefox/firefox
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     npx playwright install                                              ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+]]>
+</failure>
+</testcase>
+</testsuite>
+<testsuite name="sse-performance.spec.js" timestamp="2025-09-27T07:59:43.700Z" hostname="webkit" tests="1" failures="1" skipped="0" time="0.005" errors="0">
+<testcase name="SSE流式响应性能测试 › 测试简历分析SSE首消息到达时间" classname="sse-performance.spec.js" time="0.005">
+<failure message="sse-performance.spec.js:4:3 测试简历分析SSE首消息到达时间" type="FAILURE">
+<![CDATA[  [webkit] › sse-performance.spec.js:4:3 › SSE流式响应性能测试 › 测试简历分析SSE首消息到达时间 ──────────────────────────
+
+    Error: browserType.launch: Executable doesn't exist at /home/jhyang/.cache/ms-playwright/webkit-2203/pw_run.sh
+    ╔═════════════════════════════════════════════════════════════════════════╗
+    ║ Looks like Playwright Test or Playwright was just installed or updated. ║
+    ║ Please run the following command to download new browsers:              ║
+    ║                                                                         ║
+    ║     npx playwright install                                              ║
+    ║                                                                         ║
+    ║ <3 Playwright Team                                                      ║
+    ╚═════════════════════════════════════════════════════════════════════════╝
+]]>
+</failure>
+</testcase>
+</testsuite>
+</testsuites>

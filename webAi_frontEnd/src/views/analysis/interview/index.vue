@@ -10,6 +10,7 @@
               {{ showSessionList ? '隐藏会话列表' : '显示会话列表' }}
             </el-button>
           </div>
+          <MyUpload />
         </div>
       </template>
 
@@ -28,7 +29,7 @@
                 :key="session.session_id"
                 class="session-item"
                 :class="{ active: session.session_id === activeSessionId }"
-                @click="chatHistory.switchToSession(session.session_id)"
+                @click="handleSessionClick(session.session_id)"
               >
                 <div class="session-title">{{ session.title }}</div>
                 <div class="session-time">{{ formatTime(session.updated_at as number) }}</div>
@@ -139,6 +140,7 @@ import { Delete, Microphone, VideoPause } from '@element-plus/icons-vue'
 import { ChatHistoryManager, ChatSessionUpdated } from '@/utils/chatHistory'
 import type { ChatMessage } from '@/api/resumeApi'
 import { interviewApi } from '@/api/interviewApi'
+import { MyUpload } from '@/components'
 // import axios from 'axios'
 import axios from "axios"
 // import { useUsersStore } from '@/store'
@@ -163,6 +165,13 @@ const sessions = computed(() => chatHistory.getAllSessions().value)
 
 const userAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 const aiAvatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+
+const handleSessionClick = async (session_id: string) => {
+  const response = await interviewApi.listSession(session_id)
+  chatHistory.updateSession(response.data as ChatSessionUpdated[], false)
+  chatHistory.switchToSession(session_id)
+  // messages.value = response.data[0].messages
+}
 
 const deleteAllSessions = async () => {
   await interviewApi.deleteSession([])
@@ -287,7 +296,7 @@ const createWebRTCConnection = async () => {
 const isRecording = ref(false)
 const recognition = ref<SpeechRecognition | null>(null)
 const silenceTimer = ref<number | null>(null)
-const silenceThreshold = 1500 // 1.5秒静音判定
+const silenceThreshold = 5000 // 5秒静音判定
 const finalTranscript = ref('')
 const interimTranscript = ref('')
 
@@ -344,14 +353,14 @@ const initSpeechRecognition = async () => {
 
         finalTranscript.value = final
         interimTranscript.value = interim
-        inputMessage.value = final + interim
-
+        
         // 重置静音计时器
         if (silenceTimer.value) {
           clearTimeout(silenceTimer.value)
         }
         silenceTimer.value = window.setTimeout(() => {
-          if (finalTranscript.value) {
+          if (finalTranscript.value && !isSpeaking.value) {
+            inputMessage.value = final + interim
             sendMessage()
           }
         }, silenceThreshold)
@@ -524,11 +533,27 @@ const sendMessage = async () => {
   inputMessage.value = ''
   finalTranscript.value = ''
   interimTranscript.value = ''
+
+    // 添加AI消息占位
+  const aiMessage: ChatMessage = {
+    role: 'assistant',
+    content: '',
+  }
+  messages.value.push(aiMessage)
+  chatHistory.scrollToBottom()
   
   try {
     console.log("[Debug] 开始发送消息于会话:", thisSessionId)
+    isSpeaking.value = true
     const response = await interviewApi.chat(userMessage.content, thisSessionId)
+    isSpeaking.value = false
     console.log("[Debug] sendMessage Response:", response)
+    const lastMessage = messages.value[messages.value.length - 1];
+    if (lastMessage && lastMessage.role === 'assistant') {
+      lastMessage.content = response.data.content;
+      chatHistory.scrollToBottom();
+    }
+    chatHistory.saveSession(thisSessionId)
 
     if (response.status != 200)
       throw new Error(response.statusText);

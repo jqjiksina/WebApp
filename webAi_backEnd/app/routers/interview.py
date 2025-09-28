@@ -13,6 +13,7 @@ from config import Config
 from loguru import logger
 from .resume import Request_Upload
 from .resume import resume_map
+from api.digital_human.index import digital_human
 
 router = APIRouter(
     prefix="/api/interview",
@@ -48,28 +49,37 @@ async def answer(request: AnswerRequest, user: User = Depends(get_current_user),
         logger.debug(f"create response:{session_response}")
         if session_response and session_response.get("data"):
             request.session_id = session_response["data"]["id"]
-            return {"session_id":session_response["data"]["id"],"message":session_response["data"]["message"][0]["content"],"human_session_id":human_session_id}
+            await digital_human.play(session_response["data"]["message"][0]["content"], human_session_id, True)
+            return {"session_id":session_response["data"]["id"],"content":session_response["data"]["message"][0]["content"]}
             
     if (resume_map.get(user.external_id)):
         request.answer += f"\r\n\r\n (附简历：{resume_map[user.external_id]})"
+        
+    # 非流式
     response = rag_client.chat(Config.INTERVIEW_AGENT_ID, request.answer, request.session_id,False, True)
-
     async for chunk in response:
-        chunk_data = json.loads(chunk)
-        if chunk_data["type"] == "text":
-            msg = chunk_data["content"]
-            # 更新 session_id，确保使用最新的值
-            if "session_id" in chunk_data:
-                session_id = chunk_data["session_id"]
-        elif chunk_data["type"] == "end": # 开始处理think标签的内容，去掉思考过程后再发送
-            msg = msg.split("</think>")
-            print("[Debug] msg:",msg)
-            try:
-                await digital_human.play(msg[-1], human_session_id, True)
-            except:
-                return {"status":404,"statusText":"数字人调用失败，请检查数字人是否连接！","data":{"session_id":session_id}}
+        logger.debug(f"chunk:{chunk}")
+        msg = chunk["data"]["answer"]
+        session_id = chunk["data"]["session_id"]
+        
+    await digital_human.play(msg, human_session_id, True)
     
-    return {"session_id":session_id,"message":msg[-1]}
+    # 流式
+    # response = rag_client.chat(Config.INTERVIEW_AGENT_ID, request.answer, request.session_id,True, True)
+    # async for chunk in response:
+    #     chunk_data = json.loads(chunk)
+    #     if chunk_data["type"] == "text":
+    #         # 先去除<think>标签
+    #         added_msg = chunk_data["content"] - msg[-1]
+    #         msg = chunk_data["content"]
+    #         await digital_human.play(msg, human_session_id, False)
+    #     elif chunk_data["type"] == "end":
+    #         session_id = chunk_data["session_id"]
+        
+        
+    # await digital_human.play(msg, human_session_id, True)
+    
+    return {"session_id":session_id,"content":msg.strip()}
 
 @router.post("/set_human_session_id")
 async def set_human_session_id(request: SetHumanSessionIdRequest, current_user: User = Depends(get_current_user), db : AsyncSession = Depends(get_async_db)):

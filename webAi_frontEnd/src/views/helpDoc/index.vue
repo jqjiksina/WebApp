@@ -25,7 +25,7 @@
       </div>
 
       <div class="doc-module">
-        <a :href="'/docSite'">
+        <a :href="docSite" target="_blank">
           <el-button 
           style="height: 100%; width: 100%; font-size: 3rem;">
             <el-icon><User /></el-icon>
@@ -46,6 +46,7 @@ import {User,Cpu} from '@element-plus/icons-vue'
 import 'github-markdown-css';
 
 const router = useRouter()
+const docSite = "http://" + import.meta.env.VITE_BACK_END_URL + "/docSite"
 
 const md = new MarkdownIt()
 

@@ -28,7 +28,7 @@ const router = createRouter({
       path: '/analysis',
       name: 'Analysis',
       component: () => import('@/views/analysis/index.vue'),
-      meta: { requiresAuth: true ,title:"学业分析"},
+      meta: { requiresAuth: true ,title:"职业发展"},
       children:[{
           path: 'interview',
           name:"Interview",

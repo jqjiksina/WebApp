@@ -51,7 +51,12 @@ interface SessionItem{
  * TODO: 会话的删除
  */
 export const resumeApi = {
-  // 对话接口
+  /**
+   * sse结束时返回session_id
+   * @param session_id 
+   * @param content 
+   * @returns 
+   */
   chat: async (session_id: string, content: string) => {
     console.log(`[Debug] chat begin for session: ${session_id}`)
     let currentSessionId = "";
@@ -99,7 +104,8 @@ export const resumeApi = {
                   console.log("Parsed JSON:", jsonData)
                   
                   if (currentSessionId === "") { // 标志会话流式传输开始
-                    currentSessionId = jsonData.session_id
+                    // currentSessionId = jsonData.session_id
+                    currentSessionId = session_id
                     console.log(`会话 ${currentSessionId} 流式传输开始`)
                     const event = new CustomEvent(`sse-message-start-${currentSessionId}`)
                     window.dispatchEvent(event)
@@ -234,7 +240,7 @@ export const resumeApi = {
  * @returns 
  */
   deleteSession: async (session_ids : string[]) => {
-    return await axios.post("/api/resume/delete_session",
+    return await axios.post("http://" + import.meta.env.VITE_BACK_END_URL + "/api/resume/delete_session",
       {session_ids : session_ids}
     )
   },

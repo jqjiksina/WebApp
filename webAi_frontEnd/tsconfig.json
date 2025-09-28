@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["konva"],
+    "types": [],
     "esModuleInterop": true,
     // "moduleResolution": "node",
     "target": "ES2020",
@@ -8,6 +8,7 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./node_modules/typescript/lib"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",

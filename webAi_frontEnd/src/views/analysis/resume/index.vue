@@ -10,16 +10,7 @@
               {{ showSessionList ? '隐藏会话列表' : '显示会话列表' }}
             </el-button>
           </div>
-          <el-upload
-            class="upload-demo"
-            :http-request="handleUpload"
-            :on-success="handleUploadSuccess"
-            :on-error="handleUploadError"
-            :before-upload="beforeUpload"
-            accept=".doc,.docx,.md,.pdf"
-          >
-            <el-button type="primary">上传简历</el-button>
-          </el-upload>
+          <MyUpload />
         </div>
       </template>
 
@@ -27,6 +18,7 @@
         <div v-if="showSessionList" class="session-list">
           <div class="session-list-header">
             <h3>历史会话</h3>
+            <el-button type="text" @click="deleteAllSessions">清除所有</el-button>
             <el-button type="text" @click="createNewSession">新建会话</el-button>
           </div>
           <el-scrollbar>
@@ -106,6 +98,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { Delete } from '@element-plus/icons-vue'
 import { resumeApi } from '@/api/resumeApi'
 import { ChatHistoryManager, ChatSessionUpdated } from '@/utils/chatHistory'
+import { MyUpload } from '@/components'
 import type { ChatMessage } from '@/api/resumeApi'
 import mammoth from 'mammoth'
 
@@ -123,6 +116,11 @@ const sessions = computed(() => chatHistory.getAllSessions().value)
 
 const userAvatar = 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
 const aiAvatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+
+const deleteAllSessions = async () => {
+  await resumeApi.deleteSession([])
+  ElMessage.success('所有面试记录已删除')
+}
 
 // 辅助函数
 const readFileAsArrayBuffer = (file: File): Promise<ArrayBuffer> => {
@@ -280,7 +278,7 @@ const handleChat = async () => {
     // 发送请求前确保会话ID正确
     console.log(`发送聊天请求，会话ID: ${initialSessionId}`)
     
-    // 发送请求
+    // 发送请求，收到的sse流式响应通过event handler处理，sse结束时返回session_id。
     const session_id = await resumeApi.chat(initialSessionId, userMessageContent)
     
     // 更新会话ID（如果有变化）
@@ -328,24 +326,6 @@ const sendMessage = async () => {
     await handleChat()
   } finally {
   }
-}
-
-// 处理文件上传
-const handleUploadSuccess = async (_response: any) =>{
-  
-}
-
-const handleUploadError = () => {
-  ElMessage.error('简历上传失败，请重试')
-}
-
-const beforeUpload = (_file: File) => {
-  const isWord = true
-  if (!isWord) {
-    ElMessage.error('只能上传 Word、Markdown 文档！')
-    return false
-  }
-  return true
 }
 
 </script>

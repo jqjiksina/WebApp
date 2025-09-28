@@ -45,41 +45,7 @@
       <el-icon><DataAnalysis /></el-icon>
       <span>测试页面</span>
     </el-menu-item>
-    <el-sub-menu index="2">
-      <template #title><el-icon><Opportunity /></el-icon>知识图谱</template>
-        <el-menu-item index="/maganism">
-          电磁场与电磁波
-        </el-menu-item>
-        <el-menu-item index="/integral">
-          微积分
-        </el-menu-item>
-        <el-menu-item index="/function">
-          数理方程与特殊函数
-        </el-menu-item>
-        <el-menu-item index="/summary">
-          全部
-        </el-menu-item>
-    </el-sub-menu>
-
-    <el-menu-item index="/practice">
-      <el-icon><Reading /></el-icon>
-      <span>习题练习</span>
-    </el-menu-item>
-
-    <el-menu-item index="/route">
-      <el-icon><Share /></el-icon>
-      <span>个性化学习路径</span>
-    </el-menu-item>
-
-    <el-menu-item index="/upload">
-      <el-icon><Share /></el-icon>
-      <span>上传信息（教师端）</span>
-    </el-menu-item>
     
-    <el-menu-item index="/science">
-      <el-icon><Share /></el-icon>
-      <span>科研信息</span>
-    </el-menu-item>
   </el-menu>
 </template>
 

@@ -26,19 +26,15 @@ export const interviewApi = {
   },
 
   /**
-   * 在指定会话中， 进行一次对话（非流式接收），并调用数字人服务播放语音
+   * 在指定会话中， 进行一次对话（非流式接收）
    */
   chat : async (content : string, sessionId : string) => {
-    const response = await axios.post<{message : string, session_id:string, human_session_id:string}>('http://' + import.meta.env.VITE_BACK_END_URL + '/api/interview/answer',
+    return await axios.post<{session_id : string, content : string}>('http://' + import.meta.env.VITE_BACK_END_URL + '/api/interview/answer',
       {
         answer : content,
         session_id : sessionId
       }
     )
-    await axios.post('http://'+import.meta.env.VITE_BACK_END_URL+'/digitalperson/human',
-      {"text": response.data.message, "sessionid": response.data.human_session_id, "type": "echo", "interrupt": true}
-    )
-    return response
   },
 
   /**

@@ -211,20 +211,42 @@ export class ChatHistoryManager {
 
   /**
    * 从后端回复更新整个会话历史记录，
-   * 更新会话的 created_time、updated_time、
+   * 更新会话的 created_time、updated_time、title等信息
+   * @param sessions_updated 更新后的会话历史记录
+   * @param overlap 是否覆盖原来的会话历史记录，若为否，则只将指定会话的history进行更新
    */
-  public async updateSession(sessions_updated : ChatSessionUpdated[]) {
-    this.history.value.sessions = [] // clear the original history
-    sessions_updated.forEach(session => {
-      this.history.value.sessions.push({
-        session_id : session.id,
-        messages : session.messages,
-        title : session.title,
-        created_at : session.create_time,
-        updated_at : session.update_time,
-        state : this.createDefaultSessionState()
+  public async updateSession(sessions_updated : ChatSessionUpdated[], overlap : boolean = true) {
+    if (overlap) {  // 如果为true，则覆盖原来的会话历史记录
+      this.history.value.sessions = []
+      sessions_updated.forEach(session => {
+        this.history.value.sessions.push({
+          session_id : session.id,
+          messages : session.messages,
+          title : session.title,
+          created_at : session.create_time,
+          updated_at : session.update_time,
+          state : this.createDefaultSessionState()
+        })
+      });
+    }
+    else{ // 如果为false，则只将指定会话的history进行更新
+      sessions_updated.forEach(session => {
+        const index = this.history.value.sessions.findIndex(s => s.session_id === session.id)
+        const newSession = {
+          session_id : session.id,
+          messages : session.messages,
+          title : session.title,
+          created_at : session.create_time,
+          updated_at : session.update_time,
+          state : this.createDefaultSessionState()
+        }
+        if (index !== -1) {
+          this.history.value.sessions[index] = newSession
+        }else{
+          this.history.value.sessions.push(newSession)
+        }
       })
-    });
+    }
     this.saveHistory()
   }
 
@@ -543,7 +565,8 @@ export class ChatHistoryManager {
       
       // 保存最新内容到会话状态
       this.updateSessionState(session_id, {
-        lastContent: this.getSessionState(session_id)?.lastContent + data.content
+        // lastContent: this.getSessionState(session_id)?.lastContent + data.content
+        lastContent: data.content
       });
       
       // // 只有当前会话才尝试启动打字机效果
